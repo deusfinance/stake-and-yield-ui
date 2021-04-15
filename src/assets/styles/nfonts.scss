@@ -1,0 +1,37 @@
+//new fonts
+@font-face {
+    font-family: "Monument Grotesk";
+    src: url("../fonts/MonumentGrotesk/MonumentGrotesk-Regular.woff");
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "Monument Grotesk";
+    src: url("../fonts/EduMonumentGroteskMono/edumonumentgroteskmono-regular-webfont.woff2") format("woff2"),
+        url("../fonts/EduMonumentGroteskMono/edumonumentgroteskmono-regular-webfont.woff") format("woff"),
+        url("../fonts/EduMonumentGroteskMono/edumonumentgroteskmono-regular-webfont.ttf") format("truetype"),
+        url("../fonts/EduMonumentGroteskMono/edumonumentgroteskmono-regular-webfont.svg#edu_monument_grotesk_monoRg")
+            format("svg");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Monument Grotesk Semi";
+    src: url("../fonts/EduMonumentGroteskSemi-Mono/EduMonumentGroteskSemi-Mono-Regular.woff2") format("woff2"),
+        url("../fonts/EduMonumentGroteskSemi-Mono/EduMonumentGroteskSemi-Mono-Regular.woff") format("woff");
+}
+
+@font-face {
+    font-family: Lambok;
+    src: url("../fonts/Lombok.ttf");
+}
+
+@font-face {
+    font-family: Segoe UI;
+    src: url("../fonts/SegoeUI.woff");
+}
+
+@font-face {
+    font-family: Roboto Medium;
+    src: url("../fonts/Roboto/Roboto-Medium.ttf");
+}
