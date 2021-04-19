@@ -1,4 +1,5 @@
 import React from 'react'
+import { useWeb3React } from '@web3-react/core'
 
 import './style.css'
 
@@ -8,33 +9,29 @@ import TokenContainer from './TokenContainer'
 import tokens from './Data'
 
 const Staking = () => {
-  const [owner, setOwner] = React.useState('')
+  // const [owner, setOwner] = React.useState('')
   const [tvl, setTvl] = React.useState('')
   const [vaultsAmount, setVaultsAmount] = React.useState('')
   const [showTokens, setShowTokens] = React.useState(tokens)
   const [type, setType] = React.useState('all')
-
+  const { account } = useWeb3React()
   React.useEffect(() => {
-    getAccount()
     getTVL()
-  }, [])
-
-  React.useEffect(() => {
     setType('all')
     setShowTokens(tokens)
-  }, [owner])
+  }, [account])
 
-  window.ethereum.on('accountsChanged', function (accounts) {
-    getAccount()
-  })
+  // window.ethereum.on('accountsChanged', function (accounts) {
+  //   getAccount()
+  // })
 
-  const getAccount = async () => {
-    let wallets = await web3.eth.getAccounts()
-    if (wallets && wallets.length) {
-      let owner = wallets[0]
-      setOwner(owner)
-    }
-  }
+  // const getAccount = async () => {
+  //   let wallets = await web3.eth.getAccounts()
+  //   if (wallets && wallets.length) {
+  //     let owner = wallets[0]
+  //     setOwner(owner)
+  //   }
+  // }
 
   const getTVL = async () => {
     const url = 'https://app.deus.finance/tvl.json'
@@ -97,7 +94,7 @@ const Staking = () => {
 
         <div className="wrap-tokens">
           {showTokens.map((token, index) => (
-            <TokenContainer key={index} {...token} owner={owner} />
+            <TokenContainer key={index} {...token} owner={account} />
           ))}
         </div>
       </div>
