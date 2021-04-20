@@ -805,3 +805,12 @@
 
   color: #ffffff;
 }
+.lock-text {
+  height: 15px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 21px;
+  text-align: center;
+  color: #ffffff;
+}

@@ -11,6 +11,7 @@ import Frozen from './Frozen'
 import Fluid from './Fluid'
 // import DepositBtn from './DepositBtn'
 import Deposite from './Deposite'
+import Mint from './Mint'
 
 const TokenContainer = (props) => {
   const {
@@ -187,8 +188,8 @@ const TokenContainer = (props) => {
     if (owner) fetchData()
   }, [owner, fetchData])
 
-  const handleDeposite = () => {
-    setCollapseContent('deposite')
+  const handleCollapseContent = (data) => {
+    setCollapseContent(data)
   }
 
   const handleBack = () => {
@@ -217,7 +218,7 @@ const TokenContainer = (props) => {
             title={title}
             apy={userInfo.apy}
             balanceWallet={userInfo.balanceWallet}
-            handleDeposite={handleDeposite}
+            handleCollapseContent={(data) => handleCollapseContent(data)}
           />
         }
         triggerWhenOpen={
@@ -225,7 +226,7 @@ const TokenContainer = (props) => {
             title={title}
             apy={userInfo.apy}
             balanceWallet={userInfo.balanceWallet}
-            handleDeposite={handleDeposite}
+            handleCollapseContent={(data) => handleCollapseContent(data)}
           />
         }
       >
@@ -285,7 +286,7 @@ const TokenContainer = (props) => {
                 </div>
               </div>
             )}
-            {/* <DepositBtn onClickDeposite={handleDeposite} /> */}
+            {/* <DepositBtn onClickDeposite={data =>handleCollapseContent(data)} /> */}
           </>
         )}
         {collapseContent === 'deposite' && (
@@ -298,6 +299,15 @@ const TokenContainer = (props) => {
             handleBack={handleBack}
             exitable={exitable}
             yieldable={yieldable}
+          />
+        )}
+        {collapseContent === 'get' && (
+          <Mint
+            {...userInfo}
+            stakingContract={stakingContract}
+            fetchData={(data) => setFetchData(data)}
+            owner={owner}
+            handleBack={handleBack}
           />
         )}
       </Collapsible>

@@ -1,6 +1,11 @@
 import React from 'react'
 
-const CollapseTriggerOpen = ({ title, apy, balanceWallet, handleDeposite }) => {
+const CollapseTriggerOpen = ({
+  title,
+  apy,
+  balanceWallet,
+  handleCollapseContent
+}) => {
   return (
     <div className="collapse-trigger">
       <div>
@@ -11,13 +16,20 @@ const CollapseTriggerOpen = ({ title, apy, balanceWallet, handleDeposite }) => {
       </div>
       <div className="apy">{`${apy}% apy`}</div>
       <div className="expand-container">
-        <div className="stake-btn">{`GET ${title}`}</div>
         <div
           className="stake-btn"
           onClick={(e) => {
             e.stopPropagation()
             e.preventDefault()
-            handleDeposite()
+            handleCollapseContent('get')
+          }}
+        >{`GET ${title}`}</div>
+        <div
+          className="stake-btn"
+          onClick={(e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            handleCollapseContent('deposite')
           }}
         >
           Deposite
