@@ -48,6 +48,7 @@ ul.tab li input[type='radio']:checked ~ label {
 }
 
 .tooltip .tooltip-text {
+  visibility: hidden;
   width: 170px;
   height: 32px;
   background: #ffffff;
@@ -78,6 +79,9 @@ ul.tab li input[type='radio']:checked ~ label {
   border-width: 5px;
   border-style: solid;
   border-color: #ffffff transparent transparent transparent;
+}
+.tooltip:hover .tooltip-text {
+  visibility: visible;
 }
 @media screen and (min-width: 445px) and (max-width: 570px) {
   ul.tab li label {
