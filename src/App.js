@@ -17,7 +17,7 @@ const Swap2 = React.lazy(() => import('./pages/Swap2'))
 const SyncXdai = React.lazy(() => import('./pages/SyncXdai'))
 const NotFound = React.lazy(() => import('./components/NotFound'))
 const Test = React.lazy(() => import('./pages/Test'))
-const Staking = React.lazy(() => import('./components/Staking/Staking'))
+const Staking = React.lazy(() => import('./components/Staking'))
 
 // const Under = React.lazy(() => import('./pages/Maintenance/Under'));
 

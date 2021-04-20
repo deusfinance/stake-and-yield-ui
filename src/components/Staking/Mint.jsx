@@ -5,6 +5,7 @@ import { injected } from '../../connectors'
 
 const Mint = (props) => {
   const {
+    lockStakeType,
     balanceWallet,
     stakingContract,
     StakedTokenContract,
@@ -58,9 +59,11 @@ const Mint = (props) => {
   }
   return (
     <>
-      <div className="back-btn pointer" onClick={handleBack}>
-        Back
-      </div>
+      {lockStakeType && (
+        <div className="back-btn pointer" onClick={handleBack}>
+          Back
+        </div>
+      )}
 
       <div className="deposite-container">
         <div>
