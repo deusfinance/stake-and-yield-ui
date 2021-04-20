@@ -92,7 +92,7 @@ const Deposite = (props) => {
   return (
     <>
       {lockStakeType && (
-        <div className="back-btn" onClick={handleBack}>
+        <div className="back-btn pointer" onClick={handleBack}>
           Back
         </div>
       )}
@@ -122,13 +122,13 @@ const Deposite = (props) => {
             <div className="vault-exit-title">Vault Exit</div>
             <div className="vault-exit-btn">
               <span
-                className={`off-btn ${exitBtn ? 'opacity-25' : ''}`}
+                className={`off-btn ${exitBtn ? 'opacity-25' : ''}  pointer`}
                 onClick={() => handleVaultExit(false)}
               >
                 OFF
               </span>
               <span
-                className={`on-btn ${!!!exitBtn ? 'opacity-25' : ''}`}
+                className={`on-btn ${!!!exitBtn ? 'opacity-25' : ''} pointer`}
                 onClick={() => handleVaultExit(true)}
               >
                 ON
@@ -147,7 +147,7 @@ const Deposite = (props) => {
             onChange={(e) => setStakeAmount(e.target.value)}
           />
           <span
-            className="box-balance-max"
+            className="box-balance-max pointer"
             onClick={() => setStakeAmount(balanceWallet)}
           >
             Max
@@ -155,7 +155,7 @@ const Deposite = (props) => {
         </div>
         <div className="contract-box">
           <a
-            className="show-contract"
+            className="show-contract pointer"
             href={`https://ropsten.etherscan.io/address/${stakingContract}#code`}
             target="_blink"
           >
@@ -164,7 +164,7 @@ const Deposite = (props) => {
         </div>
         {!owner && (
           <div
-            className="wrap-box-gradient-complete width-415"
+            className="wrap-box-gradient-complete width-415 pointer"
             onClick={handleConnect}
           >
             <div>connect wallet</div>
@@ -174,11 +174,11 @@ const Deposite = (props) => {
           <>
             <div className="flex-between">
               {approve == 0 && (
-                <div className="approve-btn" onClick={handleApprove}>
+                <div className="approve-btn pointer" onClick={handleApprove}>
                   Approve
                 </div>
               )}
-              <div className="stake-deposite-btn" onClick={handleStake}>
+              <div className="stake-deposite-btn pointer" onClick={handleStake}>
                 stake
               </div>
             </div>

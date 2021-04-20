@@ -27,7 +27,9 @@ const ToggleButtons = ({
             />
             <label
               htmlFor={`${name}-${item.value}-${index}`}
-              className={`${defaultChecked == item.value ? 'checkedType' : ''}`}
+              className={`${
+                lockStakeType || item.disabled ? ' ' : ' pointer '
+              } ${defaultChecked == item.value ? 'checkedType' : ''}`}
             >
               {item.title}
             </label>

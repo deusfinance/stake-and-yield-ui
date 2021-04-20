@@ -66,11 +66,14 @@ const Frozen = (props) => {
                   onChange={(e) => setUnfreez(e.target.value)}
                 />
               </div>
-              <div onClick={() => setUnfreez(balance)} className="opacity-75">
+              <div
+                onClick={() => setUnfreez(balance)}
+                className="opacity-75 pointer"
+              >
                 Max
               </div>
             </div>
-            <div className="wrap-box-gradient" onClick={handleUnfreeze}>
+            <div className="wrap-box-gradient pointer" onClick={handleUnfreeze}>
               Unfreeze
             </div>
           </div>

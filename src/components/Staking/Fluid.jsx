@@ -74,7 +74,7 @@ const Fluid = (props) => {
             </div>
           ) : ( */}
           <div
-            className="wrap-box-gradient-complete width-402"
+            className="wrap-box-gradient-complete width-402 pointer"
             onClick={handleWithDraw}
           >
             <div className="fluid-box-content">Withdraw + Claim</div>

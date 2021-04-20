@@ -65,7 +65,7 @@ const UserInfo = (props) => {
             <div>{`${claim} DEA `}</div>
             <div className="opacity-5">claimable</div>
           </div>
-          <div className="wrap-box-gradient" onClick={handleClaim}>
+          <div className="wrap-box-gradient pointer" onClick={handleClaim}>
             Claim
           </div>
         </div>
@@ -80,7 +80,7 @@ const UserInfo = (props) => {
         </div>
         {exitable && (
           <div className="wrap-box">
-            <div className="wrap-box-exit" onClick={handleStopExit}>
+            <div className="wrap-box-exit pointer" onClick={handleStopExit}>
               {exit ? 'Stop Vault Exit' : 'Enable Vault Exit'}
             </div>
           </div>

@@ -17,7 +17,7 @@ const CollapseTriggerOpen = ({
       <div className="apy">{`${apy}% apy`}</div>
       <div className="expand-container">
         <div
-          className="stake-btn"
+          className="stake-btn pointer"
           onClick={(e) => {
             e.stopPropagation()
             e.preventDefault()
@@ -25,7 +25,7 @@ const CollapseTriggerOpen = ({
           }}
         >{`GET ${title}`}</div>
         <div
-          className="stake-btn"
+          className="stake-btn pointer"
           onClick={(e) => {
             e.stopPropagation()
             e.preventDefault()

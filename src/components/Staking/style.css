@@ -814,3 +814,6 @@
   text-align: center;
   color: #ffffff;
 }
+.pointer {
+  cursor: pointer;
+}

@@ -58,7 +58,7 @@ const Mint = (props) => {
   }
   return (
     <>
-      <div className="back-btn" onClick={handleBack}>
+      <div className="back-btn pointer" onClick={handleBack}>
         Back
       </div>
 
@@ -77,7 +77,7 @@ const Mint = (props) => {
             onChange={(e) => setStakeAmount(e.target.value)}
           />
           <span
-            className="box-balance-max"
+            className="box-balance-max pointer"
             onClick={() => setStakeAmount(balanceWallet)}
           >
             Max
@@ -85,7 +85,7 @@ const Mint = (props) => {
         </div>
         <div className="contract-box">
           <a
-            className="show-contract"
+            className="show-contract pointer"
             href={`https://ropsten.etherscan.io/address/${stakingContract}#code`}
             target="_blink"
           >
@@ -94,7 +94,7 @@ const Mint = (props) => {
         </div>
         {!owner && (
           <div
-            className="wrap-box-gradient-complete width-415"
+            className="wrap-box-gradient-complete width-415 pointer"
             onClick={handleConnect}
           >
             <div>connect wallet</div>
@@ -104,11 +104,11 @@ const Mint = (props) => {
           <>
             <div className="flex-between">
               {approve == 0 && (
-                <div className="approve-btn" onClick={handleApprove}>
+                <div className="approve-btn pointer" onClick={handleApprove}>
                   Approve
                 </div>
               )}
-              <div className="stake-deposite-btn" onClick={handleMint}>
+              <div className="stake-deposite-btn pointer" onClick={handleMint}>
                 Mint
               </div>
             </div>
