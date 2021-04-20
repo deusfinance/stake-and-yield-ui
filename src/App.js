@@ -18,7 +18,7 @@ const SyncXdai = React.lazy(() => import('./pages/SyncXdai'))
 const NotFound = React.lazy(() => import('./components/NotFound'))
 const Test = React.lazy(() => import('./pages/Test'))
 const Staking = React.lazy(() => import('./components/Staking'))
-
+const Bridge = React.lazy(() => import('./components/Bridge'))
 // const Under = React.lazy(() => import('./pages/Maintenance/Under'));
 
 function App() {
@@ -47,6 +47,7 @@ function App() {
               <Route exact path="/swap2" component={Swap2} />
               <Route exact path="/test-style" component={Test} />
               <Route exact path="/staking2" component={Staking} />
+              <Route exact path="/bridge" component={Bridge} />
               <Redirect exact from="/" to="/swap" />
               <Route path="/" component={Deus} />
               <Redirect to="not-found" />
