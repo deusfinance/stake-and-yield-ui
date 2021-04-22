@@ -1,21 +1,17 @@
 import React from 'react'
 import './bridge.css'
 import BridgeBox from './BridgeBox'
-import BaseModal from './BaseModal'
-import { tokens, chains } from './tokens'
-import TokenBadge from './TokenBadge'
-import { set } from 'lodash'
+
+import TokenModal from './TokenModal'
 
 const Bridge = () => {
   const [open, setOpen] = React.useState(false)
-  const [chainToken, setChainToken] = React.useState([])
-  const [searchQuery, setSearchQuery] = React.useState('')
   const [target, setTarget] = React.useState()
-  const [showTokens, setShowTokens] = React.useState(tokens)
   const [bridge, setBridge] = React.useState({
     from: { chain: 'ETH', icon: 'DEUS.svg', name: 'DEUS' },
     to: { chain: 'BSC', icon: 'DEUS.svg', name: 'DEUS' }
   })
+
   const handleOpenModal = (data) => {
     setTarget(data)
     setOpen(true)
@@ -23,32 +19,7 @@ const Bridge = () => {
   const changeToken = (token) => {
     setBridge((prev) => ({ ...prev, [target]: { ...token } }))
   }
-  const handleSearchModal = (e) => {
-    let search = e.target.value
-    setSearchQuery(search)
-  }
-  const handleFilter = (e) => {
-    if (e.target.checked) {
-      setChainToken([...chainToken, e.target.value])
-    } else {
-      setChainToken(chainToken.filter((id) => id !== e.target.value))
-    }
-  }
-  React.useEffect(() => {
-    const search = new RegExp([searchQuery].join(''), 'i')
-    const resultFilter = tokens.filter(
-      (item) => search.test(item.name) || search.test(item.chain)
-    )
-    if (chainToken.length === 0) {
-      setShowTokens(resultFilter)
-    } else {
-      setShowTokens(
-        resultFilter.filter((token) =>
-          chainToken.some((chain) => [token.chain].flat().includes(chain))
-        )
-      )
-    }
-  }, [chainToken, searchQuery])
+
   const handleApprove = () => {}
   const handleWarp = () => {}
   return (
@@ -83,59 +54,11 @@ const Bridge = () => {
           Warp
         </div>
       </div>
-      <BaseModal
-        title="Select an asset"
+      <TokenModal
         open={open}
-        onRequestClose={() => setOpen(false)}
-      >
-        <div className="content-modal-bridge">
-          <input
-            className="input-search"
-            placeholder="Type to search"
-            onChange={handleSearchModal}
-          />
-          <div className="filter">Filter</div>
-          <div className="bridge-checkbox">
-            {chains.map((chain, index) => (
-              <>
-                <input
-                  type="checkbox"
-                  key={index}
-                  id={chain}
-                  name={chain}
-                  defaultValue={chain}
-                  onChange={handleFilter}
-                />
-                <label htmlFor={chain}>{chain}</label>
-              </>
-            ))}
-          </div>
-          <div className="border-bottom"></div>
-          <div className="flex-between token-name">
-            <div>Token name</div>
-            <div>Balance</div>
-          </div>
-          <div className="border-bottom mb-5"></div>
-          <div className="pt-20">
-            {showTokens.map((token, index) => (
-              <div
-                className="token-list"
-                key={index}
-                onClick={() => {
-                  changeToken(token)
-                  setOpen(false)
-                }}
-              >
-                <div className="token-list-item">
-                  <TokenBadge chain={token.chain} icon={token.icon} />
-                  <span>{`${token.name} (${token.chain})`}</span>
-                </div>
-                <div>{token.balance}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </BaseModal>
+        hide={() => setOpen(!open)}
+        changeToken={(token) => changeToken(token)}
+      />
     </div>
   )
 }
