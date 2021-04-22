@@ -2,11 +2,14 @@ import React from 'react'
 import './bridge.css'
 import BridgeBox from './BridgeBox'
 import BaseModal from './BaseModal'
-import tokens from './tokens'
+import { tokens, chains } from './tokens'
 import TokenBadge from './TokenBadge'
+import { set } from 'lodash'
 
 const Bridge = () => {
   const [open, setOpen] = React.useState(false)
+  const [chainToken, setChainToken] = React.useState([])
+  const [searchQuery, setSearchQuery] = React.useState('')
   const [target, setTarget] = React.useState()
   const [showTokens, setShowTokens] = React.useState(tokens)
   const [bridge, setBridge] = React.useState({
@@ -22,13 +25,30 @@ const Bridge = () => {
   }
   const handleSearchModal = (e) => {
     let search = e.target.value
-    search = new RegExp([search].join(''), 'i')
-
+    setSearchQuery(search)
+  }
+  const handleFilter = (e) => {
+    if (e.target.checked) {
+      setChainToken([...chainToken, e.target.value])
+    } else {
+      setChainToken(chainToken.filter((id) => id !== e.target.value))
+    }
+  }
+  React.useEffect(() => {
+    const search = new RegExp([searchQuery].join(''), 'i')
     const resultFilter = tokens.filter(
       (item) => search.test(item.name) || search.test(item.chain)
     )
-    setShowTokens(resultFilter)
-  }
+    if (chainToken.length === 0) {
+      setShowTokens(resultFilter)
+    } else {
+      setShowTokens(
+        resultFilter.filter((token) =>
+          chainToken.some((chain) => [token.chain].flat().includes(chain))
+        )
+      )
+    }
+  }, [chainToken, searchQuery])
   const handleApprove = () => {}
   const handleWarp = () => {}
   return (
@@ -76,10 +96,19 @@ const Bridge = () => {
           />
           <div className="filter">Filter</div>
           <div className="bridge-checkbox">
-            <input type="checkbox" id="ETH" name="ETH" defaultValue="ETH" />
-            <label htmlFor="ETH">ETH</label>
-            <input type="checkbox" id="BSC" name="BSC" defaultValue="BSC" />
-            <label htmlFor="BSC">BSC</label>
+            {chains.map((chain, index) => (
+              <>
+                <input
+                  type="checkbox"
+                  key={index}
+                  id={chain}
+                  name={chain}
+                  defaultValue={chain}
+                  onChange={handleFilter}
+                />
+                <label htmlFor={chain}>{chain}</label>
+              </>
+            ))}
           </div>
           <div className="border-bottom"></div>
           <div className="flex-between token-name">

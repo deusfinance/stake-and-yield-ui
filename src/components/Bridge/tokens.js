@@ -70,4 +70,5 @@ const tokens = [
     balance: 0
   }
 ]
-export default tokens
+const chains = ['ETH', 'BSC']
+export { tokens, chains }
