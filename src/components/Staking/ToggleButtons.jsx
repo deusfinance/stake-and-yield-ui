@@ -9,7 +9,7 @@ const ToggleButtons = ({
 }) => {
   return (
     <div className="flex-center">
-      <ul className="tab">
+      <ul className="tab togglebuttontab">
         {data.map((item, index) => (
           <li
             key={`${item.value}-${index}`}

@@ -260,36 +260,7 @@
   }
 }
 
-@media screen and (max-width: 799px) {
-  .expand-container {
-    flex-direction: column;
-  }
-  .stake-btn {
-    margin-bottom: 3px;
-  }
-}
 
-@media screen and (max-width: 563px) {
-  .stake-btn {
-    width: 100px;
-    font-size: 10px;
-    padding: 8px;
-  }
-  .expand-btn {
-    font-size: 9px;
-    min-width: 70px;
-    margin-left: 0;
-  }
-  .apy {
-    font-size: 14px;
-  }
-  .wallet-amount {
-    font-size: 7.5px;
-  }
-  .token-title {
-    font-size: 19px;
-  }
-}
 /* end Content */
 
 /* collapse content */
@@ -816,4 +787,34 @@
 }
 .pointer {
   cursor: pointer;
+}
+@media screen and (max-width: 799px) {
+  .expand-container {
+    flex-direction: column;
+  }
+  .stake-btn {
+    margin-bottom: 3px;
+  }
+}
+
+@media screen and (max-width: 563px) {
+  .stake-btn {
+    width: 100px;
+    font-size: 10px;
+    padding: 8px;
+  }
+  .expand-btn {
+    font-size: 9px;
+    min-width: 70px;
+    margin-left: 0;
+  }
+  .apy {
+    font-size: 14px;
+  }
+  .wallet-amount {
+    font-size: 7.5px;
+  }
+  .token-title {
+    font-size: 19px;
+  }
 }
