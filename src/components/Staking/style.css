@@ -1,6 +1,8 @@
 .container-staking {
   font-family: 'Monument Grotesk';
   padding: 5px;
+  width: 1200px;
+  margin: 0 auto;
 }
 
 .p-50 {
@@ -266,9 +268,9 @@
 }
 
 @media screen and (max-width: 799px) {
-  .expand-container {
+  /* .expand-container {
     flex-direction: column;
-  }
+  } */
   .stake-btn {
     margin-bottom: 3px;
   }
@@ -687,7 +689,7 @@
 }
 .on-btn {
   color: #00d16c;
-  padding-left: 27px;
+  padding-left: 10px;
   text-transform: uppercase;
 }
 .gray-box {
@@ -702,7 +704,7 @@
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  line-height: 20px;
+  /* line-height: 20px; */
   /* identical to box height, or 167% */
 
   color: #ffffff;

@@ -8,20 +8,22 @@ ul.tab {
   border: 1px solid #1c1c1c;
   border-radius: 100px;
   display: block;
+  min-width: 415px;
+  display: flex;
+  justify-content: space-between;
 }
 ul.tab li {
   float: left;
   padding: 0;
 }
 ul.tab li label {
-  padding: 6px 20px;
+  padding: 9px 31px;
   display: inline-block;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 17px;
   text-align: center;
-  min-width: 135px;
   color: #ffffff;
 }
 ul.tab li input[type='radio'] {
@@ -63,7 +65,7 @@ ul.tab li input[type='radio']:checked ~ label {
   top: -37px;
   margin-left: -60px;
 }
-.tooltip .tooltip-text span {
+.tooltip .tooltip-text div {
   font-style: normal;
   font-weight: normal;
   font-size: 13.5px;

@@ -35,7 +35,7 @@ const ToggleButtons = ({
             </label>
             {item.tooltip && (
               <span className="tooltip-text">
-                <span>{item.tooltip}</span>
+                <div>{item.tooltip}</div>
               </span>
             )}
           </li>

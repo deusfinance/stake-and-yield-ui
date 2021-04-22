@@ -147,10 +147,10 @@ const Deposite = (props) => {
             onChange={(e) => setStakeAmount(e.target.value)}
           />
           <span
-            className="box-balance-max pointer"
+            className="pointer"
             onClick={() => setStakeAmount(balanceWallet)}
           >
-            Max
+            MAX
           </span>
         </div>
         <div className="contract-box">
