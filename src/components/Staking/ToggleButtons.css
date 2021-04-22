@@ -49,26 +49,28 @@ ul.tab li input[type='radio']:checked ~ label {
 
 .tooltip .tooltip-text {
   visibility: hidden;
-  width: 170px;
-  height: 32px;
+  width: 175px;
+  height: 35px;
   background: #ffffff;
   border: 2px solid #ffffff;
   box-sizing: border-box;
-  color: #000000;
-  text-align: center;
   border-radius: 6px;
-  padding: 5px 0;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 13.5px;
-  line-height: 19px;
-  text-align: center;
+  padding: 8px 4.67px 8px 5.83px;
   position: absolute;
   z-index: 1;
   bottom: 100%;
   left: 30%;
   top: -37px;
   margin-left: -60px;
+}
+.tooltip .tooltip-text span {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13.5px;
+  line-height: 19px;
+  background: linear-gradient(0deg, #6d6afd, #6d6afd);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .tooltip .tooltip-text::after {
   content: ' ';

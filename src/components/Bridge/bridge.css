@@ -15,6 +15,9 @@
   padding-top: 13px;
 }
 
+input:focus {
+  outline: none;
+}
 .input-transparent {
   background: transparent;
   border: transparent;
