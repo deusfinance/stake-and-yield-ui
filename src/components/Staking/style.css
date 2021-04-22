@@ -224,6 +224,11 @@
   color: #ffffff;
   margin: 0 3px;
 }
+.stake-btn:hover {
+  background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%),
+    linear-gradient(247.41deg, #a2fbb0 16.32%, #5ec4d6 87.6%);
+  border-radius: 6px;
+}
 
 .stake-btn::before {
   content: '';
