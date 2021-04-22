@@ -169,14 +169,14 @@
 }
 .wallet-amount {
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 12.5px;
   line-height: 14px;
 }
 
 .apy {
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 20px;
   line-height: 23px;
   text-align: center;
