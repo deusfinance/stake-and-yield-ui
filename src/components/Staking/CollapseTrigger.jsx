@@ -36,7 +36,7 @@ const CollapseTrigger = ({
         </div>
 
         <span className="expand-btn" name="expand-btn">
-          Collapse
+          Expand
           <img src="/img/arrow-nav.svg" alt="arrow" />
         </span>
       </div>
