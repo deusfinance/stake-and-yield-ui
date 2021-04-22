@@ -1,6 +1,8 @@
 .container-staking {
   font-family: 'Monument Grotesk';
   padding: 5px;
+  width: 1200px;
+  margin: 0 auto;
 }
 
 .p-50 {
@@ -169,14 +171,14 @@
 }
 .wallet-amount {
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 12.5px;
   line-height: 14px;
 }
 
 .apy {
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 20px;
   line-height: 23px;
   text-align: center;
@@ -224,6 +226,11 @@
   color: #ffffff;
   margin: 0 3px;
 }
+.stake-btn:hover {
+  background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%),
+    linear-gradient(247.41deg, #a2fbb0 16.32%, #5ec4d6 87.6%);
+  border-radius: 6px;
+}
 
 .stake-btn::before {
   content: '';
@@ -260,6 +267,17 @@
   }
 }
 
+<<<<<<< HEAD
+=======
+@media screen and (max-width: 799px) {
+  /* .expand-container {
+    flex-direction: column;
+  } */
+  .stake-btn {
+    margin-bottom: 3px;
+  }
+}
+>>>>>>> 9042d1fc1cc98f1bdaea96918aa8554befc87619
 
 /* end Content */
 
@@ -653,7 +671,7 @@
 }
 .on-btn {
   color: #00d16c;
-  padding-left: 27px;
+  padding-left: 10px;
   text-transform: uppercase;
 }
 .gray-box {
@@ -668,7 +686,7 @@
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  line-height: 20px;
+  /* line-height: 20px; */
   /* identical to box height, or 167% */
 
   color: #ffffff;
