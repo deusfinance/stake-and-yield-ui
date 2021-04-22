@@ -19,16 +19,16 @@ const CollapseTrigger = ({
         <div
           className="stake-btn pointer"
           onClick={(e) => {
-            e.stopPropagation()
-            e.preventDefault()
+            // e.stopPropagation()
+            // e.preventDefault()
             handleCollapseContent('get')
           }}
         >{`GET ${title}`}</div>
         <div
           className="stake-btn pointer"
           onClick={(e) => {
-            e.stopPropagation()
-            e.preventDefault()
+            // e.stopPropagation()
+            // e.preventDefault()
             handleCollapseContent('deposite')
           }}
         >
