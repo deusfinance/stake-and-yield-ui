@@ -8,11 +8,17 @@ import TokenBadge from './TokenBadge'
 const Bridge = () => {
   const [open, setOpen] = React.useState(false)
   const [target, setTarget] = React.useState()
+  const [bridge, setBridge] = React.useState({
+    from: { chain: 'ETH', icon: 'DEUS.svg', name: 'DEUS' },
+    to: { chain: 'BSC', icon: 'DEUS.svg', name: 'DEUS' }
+  })
   const handleOpenModal = (data) => {
     setTarget(data)
     setOpen(true)
   }
-  const changeToken = () => {}
+  const changeToken = (token) => {
+    setBridge((prev) => ({ ...prev, [target]: { ...token } }))
+  }
   const handleApprove = () => {}
   const handleWarp = () => {}
   return (
@@ -25,16 +31,16 @@ const Bridge = () => {
         <div className="bridge-box-1">
           <BridgeBox
             title="from"
-            badgeType="ETH"
+            {...bridge.from}
             max={true}
-            handleOpenModal={(data) => handleOpenModal(data)}
+            handleOpenModal={() => handleOpenModal('from')}
           />
         </div>
         <div className="bridge-box-2">
           <BridgeBox
             title="to"
-            badgeType="BSC"
-            handleOpenModal={(data) => handleOpenModal(data)}
+            {...bridge.to}
+            handleOpenModal={() => handleOpenModal('to')}
           />
         </div>
       </div>
@@ -72,10 +78,13 @@ const Bridge = () => {
               <div
                 className="token-list"
                 key={index}
-                onClick={(token) => changeToken(token)}
+                onClick={() => {
+                  changeToken(token)
+                  setOpen(false)
+                }}
               >
                 <div className="token-list-item">
-                  <TokenBadge badgeType={token.chain} icon={token.icon} />
+                  <TokenBadge chain={token.chain} icon={token.icon} />
                   <span>{`${token.name} (${token.chain})`}</span>
                 </div>
                 <div>{token.balance}</div>

@@ -2,7 +2,7 @@ import React from 'react'
 import TokenBadge from './TokenBadge'
 
 const BridgeBox = (props) => {
-  const { title, badgeType, max, handleOpenModal } = props
+  const { title, chain, max, handleOpenModal, icon, name } = props
   const [amount, setAmount] = React.useState(0)
   // TODO change to dynamic data
   const balance = 23.33
@@ -31,12 +31,9 @@ const BridgeBox = (props) => {
               Max
             </div>
           )}
-          <TokenBadge badgeType={badgeType} icon="icon.svg" />
-          <div
-            className="bridge-assets"
-            onClick={() => handleOpenModal(badgeType)}
-          >
-            DEUS <img src="/img/arrow-nav.svg" alt="arrow" />
+          <TokenBadge chain={chain} icon={icon} />
+          <div className="bridge-assets" onClick={handleOpenModal}>
+            {name} <img src="/img/arrow-nav.svg" alt="arrow" />
           </div>
         </div>
       </div>
