@@ -2,7 +2,9 @@ import React from 'react'
 import ReactModal from 'react-modal'
 import TokenBadge from './TokenBadge'
 import { tokens, chains } from './tokens'
-
+if (typeof window !== 'undefined') {
+  ReactModal.setAppElement('body')
+}
 const customStyles = {
   overlay: {
     backgroundColor: 'rgba(0,0,0,0.5)'
@@ -85,17 +87,16 @@ const TokenModal = (props) => {
             <div className="filter">Filter</div>
             <div className="bridge-checkbox">
               {chains.map((chain, index) => (
-                <>
+                <span key={index}>
                   <input
                     type="checkbox"
-                    key={index}
                     id={chain}
                     name={chain}
                     defaultValue={chain}
                     onChange={handleFilter}
                   />
                   <label htmlFor={chain}>{chain}</label>
-                </>
+                </span>
               ))}
             </div>
             <div className="border-bottom"></div>
