@@ -1,5 +1,14 @@
+@font-face {
+  font-family: 'Monument Grotesk Semi';
+  src: url('../../assets/fonts/EduMonumentGroteskSemi-Mono/EduMonumentGroteskSemi-Mono-Regular.woff2')
+      format('woff2'),
+    url('../../assets/fonts/EduMonumentGroteskSemi-Mono/EduMonumentGroteskSemi-Mono-Regular.woff')
+      format('woff')
+      url('../../assets/fonts/EduMonumentGroteskSemi-Mono/EduMonumentGroteskSemi-Mono-Regular.otf')
+      format('otf');
+}
 .container-staking {
-  font-family: 'Monument Grotesk';
+  font-family: 'Monument Grotesk Semi';
   padding: 5px;
   width: 1200px;
   margin: 0 auto;
@@ -515,7 +524,7 @@
   width: 347px;
   height: 42px;
 
-  font-family: 'Monument Grotesk';
+  font-family: 'Monument Grotesk Semi';
   font-size: 12.5px;
   line-height: 15px;
 

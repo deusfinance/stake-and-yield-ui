@@ -35,7 +35,7 @@ const CollapseTriggerOpen = ({
           Deposite
         </div>
 
-        <span className="expand-btn" name="expand-btn">
+        <span className="expand-btn pointer" name="expand-btn">
           Collapse
           <img
             src="/img/arrow-nav.svg"
