@@ -58,20 +58,18 @@ const Frozen = (props) => {
               }`}
             > */}
             <div className="wrap-box-gray width-271">
-              <div>
-                <input
-                  type="text"
-                  className="input-transparent"
-                  value={unfreez}
-                  onChange={(e) => setUnfreez(e.target.value)}
-                />
-              </div>
-              <div
+              <input
+                type="text"
+                className="input-transparent"
+                value={unfreez}
+                onChange={(e) => setUnfreez(e.target.value)}
+              />
+              <span
                 onClick={() => setUnfreez(balance)}
-                className="opacity-75 pointer"
+                className="opacity-75 pointer flex-align-center"
               >
-                Max
-              </div>
+                MAX
+              </span>
             </div>
             <div className="wrap-box-gradient pointer" onClick={handleUnfreeze}>
               Unfreeze

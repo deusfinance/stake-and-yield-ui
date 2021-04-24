@@ -17,6 +17,10 @@
   display: flex;
   justify-content: space-between;
 }
+.flex-align-center {
+  display: flex;
+  align-items: center;
+}
 .mb-15 {
   margin-bottom: 15px;
 }
@@ -178,7 +182,7 @@
 
 .apy {
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 20px;
   line-height: 23px;
   text-align: center;
@@ -311,7 +315,7 @@
 }
 .wrap-box > * {
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 12px;
   line-height: 20px;
   /* identical to box height, or 167% */
@@ -392,7 +396,7 @@
   width: 150px;
   height: 35px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 12px;
   line-height: 20px;
   /* identical to box height, or 167% */
@@ -410,7 +414,7 @@
   width: 200px;
   height: 35px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 12px;
   line-height: 20px;
   /* identical to box height, or 167% */
@@ -498,7 +502,7 @@
 }
 .text-box-redeemable {
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 9px;
   line-height: 20px;
   /* identical to box height, or 222% */
@@ -559,7 +563,7 @@
 }
 .fluid-footer-exit {
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 9px;
   /* identical to box height, or 222% */
 
@@ -577,7 +581,7 @@
 }
 .fluid-footer {
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 9px;
   /* identical to box height, or 222% */
 
@@ -603,7 +607,7 @@
 
 .fluid-box-content {
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 12px;
   line-height: 20px;
   /* identical to box height, or 167% */
@@ -653,7 +657,7 @@
 }
 .vault-exit-btn {
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 12px;
   line-height: 14px;
   display: flex;
@@ -723,7 +727,7 @@
   width: 190px;
   height: 35px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 15px;
   line-height: 21px;
   padding: 7px;
@@ -740,7 +744,7 @@
   width: 190px;
   height: 35px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 15px;
   line-height: 21px;
   padding: 7px;
