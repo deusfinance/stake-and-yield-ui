@@ -3,6 +3,8 @@ import { useWeb3React } from '@web3-react/core'
 import ToggleButtons from './ToggleButtons'
 import { web3 } from '../../utils/Stakefun'
 import { injected } from '../../connectors'
+import { ApproveTranaction } from '../../utils/explorers'
+import { TransactionState } from '../../utils/constant'
 
 const Deposite = (props) => {
   const {
@@ -16,6 +18,7 @@ const Deposite = (props) => {
     fetchData,
     exit,
     owner,
+    chainId,
     approve,
     handleBack,
     exitable,
@@ -56,10 +59,40 @@ const Deposite = (props) => {
       await StakedTokenContract.methods
         .approve(stakingContract, amount)
         .send({ from: owner })
-        .once('receipt', () => {
+        .once('transactionHash', (hash) =>
+          ApproveTranaction(TransactionState.LOADING, {
+            hash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title,
+              amount
+            },
+            chainId
+          })
+        )
+        .once('receipt', (hash) => {
           fetchData('approve')
+          ApproveTranaction(TransactionState.SUCCESS, {
+            hash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title,
+              amount
+            },
+            chainId
+          })
         })
-        .on('error', () => console.log('error happend in approve'))
+        .once('error', (hash) =>
+          ApproveTranaction(TransactionState.FAILED, {
+            hash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title,
+              amount
+            },
+            chainId
+          })
+        )
     } catch (error) {
       console.log('Error Happend in Fun approve', error)
     }
@@ -75,10 +108,12 @@ const Deposite = (props) => {
       await StakeAndYieldContract.methods
         .deposit(amount, type, exitBtn)
         .send({ from: owner })
+        .once('transactionHash', (data) => console.log(data))
         .once('receipt', () => {
           setStakeAmount('')
           fetchData('stake')
         })
+        .once('error', () => console.log('error happend in approve'))
     } catch (error) {
       console.log('Error Happend in Fun Stake', error)
     }
@@ -156,7 +191,7 @@ const Deposite = (props) => {
         <div className="contract-box">
           <a
             className="show-contract pointer"
-            href={`https://ropsten.etherscan.io/address/${stakingContract}#code`}
+            href={`${process.env.REACT_APP_CHAIN_URL}/address/${stakingContract}#code`}
             target="_blink"
           >
             Show me the contract

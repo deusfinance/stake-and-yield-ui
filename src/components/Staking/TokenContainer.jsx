@@ -20,7 +20,8 @@ const TokenContainer = (props) => {
     stakingContract,
     exitable,
     yieldable,
-    owner
+    owner,
+    chainId
   } = props
   const [fetchData, setFetchData] = React.useState('')
   const [collapseContent, setCollapseContent] = React.useState('deposite')
@@ -295,6 +296,7 @@ const TokenContainer = (props) => {
             stakingContract={stakingContract}
             fetchData={(data) => setFetchData(data)}
             owner={owner}
+            chainId={chainId}
             title={title}
             handleBack={handleBack}
             exitable={exitable}
@@ -307,6 +309,7 @@ const TokenContainer = (props) => {
             stakingContract={stakingContract}
             fetchData={(data) => setFetchData(data)}
             owner={owner}
+            chainId={chainId}
             handleBack={handleBack}
           />
         )}

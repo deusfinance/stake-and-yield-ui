@@ -14,12 +14,12 @@ const Staking = () => {
   const [vaultsAmount, setVaultsAmount] = React.useState('')
   const [showTokens, setShowTokens] = React.useState(tokens)
   const [type, setType] = React.useState('all')
-  const { account } = useWeb3React()
+  const { account, chainId } = useWeb3React()
   React.useEffect(() => {
     getTVL()
     setType('all')
     setShowTokens(tokens)
-  }, [account])
+  }, [account, chainId])
 
   // window.ethereum.on('accountsChanged', function (accounts) {
   //   getAccount()
@@ -94,7 +94,12 @@ const Staking = () => {
 
         <div className="wrap-tokens">
           {showTokens.map((token, index) => (
-            <TokenContainer key={index} {...token} owner={account} />
+            <TokenContainer
+              key={index}
+              {...token}
+              owner={account}
+              chainId={chainId}
+            />
           ))}
         </div>
       </div>

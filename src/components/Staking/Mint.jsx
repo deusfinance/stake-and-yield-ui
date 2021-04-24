@@ -2,26 +2,22 @@ import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { injected } from '../../connectors'
 import { VaultsService } from '../../services/VaultsService'
+import { web3 } from '../../utils/Stakefun'
 
 const Mint = (props) => {
   const {
     lockStakeType,
     balanceWallet,
-    stakingContract,
     owner,
     handleBack,
+    stakingContract,
+    StakedTokenContract,
     title
   } = props
 
   const web3React = useWeb3React()
-  const { activate, chainId } = web3React
+  const { activate } = web3React
   const [amount, setAmount] = React.useState('0')
-  const web3 = new VaultsService(owner, chainId)
-  console.log(web3)
-  // useEffect(() => {
-  //   await this.setState({ web3: new VaultsService(owner, chainId) })
-
-  // }, [])
 
   const handleConnect = async () => {
     try {
@@ -33,24 +29,24 @@ const Mint = (props) => {
   }
 
   const handleApprove = async () => {
-    if (amount === '' || amount === '0') return
     try {
-      // this.setState({ typeTransaction: 'approve' })
-      await web3.approve(
-        title,
-        stakingContract,
-        amount,
-        console.log('response approve')
-      )
+      if (!owner) {
+        return
+      }
+      let amount = web3.utils.toWei('1000000000')
+
+      await StakedTokenContract.methods
+        .approve(stakingContract, amount)
+        .send({ from: owner })
+        .once('receipt', () => {})
+        .once('error', () => console.log('error happend in approve'))
     } catch (error) {
-      console.log(error)
+      console.log('Error Happend in Fun approve', error)
     }
   }
   const handleMint = async () => {
     if (amount === '' || amount === '0') return
     try {
-      // this.setState({ typeTransaction: 'approve' })
-      await web3.lock(stakingContract, amount, console.log('response approve'))
     } catch (error) {
       console.log(error)
     }
