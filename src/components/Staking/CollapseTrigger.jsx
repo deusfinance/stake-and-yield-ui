@@ -3,6 +3,7 @@ import React from 'react'
 const CollapseTrigger = ({
   title,
   category,
+  onlyLocking,
   apy,
   balanceWallet,
   handleCollapseContent
@@ -17,7 +18,7 @@ const CollapseTrigger = ({
       </div>
       <div className="apy">{`${apy}% apy`}</div>
       <div className="expand-container">
-        {category === 'liquidity' ? (
+        {/* {category === 'liquidity' ? (
           <div
             className="stake-btn pointer"
             onClick={(e) => {
@@ -27,28 +28,41 @@ const CollapseTrigger = ({
           >
             <a href="">Provide Liquidity</a>
           </div>
-        ) : (
-          <div
-            className="stake-btn pointer"
-            onClick={(e) => {
-              // e.stopPropagation()
-              // e.preventDefault()
-              handleCollapseContent('get')
-            }}
-          >
-            GET
-          </div>
-        )}
+        ) : ( */}
         <div
           className="stake-btn pointer"
           onClick={(e) => {
             // e.stopPropagation()
             // e.preventDefault()
-            handleCollapseContent('deposite')
+            handleCollapseContent('get')
           }}
         >
-          Deposite
+          {`GET ${title}`}
         </div>
+        {/* )} */}
+        {onlyLocking ? (
+          <div
+            className="stake-btn pointer"
+            onClick={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
+              // handleCollapseContent('deposite')
+            }}
+          >
+            {`Deposite ${title}`}
+          </div>
+        ) : (
+          <div
+            className="stake-btn pointer"
+            onClick={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
+              handleCollapseContent('deposite')
+            }}
+          >
+            {`Stake ${title}`}
+          </div>
+        )}
 
         <span className="expand-btn pointer" name="expand-btn">
           Expand

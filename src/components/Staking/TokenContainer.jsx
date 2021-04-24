@@ -17,6 +17,7 @@ const TokenContainer = (props) => {
   const {
     title,
     titleExit,
+    onlyLocking,
     stakingContract,
     exitable,
     yieldable,
@@ -218,6 +219,7 @@ const TokenContainer = (props) => {
         trigger={
           <CollapseTrigger
             title={title}
+            onlyLocking={onlyLocking}
             apy={userInfo.apy}
             category={category}
             balanceWallet={userInfo.balanceWallet}
@@ -227,6 +229,7 @@ const TokenContainer = (props) => {
         triggerWhenOpen={
           <CollapseTriggerOpen
             title={title}
+            onlyLocking={onlyLocking}
             apy={userInfo.apy}
             category={category}
             balanceWallet={userInfo.balanceWallet}
