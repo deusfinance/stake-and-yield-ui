@@ -310,6 +310,7 @@ const TokenContainer = (props) => {
             fetchData={(data) => setFetchData(data)}
             owner={owner}
             chainId={chainId}
+            title={title}
             handleBack={handleBack}
           />
         )}

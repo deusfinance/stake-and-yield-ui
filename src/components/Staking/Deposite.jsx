@@ -3,7 +3,7 @@ import { useWeb3React } from '@web3-react/core'
 import ToggleButtons from './ToggleButtons'
 import { web3 } from '../../utils/Stakefun'
 import { injected } from '../../connectors'
-import { ApproveTranaction } from '../../utils/explorers'
+import { ApproveTranaction, CustomTranaction } from '../../utils/explorers'
 import { TransactionState } from '../../utils/constant'
 
 const Deposite = (props) => {
@@ -108,9 +108,30 @@ const Deposite = (props) => {
       await StakeAndYieldContract.methods
         .deposit(amount, type, exitBtn)
         .send({ from: owner })
-        .once('transactionHash', (data) => console.log(data))
-        .once('receipt', () => {
+        .once('transactionHash', (hash) =>
+          CustomTranaction(TransactionState.LOADING, {
+            hash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title,
+              amount
+            },
+            chainId,
+            message: `Staked ${amount} ${title}`
+          })
+        )
+        .once('receipt', (hash) => {
           setStakeAmount('')
+          CustomTranaction(TransactionState.LOADING, {
+            hash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title,
+              amount
+            },
+            chainId,
+            message: `Staked ${amount} ${title}`
+          })
           fetchData('stake')
         })
         .once('error', () => console.log('error happend in approve'))

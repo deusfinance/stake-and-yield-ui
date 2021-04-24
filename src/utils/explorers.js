@@ -273,3 +273,72 @@ export function ApproveTranaction(type, payload) {
   }
   return
 }
+
+export function CustomTranaction(type, payload) {
+  toast.dismiss()
+  switch (type) {
+    case TransactionState.LOADING:
+      ToastTransaction(
+        'info',
+        'Transaction Pending',
+        <ExternalLink
+          href={getTransactionLink(
+            payload.chainId,
+            payload.hash,
+            'transaction'
+          )}
+        >
+          {`${payload.message} ↗ `}
+        </ExternalLink>
+      )
+      break
+
+    case TransactionState.SUCCESS:
+      ToastTransaction(
+        'success',
+        'Transaction Successful',
+        <ExternalLink
+          href={getTransactionLink(
+            payload.chainId,
+            payload.hash,
+            'transaction'
+          )}
+        >
+          {`${payload.message}`}
+        </ExternalLink>
+      )
+      break
+
+    case TransactionState.FAILED:
+      ToastTransaction(
+        'warn',
+        'Transaction Failed',
+        <ExternalLink
+          href={getTransactionLink(
+            payload.chainId,
+            payload.hash,
+            'transaction'
+          )}
+        >
+          {`View On Explorer`}
+        </ExternalLink>
+      )
+      break
+
+    default:
+      ToastTransaction(
+        'info',
+        'Transaction Unhandled',
+        <ExternalLink
+          href={getTransactionLink(
+            payload.chainId,
+            payload.hash,
+            'transaction'
+          )}
+        >
+          {`View On Explorer`}
+        </ExternalLink>
+      )
+  }
+  return
+}

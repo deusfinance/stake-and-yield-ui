@@ -1,18 +1,21 @@
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { injected } from '../../connectors'
-import { VaultsService } from '../../services/VaultsService'
 import { web3 } from '../../utils/Stakefun'
+import { ApproveTranaction } from '../../utils/explorers'
+import { TransactionState } from '../../utils/constant'
 
 const Mint = (props) => {
   const {
     lockStakeType,
     balanceWallet,
     owner,
+    chainId,
     handleBack,
     stakingContract,
     StakedTokenContract,
-    title
+    title,
+    fetchData
   } = props
 
   const web3React = useWeb3React()
@@ -38,8 +41,43 @@ const Mint = (props) => {
       await StakedTokenContract.methods
         .approve(stakingContract, amount)
         .send({ from: owner })
-        .once('receipt', () => {})
-        .once('error', () => console.log('error happend in approve'))
+        .once('transactionHash', (hash) =>
+          ApproveTranaction(TransactionState.LOADING, {
+            hash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title,
+              amount
+            },
+            chainId
+          })
+        )
+        .once('receipt', (hash) => {
+          fetchData('approveMint')
+          console.log('receipt', hash)
+          // ApproveTranaction(TransactionState.SUCCESS, {
+          //   hash,
+          //   from: {
+          //     logo: `/img/bridge/${title}.svg`,
+          //     symbol: title,
+          //     amount
+          //   },
+          //   chainId
+          // })
+        })
+        .once(
+          'error',
+          (hash) => console.log('hash', hash)
+          // ApproveTranaction(TransactionState.FAILED, {
+          //   hash,
+          //   from: {
+          //     logo: `/img/bridge/${title}.svg`,
+          //     symbol: title,
+          //     amount
+          //   },
+          //   chainId
+          // })
+        )
     } catch (error) {
       console.log('Error Happend in Fun approve', error)
     }
