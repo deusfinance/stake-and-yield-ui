@@ -1,24 +1,27 @@
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
-import { web3 } from '../../utils/Stakefun'
 import { injected } from '../../connectors'
+import { VaultsService } from '../../services/VaultsService'
 
 const Mint = (props) => {
   const {
     lockStakeType,
     balanceWallet,
     stakingContract,
-    StakedTokenContract,
-    StakeAndYieldContract,
-    fetchData,
     owner,
-    approve,
-    handleBack
+    handleBack,
+    title
   } = props
 
   const web3React = useWeb3React()
-  const { activate } = web3React
-  const [stakeAmount, setStakeAmount] = React.useState('0')
+  const { activate, chainId } = web3React
+  const [amount, setAmount] = React.useState('0')
+  const web3 = new VaultsService(owner, chainId)
+  console.log(web3)
+  // useEffect(() => {
+  //   await this.setState({ web3: new VaultsService(owner, chainId) })
+
+  // }, [])
 
   const handleConnect = async () => {
     try {
@@ -30,31 +33,26 @@ const Mint = (props) => {
   }
 
   const handleApprove = async () => {
+    if (amount === '' || amount === '0') return
     try {
-      if (!owner) {
-        return
-      }
-      let amount = web3.utils.toWei('1000000000')
-
-      await StakedTokenContract.methods
-        .approve(stakingContract, amount)
-        .send({ from: owner })
-        .once('receipt', () => {
-          fetchData('approve')
-        })
-        .on('error', () => console.log('error happend in approve'))
+      // this.setState({ typeTransaction: 'approve' })
+      await web3.approve(
+        title,
+        stakingContract,
+        amount,
+        console.log('response approve')
+      )
     } catch (error) {
-      console.log('Error Happend in Fun approve', error)
+      console.log(error)
     }
   }
   const handleMint = async () => {
+    if (amount === '' || amount === '0') return
     try {
-      if (!owner) {
-        return
-      }
-      let amount = web3.utils.toWei(stakeAmount)
+      // this.setState({ typeTransaction: 'approve' })
+      await web3.lock(stakingContract, amount, console.log('response approve'))
     } catch (error) {
-      console.log('Error Happend in Fun Stake', error)
+      console.log(error)
     }
   }
   return (
@@ -76,12 +74,12 @@ const Mint = (props) => {
           <input
             type="text"
             className="input-transparent"
-            value={stakeAmount}
-            onChange={(e) => setStakeAmount(e.target.value)}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
           />
           <span
             className="box-balance-max pointer"
-            onClick={() => setStakeAmount(balanceWallet)}
+            onClick={() => setAmount(balanceWallet)}
           >
             Max
           </span>
@@ -106,11 +104,10 @@ const Mint = (props) => {
         {owner && (
           <>
             <div className="flex-between">
-              {approve == 0 && (
-                <div className="approve-btn pointer" onClick={handleApprove}>
-                  Approve
-                </div>
-              )}
+              <div className="approve-btn pointer" onClick={handleApprove}>
+                Approve
+              </div>
+
               <div className="stake-deposite-btn pointer" onClick={handleMint}>
                 Mint
               </div>

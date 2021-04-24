@@ -182,10 +182,11 @@
   font-size: 20px;
   line-height: 23px;
   text-align: center;
-
   color: #ffffff;
-
   text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .expand-container {
   display: flex;

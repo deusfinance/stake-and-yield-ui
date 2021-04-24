@@ -85,7 +85,7 @@ ul.tab li input[type='radio']:checked ~ label {
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: #ffffff transparent transparent transparent;
+  border-color: #ffffff;
 }
 .tooltip:hover .tooltip-text {
   visibility: visible;
@@ -94,58 +94,53 @@ ul.tab li input[type='radio']:checked ~ label {
   ul.tab li label {
     width: 110px;
   }
-  ul.togglebuttontab{
-   /* display: flex;
+  ul.togglebuttontab {
+    /* display: flex;
    flex-direction: column; */
-   border-radius: 10px;
+    border-radius: 10px;
   }
-  ul.togglebuttontab li{
+  ul.togglebuttontab li {
     width: 100%;
   }
-  ul.togglebuttontab li label{
+  ul.togglebuttontab li label {
     width: 100%;
   }
 }
 @media screen and (min-width: 370px) and (max-width: 445px) {
-  ul.togglebuttontab{
+  ul.togglebuttontab {
     /* display: flex;
     flex-direction: column; */
     border-radius: 10px;
-   }
-  ul.togglebuttontab li{
+  }
+  ul.togglebuttontab li {
     width: 100%;
   }
-  ul.togglebuttontab li label{
+  ul.togglebuttontab li label {
     width: 100%;
   }
-
-
 }
 @media screen and (max-width: 500px) {
   .tvl-container {
     position: absolute;
     width: 400px;
     left: 0;
-}
-  ul.togglebuttontab{
+  }
+  ul.togglebuttontab {
     /* display: flex;
     flex-direction: column; */
     border-radius: 10px;
-   }
-   ul.tab li input[type='radio']:checked ~ label {
- 
-    border-radius: 10px;
-    
-}
-.stake-deposite-btn {
-  width: 100%;
   }
-  ul.togglebuttontab li{
+  ul.tab li input[type='radio']:checked ~ label {
+    border-radius: 10px;
+  }
+  .stake-deposite-btn {
+    width: 100%;
+  }
+  ul.togglebuttontab li {
     width: 100%;
     min-width: none;
-
   }
-  ul.togglebuttontab li label{
+  ul.togglebuttontab li label {
     width: 100%;
     min-width: none;
   }
@@ -153,39 +148,37 @@ ul.tab li input[type='radio']:checked ~ label {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-}
-.expand-container {
-  flex-direction: column;
-  margin: 0 auto;
-}
-.deposite-container {
- width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin: 60px auto 0;
-}
-.approve-btn {
-
-  margin: 0 3px;
-}
+  }
+  .expand-container {
+    flex-direction: column;
+    margin: 0 auto;
+  }
+  .deposite-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 60px auto 0;
+  }
+  .approve-btn {
+    margin: 0 3px;
+  }
 }
 @media screen and (max-width: 370px) {
   .tvl-container {
     position: absolute;
     width: 360px;
     left: 0;
-}
-  ul.togglebuttontab{
+  }
+  ul.togglebuttontab {
     /* display: flex;
     flex-direction: column; */
     border-radius: 10px;
-   }
-  ul.togglebuttontab li{
+  }
+  ul.togglebuttontab li {
     width: 100%;
     min-width: none;
-
   }
-  ul.togglebuttontab li label{
+  ul.togglebuttontab li label {
     width: 100%;
     min-width: none;
   }
