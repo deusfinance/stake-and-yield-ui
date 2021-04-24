@@ -259,7 +259,7 @@ const TokenContainer = (props) => {
                   fetchData={(data) => setFetchData(data)}
                   showFluid={() => setShowFluid(true)}
                 />
-                {
+                {showFluid && (
                   <Fluid
                     {...userInfo}
                     chainId={chainId}
@@ -269,7 +269,7 @@ const TokenContainer = (props) => {
                     fetchData={(data) => setFetchData(data)}
                     showFluid={() => setShowFluid(false)}
                   />
-                }
+                )}
               </>
             ) : (
               <div className="wrap-box mt-20">

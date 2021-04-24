@@ -20,7 +20,7 @@ const Mint = (props) => {
 
   const web3React = useWeb3React()
   const { activate } = web3React
-  const [amount, setAmount] = React.useState('0')
+  const [amount, setAmount] = React.useState('')
 
   const handleConnect = async () => {
     try {
@@ -106,6 +106,7 @@ const Mint = (props) => {
           <input
             type="text"
             className="input-transparent"
+            placeholder="0 DEA"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
           />

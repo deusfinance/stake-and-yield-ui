@@ -32,7 +32,7 @@ const Deposite = (props) => {
   const web3React = useWeb3React()
   const { activate } = web3React
   const [selectedStakeType, setSelectedStakeType] = React.useState(stakeType)
-  const [stakeAmount, setStakeAmount] = React.useState('0')
+  const [stakeAmount, setStakeAmount] = React.useState('')
   const [exitBtn, setExitBtn] = React.useState(exit)
 
   React.useEffect(() => {
@@ -106,6 +106,7 @@ const Deposite = (props) => {
       if (!owner) {
         return
       }
+      if (stakeAmount == 0 || stakeAmount == '') return
       let amount = web3.utils.toWei(stakeAmount)
       let type = selectedStakeType == '0' ? '1' : selectedStakeType
       await StakeAndYieldContract.methods
@@ -214,6 +215,7 @@ const Deposite = (props) => {
             type="text"
             className="input-transparent"
             value={stakeAmount}
+            placeholder="0 DEA"
             onChange={(e) => setStakeAmount(e.target.value)}
           />
           <span
@@ -252,12 +254,14 @@ const Deposite = (props) => {
                 stake
               </div>
             </div>
-            <div className="flex-center">
-              <div className="container-status-button">
-                <div className="active">1</div>
-                <div>2</div>
+            {approve == 0 && (
+              <div className="flex-center">
+                <div className="container-status-button">
+                  <div className="active">1</div>
+                  <div>2</div>
+                </div>
               </div>
-            </div>
+            )}
           </>
         )}
       </div>
