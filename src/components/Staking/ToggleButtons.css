@@ -65,7 +65,7 @@ ul.tab li input[type='radio']:checked ~ label {
   z-index: 1;
   bottom: 100%;
   left: 30%;
-  top: -37px;
+  top: -40px;
   margin-left: -60px;
 }
 .tooltip .tooltip-text div {
@@ -85,7 +85,7 @@ ul.tab li input[type='radio']:checked ~ label {
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: #ffffff;
+  border-color: #ffffff transparent transparent transparent;
 }
 .tooltip:hover .tooltip-text {
   visibility: visible;
