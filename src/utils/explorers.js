@@ -17,7 +17,7 @@ const EXPLORER_PREFIXES = {
   97: 'testnet.'
 }
 
-function getEtherscanLink(chainId, data, type) {
+export function getEtherscanLink(chainId, data, type) {
   const prefix = `https://${
     EXPLORER_PREFIXES[chainId] || EXPLORER_PREFIXES[1]
   }etherscan.io`

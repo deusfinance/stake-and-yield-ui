@@ -3,7 +3,11 @@ import { useWeb3React } from '@web3-react/core'
 import ToggleButtons from './ToggleButtons'
 import { web3 } from '../../utils/Stakefun'
 import { injected } from '../../connectors'
-import { ApproveTranaction, CustomTranaction } from '../../utils/explorers'
+import {
+  ApproveTranaction,
+  CustomTranaction,
+  getEtherscanLink
+} from '../../utils/explorers'
 import { TransactionState } from '../../utils/constant'
 
 const Deposite = (props) => {
@@ -222,7 +226,7 @@ const Deposite = (props) => {
         <div className="contract-box">
           <a
             className="show-contract pointer"
-            href={`${process.env.REACT_APP_CHAIN_URL}/address/${stakingContract}#code`}
+            href={getEtherscanLink(chainId, stakingContract)}
             target="_blink"
           >
             Show me the contract

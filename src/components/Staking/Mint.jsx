@@ -2,7 +2,7 @@ import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { injected } from '../../connectors'
 import { web3 } from '../../utils/Stakefun'
-import { ApproveTranaction } from '../../utils/explorers'
+import { ApproveTranaction, getEtherscanLink } from '../../utils/explorers'
 import { TransactionState } from '../../utils/constant'
 
 const Mint = (props) => {
@@ -119,7 +119,7 @@ const Mint = (props) => {
         <div className="contract-box">
           <a
             className="show-contract pointer"
-            href={`https://ropsten.etherscan.io/address/${stakingContract}#code`}
+            href={getEtherscanLink(stakingContract)}
             target="_blink"
           >
             Show me the contract
