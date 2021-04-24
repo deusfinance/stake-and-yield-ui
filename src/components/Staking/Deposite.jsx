@@ -104,7 +104,6 @@ const Deposite = (props) => {
       }
       let amount = web3.utils.toWei(stakeAmount)
       let type = selectedStakeType == '0' ? '1' : selectedStakeType
-      console.log({ amount, type, exitBtn, owner })
       await StakeAndYieldContract.methods
         .deposit(amount, type, exitBtn)
         .send({ from: owner })
@@ -135,7 +134,17 @@ const Deposite = (props) => {
           })
           fetchData('stake')
         })
-        .once('error', () => console.log('error happend in approve'))
+        .once('error', (hash) =>
+          CustomTranaction(TransactionState.FAILED, {
+            hash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title,
+              amount
+            },
+            chainId
+          })
+        )
     } catch (error) {
       console.log('Error Happend in Fun Stake', error)
     }

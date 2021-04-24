@@ -241,6 +241,7 @@ const TokenContainer = (props) => {
               {...userInfo}
               title={title}
               owner={owner}
+              chainId={chainId}
               fetchData={(data) => setFetchData(data)}
               exitable={exitable}
             />
@@ -251,19 +252,21 @@ const TokenContainer = (props) => {
                   owner={owner}
                   title={title}
                   titleExit={titleExit}
+                  chainId={chainId}
                   fetchData={(data) => setFetchData(data)}
                   showFluid={() => setShowFluid(true)}
                 />
-                {showFluid && (
+                {
                   <Fluid
                     {...userInfo}
+                    chainId={chainId}
                     owner={owner}
                     title={title}
                     titleExit={titleExit}
                     fetchData={(data) => setFetchData(data)}
                     showFluid={() => setShowFluid(false)}
                   />
-                )}
+                }
               </>
             ) : (
               <div className="wrap-box mt-20">

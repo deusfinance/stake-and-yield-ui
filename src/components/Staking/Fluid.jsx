@@ -1,5 +1,7 @@
 import React from 'react'
 import DrawableAmount from './DrawableAmount'
+import { CustomTranaction } from '../../utils/explorers'
+import { TransactionState } from '../../utils/constant'
 
 const Fluid = (props) => {
   const {
@@ -11,21 +13,60 @@ const Fluid = (props) => {
     StakeAndYieldContract,
     fetchData,
     exit,
+    chainId,
     showFluid
   } = props
 
   const handleWithDraw = async () => {
-    try {
-      await StakeAndYieldContract.methods
-        .withdrawUnfreezed()
-        .send({ from: owner })
-        .once('receipt', () => {
-          fetchData('withdrawUnfreezed')
-          showFluid()
+    // try {
+    await StakeAndYieldContract.methods
+      .withdrawUnfreezed()
+      .send({ from: owner })
+      .once('transactionHash', (hash) =>
+        CustomTranaction(TransactionState.LOADING, {
+          hash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId,
+          message: `With Draw Unfreeze`
         })
-    } catch (error) {
-      console.log('Error happend in WithDraw Fluid', error)
-    }
+      )
+      .once('receipt', ({ transactionHash }) => {
+        CustomTranaction(TransactionState.SUCCESS, {
+          hash: transactionHash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId,
+          message: `With Draw Unfreeze`
+        })
+        fetchData('withdrawUnfreezed')
+        showFluid()
+      })
+      .once('error', ({ transactionHash }) =>
+        CustomTranaction(TransactionState.FAILED, {
+          hash: transactionHash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId
+        })
+      )
+    // } catch (error) {
+    //   console.log('Error happend in WithDraw Fluid', error)
+    //   CustomTranaction(TransactionState.FAILED, {
+    //     hash: error.transactionHash,
+    //     from: {
+    //       logo: `/img/bridge/${title}.svg`,
+    //       symbol: title
+    //     },
+    //     chainId
+    //   })
+    // }
   }
   return (
     <div className="userInfo-container">

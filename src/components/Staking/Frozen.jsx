@@ -2,6 +2,8 @@ import React from 'react'
 import { web3 } from '../../utils/Stakefun'
 import DrawableAmount from './DrawableAmount'
 import WaitingTime from './WaitingTime'
+import { CustomTranaction } from '../../utils/explorers'
+import { TransactionState } from '../../utils/constant'
 
 const Frozen = (props) => {
   const {
