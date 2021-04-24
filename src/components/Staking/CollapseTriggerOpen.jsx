@@ -2,6 +2,7 @@ import React from 'react'
 
 const CollapseTriggerOpen = ({
   title,
+  category,
   apy,
   balanceWallet,
   handleCollapseContent
@@ -16,14 +17,28 @@ const CollapseTriggerOpen = ({
       </div>
       <div className="apy">{`${apy}% apy`}</div>
       <div className="expand-container">
-        <div
-          className="stake-btn pointer"
-          onClick={(e) => {
-            e.stopPropagation()
-            e.preventDefault()
-            handleCollapseContent('get')
-          }}
-        >{`GET ${title}`}</div>
+        {category === 'liquidity' ? (
+          <div
+            className="stake-btn pointer"
+            onClick={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
+            }}
+          >
+            <a href="">Provide Liquidity</a>
+          </div>
+        ) : (
+          <div
+            className="stake-btn pointer"
+            onClick={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
+              handleCollapseContent('get')
+            }}
+          >
+            GET
+          </div>
+        )}
         <div
           className="stake-btn pointer"
           onClick={(e) => {

@@ -52,32 +52,30 @@ const Mint = (props) => {
             chainId
           })
         )
-        .once('receipt', (hash) => {
+        .once('receipt', ({ transactionHash }) => {
           fetchData('approveMint')
-          console.log('receipt', hash)
-          // ApproveTranaction(TransactionState.SUCCESS, {
-          //   hash,
-          //   from: {
-          //     logo: `/img/bridge/${title}.svg`,
-          //     symbol: title,
-          //     amount
-          //   },
-          //   chainId
-          // })
+          ApproveTranaction(TransactionState.SUCCESS, {
+            hash: transactionHash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title,
+              amount
+            },
+            chainId
+          })
         })
-        .once(
-          'error',
-          (hash) => console.log('hash', hash)
-          // ApproveTranaction(TransactionState.FAILED, {
-          //   hash,
-          //   from: {
-          //     logo: `/img/bridge/${title}.svg`,
-          //     symbol: title,
-          //     amount
-          //   },
-          //   chainId
-          // })
-        )
+        .once('error', (hash) => {
+          console.log('hash', hash)
+          ApproveTranaction(TransactionState.FAILED, {
+            hash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title,
+              amount
+            },
+            chainId
+          })
+        })
     } catch (error) {
       console.log('Error Happend in Fun approve', error)
     }

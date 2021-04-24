@@ -21,7 +21,8 @@ const TokenContainer = (props) => {
     exitable,
     yieldable,
     owner,
-    chainId
+    chainId,
+    category
   } = props
   const [fetchData, setFetchData] = React.useState('')
   const [collapseContent, setCollapseContent] = React.useState('deposite')
@@ -218,6 +219,7 @@ const TokenContainer = (props) => {
           <CollapseTrigger
             title={title}
             apy={userInfo.apy}
+            category={category}
             balanceWallet={userInfo.balanceWallet}
             handleCollapseContent={(data) => handleCollapseContent(data)}
           />
@@ -226,6 +228,7 @@ const TokenContainer = (props) => {
           <CollapseTriggerOpen
             title={title}
             apy={userInfo.apy}
+            category={category}
             balanceWallet={userInfo.balanceWallet}
             handleCollapseContent={(data) => handleCollapseContent(data)}
           />

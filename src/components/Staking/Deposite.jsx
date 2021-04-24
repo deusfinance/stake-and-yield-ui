@@ -70,10 +70,10 @@ const Deposite = (props) => {
             chainId
           })
         )
-        .once('receipt', (hash) => {
+        .once('receipt', ({ transactionHash }) => {
           fetchData('approve')
           ApproveTranaction(TransactionState.SUCCESS, {
-            hash,
+            hash: transactionHash,
             from: {
               logo: `/img/bridge/${title}.svg`,
               symbol: title,
@@ -114,23 +114,24 @@ const Deposite = (props) => {
             from: {
               logo: `/img/bridge/${title}.svg`,
               symbol: title,
-              amount
+              stakeAmount
             },
             chainId,
-            message: `Staked ${amount} ${title}`
+            message: `Staked ${stakeAmount} ${title}`
           })
         )
-        .once('receipt', (hash) => {
+        .once('receipt', ({ transactionHash }) => {
           setStakeAmount('')
-          CustomTranaction(TransactionState.LOADING, {
-            hash,
+          console.log({ transactionHash })
+          CustomTranaction(TransactionState.SUCCESS, {
+            hash: transactionHash,
             from: {
               logo: `/img/bridge/${title}.svg`,
               symbol: title,
-              amount
+              stakeAmount
             },
             chainId,
-            message: `Staked ${amount} ${title}`
+            message: `Staked ${stakeAmount} ${title}`
           })
           fetchData('stake')
         })
