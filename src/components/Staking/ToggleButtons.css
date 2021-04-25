@@ -90,6 +90,22 @@ ul.tab li input[type='radio']:checked ~ label {
 .tooltip:hover .tooltip-text {
   visibility: visible;
 }
+@media screen and (max-width: 799px) {
+  /* .expand-container {
+    flex-direction: column;
+  } */
+  .stake-btn {
+    margin-bottom: 3px;
+  }
+  .stake-btn span{
+    width: 100%;
+  }
+  .container-staking {
+ 
+   width: 100%; 
+   
+}
+}
 @media screen and (min-width: 445px) and (max-width: 570px) {
   ul.tab li label {
     width: 110px;

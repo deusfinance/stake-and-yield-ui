@@ -278,6 +278,17 @@
     font-size: 22px;
   }
 }
+@media screen and (max-width:1200px) {
+  /* .expand-container {
+    flex-direction: column;
+  } */
+  .container-staking {
+    font-family: 'Monument Grotesk Semi';
+    padding: 5px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+}
 
 @media screen and (max-width: 799px) {
   /* .expand-container {
@@ -285,6 +296,9 @@
   } */
   .stake-btn {
     margin-bottom: 3px;
+  }
+  .stake-btn span{
+    width: 100%;
   }
   .container-staking {
  
