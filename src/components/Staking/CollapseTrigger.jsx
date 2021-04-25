@@ -29,7 +29,7 @@ const CollapseTrigger = ({
             <a href="">Provide Liquidity</a>
           </div>
         ) : ( */}
-        <div
+        <a
           className="stake-btn pointer"
           onClick={(e) => {
             // e.stopPropagation()
@@ -37,11 +37,11 @@ const CollapseTrigger = ({
             handleCollapseContent('get')
           }}
         >
-          {`GET ${title}`}
-        </div>
+          <span>{`GET ${title}`}</span>
+        </a>
         {/* )} */}
         {onlyLocking ? (
-          <div
+          <a
             className="stake-btn pointer"
             onClick={(e) => {
               e.stopPropagation()
@@ -49,10 +49,10 @@ const CollapseTrigger = ({
               // handleCollapseContent('deposite')
             }}
           >
-            {`Deposite ${title}`}
-          </div>
+            <span>{`Deposite ${title}`}</span>
+          </a>
         ) : (
-          <div
+          <a
             className="stake-btn pointer"
             onClick={(e) => {
               // e.stopPropagation()
@@ -60,8 +60,8 @@ const CollapseTrigger = ({
               handleCollapseContent('deposite')
             }}
           >
-            {`Stake ${title}`}
-          </div>
+            <span> {`Stake ${title}`}</span>
+          </a>
         )}
 
         <span className="expand-btn pointer" name="expand-btn">

@@ -224,28 +224,27 @@
   transform: rotate(180deg);
 }
 
-.stake-btn {
+/* .stake-btn {
   width: 150px;
   height: 35px;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 20px;
-  /* identical to box height, or 167% */
   padding: 8px 10px;
 
   text-align: center;
   position: relative;
   color: #ffffff;
   margin: 0 3px;
-}
-.stake-btn:hover {
+} */
+/* .stake-btn:hover {
   background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%),
     linear-gradient(247.41deg, #a2fbb0 16.32%, #5ec4d6 87.6%);
   border-radius: 6px;
-}
+} */
 
-.stake-btn::before {
+/* .stake-btn::before {
   content: '';
   border: 1px solid transparent;
   position: absolute;
@@ -258,7 +257,7 @@
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
-}
+} */
 
 @media screen and (min-width: 563px) and (max-width: 970px) {
   .stake-btn {
@@ -875,4 +874,34 @@ input:focus {
   align-items: center;
 
   color: #ffffff;
+}
+
+.stake-btn {
+  background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%);
+  border-radius: 6px;
+  color: #ffffff;
+  display: inline-block;
+  padding: 1px;
+  text-decoration: none;
+  margin: 0 3px;
+}
+.stake-btn span {
+  background: #0d0d0d;
+  display: block;
+  /* padding: 1px 10px; */
+  border-radius: 6px;
+  width: 150px;
+  height: 35px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.stake-btn:hover {
+  background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%),
+    linear-gradient(247.41deg, #a2fbb0 16.32%, #5ec4d6 87.6%);
+  border-radius: 6px;
 }
