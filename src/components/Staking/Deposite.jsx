@@ -88,7 +88,7 @@ const Deposite = (props) => {
           })
         })
         .once('error', () =>
-          ApproveTranaction(TransactionState.FAILED, {
+          CustomTranaction(TransactionState.FAILED, {
             from: {
               logo: `/img/bridge/${title}.svg`,
               symbol: title
@@ -98,7 +98,7 @@ const Deposite = (props) => {
         )
     } catch (error) {
       console.log('Error Happend in Fun approve', error)
-      ApproveTranaction(TransactionState.FAILED, {
+      CustomTranaction(TransactionState.FAILED, {
         from: {
           logo: `/img/bridge/${title}.svg`,
           symbol: title

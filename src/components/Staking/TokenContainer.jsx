@@ -12,6 +12,7 @@ import Fluid from './Fluid'
 // import DepositBtn from './DepositBtn'
 import Deposite from './Deposite'
 import Mint from './Mint'
+import abis from '../../services/abis.json'
 
 const TokenContainer = (props) => {
   const {
@@ -19,6 +20,7 @@ const TokenContainer = (props) => {
     titleExit,
     onlyLocking,
     stakingContract,
+    vaultContract,
     exitable,
     yieldable,
     owner,
@@ -42,6 +44,7 @@ const TokenContainer = (props) => {
     stakeType: '0',
     stakeTypeName: '',
     approve: 0,
+    approveVault: 0,
     withDrawable: 0,
     withDrawableExit: 0,
     lockStakeType: false,
@@ -64,6 +67,7 @@ const TokenContainer = (props) => {
       stakeType: '0',
       stakeTypeName: '',
       approve: 0,
+      approveVault: 0,
       withDrawable: 0,
       withDrawableExit: 0,
       lockStakeType: false,
@@ -74,11 +78,12 @@ const TokenContainer = (props) => {
   }, [owner])
 
   const StakeAndYieldContract = makeContract(StakeAndYieldABI, stakingContract)
-
+  const VaultContract = makeContract(abis['vaults'], vaultContract)
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         let result = await StakeAndYieldContract.methods.userInfo(owner).call()
+        console.log({ result })
         let { numbers, exit, stakedTokenAddress } = result
         const StakedTokenContract = makeContract(abi, stakedTokenAddress)
         let balanceWallet = await StakedTokenContract.methods
@@ -89,6 +94,10 @@ const TokenContainer = (props) => {
           .allowance(owner, stakingContract)
           .call()
         approve = Number(web3.utils.fromWei(approve, 'ether'))
+        let approveVault = await StakedTokenContract.methods
+          .allowance(owner, vaultContract)
+          .call()
+        approveVault = Number(web3.utils.fromWei(approveVault, 'ether'))
         let apy = (
           (Number(web3.utils.fromWei(numbers[7], 'ether')) +
             Number(web3.utils.fromWei(numbers[8], 'ether'))) *
@@ -156,7 +165,9 @@ const TokenContainer = (props) => {
             stakedTokenAddress,
             StakedTokenContract,
             StakeAndYieldContract,
+            VaultContract,
             approve,
+            approveVault,
             stakeType,
             stakeTypeName,
             balanceWallet,
@@ -164,7 +175,6 @@ const TokenContainer = (props) => {
             apy,
             claim,
             exit,
-            approve,
             withDrawable,
             withDrawableExit,
             burn,
@@ -315,7 +325,7 @@ const TokenContainer = (props) => {
         {collapseContent === 'get' && (
           <Mint
             {...userInfo}
-            stakingContract={stakingContract}
+            vaultContract={vaultContract}
             fetchData={(data) => setFetchData(data)}
             owner={owner}
             chainId={chainId}

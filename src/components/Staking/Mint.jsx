@@ -2,9 +2,13 @@ import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { injected } from '../../connectors'
 import { web3 } from '../../utils/Stakefun'
-import { ApproveTranaction, getEtherscanLink } from '../../utils/explorers'
+import {
+  ApproveTranaction,
+  getEtherscanLink,
+  CustomTranaction
+} from '../../utils/explorers'
 import { TransactionState } from '../../utils/constant'
-import { BigNumber } from 'ethers'
+
 const Mint = (props) => {
   const {
     lockStakeType,
@@ -12,10 +16,11 @@ const Mint = (props) => {
     owner,
     chainId,
     handleBack,
-    stakingContract,
+    vaultContract,
+    VaultContract,
     StakedTokenContract,
     title,
-    approve,
+    approveVault,
     fetchData
   } = props
 
@@ -39,7 +44,7 @@ const Mint = (props) => {
       }
       let amount = web3.utils.toWei('1000000000000000000')
       await StakedTokenContract.methods
-        .approve(stakingContract, amount)
+        .approve(vaultContract, amount)
         .send({ from: owner })
         .once('transactionHash', (hash) =>
           ApproveTranaction(TransactionState.LOADING, {
@@ -66,7 +71,7 @@ const Mint = (props) => {
           })
         })
         .once('error', (error) => {
-          ApproveTranaction(TransactionState.FAILED, {
+          CustomTranaction(TransactionState.FAILED, {
             from: {
               logo: `/img/bridge/${title}.svg`,
               symbol: title,
@@ -76,14 +81,77 @@ const Mint = (props) => {
           })
         })
     } catch (error) {
-      console.log('Error Happend in Fun approve', error)
+      console
+        .log('Error Happend in Fun approve', error)
+        .once('error', (error) => {
+          CustomTranaction(TransactionState.FAILED, {
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title,
+              amount
+            },
+            chainId
+          })
+        })
     }
   }
   const handleMint = async () => {
-    if (amount === '' || amount === '0') return
     try {
+      if (!owner) {
+        return
+      }
+      if (amount === '' || amount === '0') return
+      let amountVault = web3.utils.toWei(amount)
+      console.log(amountVault)
+      await VaultContract.methods
+        .lock(amountVault)
+        .send({ from: owner })
+        .once('transactionHash', (hash) =>
+          CustomTranaction(TransactionState.LOADING, {
+            hash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title,
+              amount
+            },
+            chainId,
+            message: `Mint ${amount} ${title}`
+          })
+        )
+        .once('receipt', ({ transactionHash }) => {
+          setAmount('')
+          console.log({ transactionHash })
+          CustomTranaction(TransactionState.SUCCESS, {
+            hash: transactionHash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title,
+              amount
+            },
+            chainId,
+            message: `Mint ${amount} ${title}`
+          })
+          fetchData('Mint')
+        })
+        .once('error', (hash) =>
+          CustomTranaction(TransactionState.FAILED, {
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title
+            },
+            chainId
+          })
+        )
     } catch (error) {
       console.log(error)
+      CustomTranaction(TransactionState.FAILED, {
+        from: {
+          logo: `/img/bridge/${title}.svg`,
+          symbol: title,
+          amount
+        },
+        chainId
+      })
     }
   }
   return (
@@ -119,7 +187,7 @@ const Mint = (props) => {
         <div className="contract-box">
           <a
             className="show-contract pointer"
-            href={getEtherscanLink(stakingContract)}
+            href={getEtherscanLink(vaultContract)}
             target="_blink"
           >
             Show me the contract
@@ -142,8 +210,8 @@ const Mint = (props) => {
         )}
         {owner && (
           <>
-            <div className={!approve ? 'flex-between' : 'flex-center'}>
-              {approve == 0 && (
+            <div className={!approveVault ? 'flex-between' : 'flex-center'}>
+              {approveVault == 0 && (
                 <div
                   className={`${
                     !approveClick ? 'approve-btn' : 'stake-deposite-btn'
@@ -163,7 +231,7 @@ const Mint = (props) => {
                 Mint
               </div>
             </div>
-            {approve == 0 && (
+            {approveVault == 0 && (
               <div className="flex-center">
                 <div className="container-status-button">
                   <div className="active">1</div>
