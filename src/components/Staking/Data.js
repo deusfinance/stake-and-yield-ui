@@ -24,7 +24,7 @@ const tokens = [
     vaultContract: '0x6ba4ead0115f3c9239d596fe4bb7c242a39f62f0',
 
     exitable: false,
-    category: 'single',
+    category: '',
     yieldable: false
   },
   {
