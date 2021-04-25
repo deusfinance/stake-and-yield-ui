@@ -18,7 +18,8 @@ ul.tab li {
   position: relative;
 }
 ul.tab li label {
-  padding: 9px 31px;
+  height: 35px;
+  min-width: 130px;
   display: inline-block;
   font-style: normal;
   font-weight: normal;
@@ -26,6 +27,10 @@ ul.tab li label {
   line-height: 17px;
   text-align: center;
   color: #ffffff;
+  border: 1px solid transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 ul.tab li input[type='radio'] {
   opacity: 0;
