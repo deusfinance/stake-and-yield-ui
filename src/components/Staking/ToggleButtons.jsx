@@ -8,7 +8,7 @@ const ToggleButtons = ({
   lockStakeType
 }) => {
   return (
-    <div className="flex-center">
+    <div className="flex-center flex-column-res">
       <ul className="tab togglebuttontab">
         {data.map((item, index) => (
           <li

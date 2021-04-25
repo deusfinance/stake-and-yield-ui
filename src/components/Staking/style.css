@@ -286,6 +286,11 @@
   .stake-btn {
     margin-bottom: 3px;
   }
+  .container-staking {
+ 
+   width: 100%; 
+   
+}
 }
 
 /* end Content */
