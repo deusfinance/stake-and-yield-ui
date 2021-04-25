@@ -4,7 +4,7 @@ import { injected } from '../../connectors'
 import { web3 } from '../../utils/Stakefun'
 import { ApproveTranaction, getEtherscanLink } from '../../utils/explorers'
 import { TransactionState } from '../../utils/constant'
-
+import { BigNumber } from 'ethers'
 const Mint = (props) => {
   const {
     lockStakeType,
@@ -15,13 +15,14 @@ const Mint = (props) => {
     stakingContract,
     StakedTokenContract,
     title,
+    approve,
     fetchData
   } = props
 
   const web3React = useWeb3React()
   const { activate } = web3React
   const [amount, setAmount] = React.useState('')
-
+  const [approveClick, setApproveClick] = React.useState(false)
   const handleConnect = async () => {
     try {
       const data = await activate(injected)
@@ -36,8 +37,7 @@ const Mint = (props) => {
       if (!owner) {
         return
       }
-      let amount = web3.utils.toWei('1000000000')
-
+      let amount = web3.utils.toWei('1000000000000000000')
       await StakedTokenContract.methods
         .approve(stakingContract, amount)
         .send({ from: owner })
@@ -53,7 +53,8 @@ const Mint = (props) => {
           })
         )
         .once('receipt', ({ transactionHash }) => {
-          fetchData('approveMint')
+          setApproveClick(true)
+          // fetchData('approveMint')
           ApproveTranaction(TransactionState.SUCCESS, {
             hash: transactionHash,
             from: {
@@ -64,10 +65,8 @@ const Mint = (props) => {
             chainId
           })
         })
-        .once('error', (hash) => {
-          console.log('hash', hash)
+        .once('error', (error) => {
           ApproveTranaction(TransactionState.FAILED, {
-            hash,
             from: {
               logo: `/img/bridge/${title}.svg`,
               symbol: title,
@@ -126,6 +125,13 @@ const Mint = (props) => {
             Show me the contract
           </a>
         </div>
+        <div className="convert-box-mint">
+          <span>mint 1.345646 sDEA</span>
+        </div>
+        <div className="convert-box-mint">
+          <span>mint 8000 TIME</span>
+        </div>
+
         {!owner && (
           <div
             className="wrap-box-gradient-complete width-415 pointer"
@@ -136,21 +142,35 @@ const Mint = (props) => {
         )}
         {owner && (
           <>
-            <div className="flex-between">
-              <div className="approve-btn pointer" onClick={handleApprove}>
-                Approve
-              </div>
+            <div className={!approve ? 'flex-between' : 'flex-center'}>
+              {approve == 0 && (
+                <div
+                  className={`${
+                    !approveClick ? 'approve-btn' : 'stake-deposite-btn'
+                  } pointer`}
+                  onClick={handleApprove}
+                >
+                  Approve
+                </div>
+              )}
 
-              <div className="stake-deposite-btn pointer" onClick={handleMint}>
+              <div
+                className={`${
+                  approveClick ? 'approve-btn' : 'stake-deposite-btn'
+                } pointer`}
+                onClick={handleMint}
+              >
                 Mint
               </div>
             </div>
-            <div className="flex-center">
-              <div className="container-status-button">
-                <div className="active">1</div>
-                <div>2</div>
+            {approve == 0 && (
+              <div className="flex-center">
+                <div className="container-status-button">
+                  <div className="active">1</div>
+                  <div className={approveClick ? 'active' : ''}>2</div>
+                </div>
               </div>
-            </div>
+            )}
           </>
         )}
       </div>

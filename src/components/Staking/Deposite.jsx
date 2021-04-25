@@ -34,6 +34,7 @@ const Deposite = (props) => {
   const [selectedStakeType, setSelectedStakeType] = React.useState(stakeType)
   const [stakeAmount, setStakeAmount] = React.useState('')
   const [exitBtn, setExitBtn] = React.useState(exit)
+  const [approveClick, setApproveClick] = React.useState(false)
 
   React.useEffect(() => {
     setSelectedStakeType(stakeType)
@@ -58,7 +59,7 @@ const Deposite = (props) => {
       if (!owner) {
         return
       }
-      let amount = web3.utils.toWei('1000000000')
+      let amount = web3.utils.toWei('1000000000000000000')
 
       await StakedTokenContract.methods
         .approve(stakingContract, amount)
@@ -75,7 +76,7 @@ const Deposite = (props) => {
           })
         )
         .once('receipt', ({ transactionHash }) => {
-          fetchData('approve')
+          setApproveClick(true)
           ApproveTranaction(TransactionState.SUCCESS, {
             hash: transactionHash,
             from: {
@@ -244,13 +245,23 @@ const Deposite = (props) => {
         )}
         {owner && (
           <>
-            <div className="flex-between">
+            <div className={!approve ? 'flex-between' : 'flex-center'}>
               {approve == 0 && (
-                <div className="approve-btn pointer" onClick={handleApprove}>
+                <div
+                  className={`${
+                    !approveClick ? 'approve-btn' : 'stake-deposite-btn'
+                  } pointer`}
+                  onClick={handleApprove}
+                >
                   Approve
                 </div>
               )}
-              <div className="stake-deposite-btn pointer" onClick={handleStake}>
+              <div
+                className={`${
+                  approveClick ? 'approve-btn' : 'stake-deposite-btn'
+                } pointer`}
+                onClick={handleStake}
+              >
                 stake
               </div>
             </div>
@@ -258,7 +269,7 @@ const Deposite = (props) => {
               <div className="flex-center">
                 <div className="container-status-button">
                   <div className="active">1</div>
-                  <div>2</div>
+                  <div className={approveClick ? 'active' : ''}>2</div>
                 </div>
               </div>
             )}

@@ -849,3 +849,30 @@
 input:focus {
   outline: none;
 }
+.convert-box-mint {
+  height: 35px;
+  padding: 1px 21px;
+  background: linear-gradient(
+    90deg,
+    rgb(223, 244, 254, 0.25) 0%,
+    rgb(142, 181, 255, 0.25) 100%
+  );
+  /* opacity: 0.25; */
+  border: 1px solid rgba(100, 100, 100, 0.498039);
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+
+.convert-box-mint > span {
+  height: 33px;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 20px;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+
+  color: #ffffff;
+}
