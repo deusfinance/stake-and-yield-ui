@@ -87,19 +87,24 @@ const Deposite = (props) => {
             chainId
           })
         })
-        .once('error', (hash) =>
+        .once('error', () =>
           ApproveTranaction(TransactionState.FAILED, {
-            hash,
             from: {
               logo: `/img/bridge/${title}.svg`,
-              symbol: title,
-              amount
+              symbol: title
             },
             chainId
           })
         )
     } catch (error) {
       console.log('Error Happend in Fun approve', error)
+      ApproveTranaction(TransactionState.FAILED, {
+        from: {
+          logo: `/img/bridge/${title}.svg`,
+          symbol: title
+        },
+        chainId
+      })
     }
   }
   const handleStake = async () => {
@@ -142,17 +147,22 @@ const Deposite = (props) => {
         })
         .once('error', (hash) =>
           CustomTranaction(TransactionState.FAILED, {
-            hash,
             from: {
               logo: `/img/bridge/${title}.svg`,
-              symbol: title,
-              amount
+              symbol: title
             },
             chainId
           })
         )
     } catch (error) {
       console.log('Error Happend in Fun Stake', error)
+      CustomTranaction(TransactionState.FAILED, {
+        from: {
+          logo: `/img/bridge/${title}.svg`,
+          symbol: title
+        },
+        chainId
+      })
     }
   }
   const handleVaultExit = (data) => {

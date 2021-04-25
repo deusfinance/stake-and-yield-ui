@@ -41,19 +41,17 @@ const Fluid = (props) => {
             symbol: title
           },
           chainId,
-          message: `With Draw Unfreeze`
+          message: `Withdraw + Claim`
         })
         fetchData('withdrawUnfreezed')
         showFluid()
       })
-      .once('error', ({ transactionHash }) =>
+      .once('error', () =>
         CustomTranaction(TransactionState.FAILED, {
-          hash: transactionHash,
           from: {
             logo: `/img/bridge/${title}.svg`,
             symbol: title
-          },
-          chainId
+          }
         })
       )
     // } catch (error) {

@@ -9,6 +9,7 @@ const Frozen = (props) => {
   const {
     balance,
     owner,
+    chainId,
     title,
     titleExit,
     StakeAndYieldContract,
@@ -29,12 +30,45 @@ const Frozen = (props) => {
       await StakeAndYieldContract.methods
         .unfreeze(amount)
         .send({ from: owner })
-        .once('receipt', () => {
+        .once('transactionHash', (hash) =>
+          CustomTranaction(TransactionState.LOADING, {
+            hash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title
+            },
+            chainId,
+            message: `Unfreeze ${amount} ${title}`
+          })
+        )
+        .once('receipt', ({ transactionHash }) => {
           setUnfreez('0')
+          CustomTranaction(TransactionState.SUCCESS, {
+            hash: transactionHash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title
+            },
+            chainId,
+            message: `Unfreeze ${amount} ${title}`
+          })
           fetchData('unfreez')
         })
+        .once('error', () =>
+          CustomTranaction(TransactionState.FAILED, {
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title
+            }
+          })
+        )
     } catch (error) {
-      console.log('Error happend in unfreez', error)
+      CustomTranaction(TransactionState.FAILED, {
+        from: {
+          logo: `/img/bridge/${title}.svg`,
+          symbol: title
+        }
+      })
     }
   }
   return (
