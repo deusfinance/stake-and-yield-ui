@@ -10,8 +10,8 @@ import tokens from './Data'
 const Staking = () => {
   const { account, chainId } = useWeb3React()
 
-  const [showTokens, setShowTokens] = React.useState(tokens[chainId])
-  const [selesctedChainId, setSelesctedChainId] = React.useState(chainId)
+  const [showTokens, setShowTokens] = React.useState(tokens[1])
+  const [selesctedChainId, setSelesctedChainId] = React.useState(1)
   const [type, setType] = React.useState('all')
   const [open, setOpen] = React.useState({
     sDEUS: false,
@@ -24,10 +24,12 @@ const Staking = () => {
   })
 
   React.useEffect(() => {
-    setType('all')
-    let selectedChainId = chainId == 4 ? chainId : 1
-    setShowTokens(tokens[selectedChainId])
-    setSelesctedChainId(selectedChainId)
+    if (account) {
+      setType('all')
+      let selectedChainId = chainId == 4 ? chainId : 1
+      setShowTokens(tokens[selectedChainId])
+      setSelesctedChainId(selectedChainId)
+    }
   }, [account, chainId])
 
   const chooseType = (e) => {
