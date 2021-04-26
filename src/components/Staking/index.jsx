@@ -13,6 +13,7 @@ const Staking = () => {
   const [showTokens, setShowTokens] = React.useState(tokens[chainId])
   const [selesctedChainId, setSelesctedChainId] = React.useState(chainId)
   const [type, setType] = React.useState('all')
+  const [open, setOpen] = React.useState('')
 
   React.useEffect(() => {
     setType('all')
@@ -24,6 +25,7 @@ const Staking = () => {
   const chooseType = (e) => {
     let category = e.target.value
     setType(category)
+    setOpen(category)
     let result =
       category === 'all'
         ? tokens[selesctedChainId]
@@ -64,6 +66,7 @@ const Staking = () => {
               {...token}
               owner={account}
               chainId={chainId}
+              open={open}
             />
           ))}
         </div>

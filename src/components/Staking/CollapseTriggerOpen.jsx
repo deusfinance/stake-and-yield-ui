@@ -3,6 +3,7 @@ import React from 'react'
 const CollapseTriggerOpen = ({
   title,
   category,
+  balancer,
   onlyLocking,
   apy,
   balanceWallet,
@@ -18,35 +19,42 @@ const CollapseTriggerOpen = ({
       </div>
       <div className="apy">{`${apy}% apy`}</div>
       <div className="expand-container">
-        {/* {category === 'liquidity' ? (
-          <div
+        {balancer ? (
+          <a
             className="stake-btn pointer"
             onClick={(e) => {
               e.stopPropagation()
               e.preventDefault()
+              window.open(
+                'https://pools.balancer.exchange/#/pool/0x1dc2948b6db34e38291090b825518c1e8346938b/',
+                '_blank'
+              )
             }}
           >
-            <a href="">Provide Liquidity</a>
-          </div>
-        ) : ( */}
-        <a
-          className="stake-btn pointer"
-          onClick={(e) => {
-            e.stopPropagation()
-            e.preventDefault()
-            handleCollapseContent('get')
-          }}
-        >
-          <span>{`GET ${title}`}</span>
-        </a>
-        {/* )} */}
+            <span>{`GET ${title}`}</span>
+          </a>
+        ) : (
+          <a
+            className="stake-btn pointer"
+            onClick={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
+              handleCollapseContent('get')
+            }}
+          >
+            <span>{`GET ${title}`}</span>
+          </a>
+        )}
         {onlyLocking ? (
           <a
             className="stake-btn pointer"
             onClick={(e) => {
               e.stopPropagation()
               e.preventDefault()
-              // handleCollapseContent('deposite')
+              window.open(
+                'https://pools.balancer.exchange/#/pool/0x1dc2948b6db34e38291090b825518c1e8346938b/',
+                '_blank'
+              )
             }}
           >
             <span> {`Deposite ${title}`}</span>

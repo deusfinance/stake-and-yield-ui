@@ -36,7 +36,7 @@ const Mint = (props) => {
   const VaultContract = makeContract(abis['vaults'], vaultContract)
 
   React.useEffect(() => {
-    if (owner) checkApprove()
+    if (owner && vaultContract) checkApprove()
   }, [owner, vaultContract, chainId])
 
   const checkApprove = async () => {

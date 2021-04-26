@@ -15,6 +15,7 @@ import Mint from './Mint'
 
 const TokenContainer = (props) => {
   const {
+    open,
     title,
     titleExit,
     onlyLocking,
@@ -218,6 +219,7 @@ const TokenContainer = (props) => {
   return (
     <div className="token-container">
       <Collapsible
+        open={open}
         trigger={
           <CollapseTrigger
             title={title}
