@@ -75,7 +75,7 @@ const TokenContainer = (props) => {
       fullyUnlock: '',
       withDrawTime: ''
     })
-  }, [owner])
+  }, [owner, chainId])
 
   const StakeAndYieldContract = makeContract(StakeAndYieldABI, stakingContract)
   React.useEffect(() => {
@@ -193,7 +193,7 @@ const TokenContainer = (props) => {
       }
     }
     if (owner) fetchData()
-  }, [owner, fetchData])
+  }, [owner, fetchData, chainId])
 
   const handleCollapseContent = (data) => {
     setCollapseContent(data)
