@@ -29,19 +29,29 @@ const Mint = (props) => {
   const [amount, setAmount] = React.useState('')
   const [approveClick, setApproveClick] = React.useState(false)
   const [sealedTime, setSealedTime] = React.useState({
-    sealed: '',
-    time: ''
+    sealed: '0',
+    time: '0'
   })
 
   const VaultContract = makeContract(abis['vaults'], vaultContract)
 
   const getSealedTimeAmount = async (amount) => {
     setAmount(amount)
-    amount = web3.utils.toWei(amount)
-    const result = await VaultContract.methods
-      .sealedAndTimeAmount(owner, amount)
-      .call()
-    console.log('*************', result)
+    if (amount) {
+      amount = web3.utils.toWei(amount)
+      const result = await VaultContract.methods
+        .sealedAndTimeAmount(owner, amount)
+        .call()
+      setSealedTime({
+        sealed: web3.utils.fromWei(result[0], 'ether'),
+        time: web3.utils.fromWei(result[1], 'ether')
+      })
+    } else {
+      setSealedTime({
+        sealed: 0,
+        time: 0
+      })
+    }
   }
 
   const handleConnect = async () => {
