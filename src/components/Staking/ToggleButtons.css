@@ -29,6 +29,7 @@ ul.tab li label {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid transparent;
 }
 ul.tab li input[type='radio'] {
   opacity: 0;
