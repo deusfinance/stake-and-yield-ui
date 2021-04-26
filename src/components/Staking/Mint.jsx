@@ -37,14 +37,16 @@ const Mint = (props) => {
 
   React.useEffect(() => {
     if (owner && vaultContract) checkApprove()
-  }, [owner, vaultContract, chainId])
+  }, [owner, vaultContract])
 
   const checkApprove = async () => {
-    let approve = await StakedTokenContract.methods
-      .allowance(owner, vaultContract)
-      .call()
-    approve = Number(web3.utils.fromWei(approve, 'ether'))
-    setApprove(approve)
+    if (StakedTokenContract) {
+      let approve = await StakedTokenContract.methods
+        .allowance(owner, vaultContract)
+        .call()
+      approve = Number(web3.utils.fromWei(approve, 'ether'))
+      setApprove(approve)
+    }
   }
 
   const getSealedTimeAmount = async (amount) => {
@@ -239,50 +241,51 @@ const Mint = (props) => {
           <span>{`mint ${sealedTime.time} TIME`}</span>
         </div>
 
-        {!owner && (
+        {owner ? (
+          chainId == 1 || chainId == 4 ? (
+            <>
+              <div className={!approve ? 'flex-between' : 'flex-center'}>
+                {approve == 0 && (
+                  <div
+                    className={`${
+                      !approveClick ? 'approve-btn' : 'stake-deposite-btn'
+                    } pointer`}
+                    onClick={handleApprove}
+                  >
+                    Approve
+                  </div>
+                )}
+
+                <div
+                  className={`${
+                    approveClick ? 'approve-btn pointer' : 'stake-deposite-btn'
+                  } ${approve ? 'pointer' : ''}`}
+                  onClick={handleMint}
+                >
+                  Mint
+                </div>
+              </div>
+              {approve == 0 && (
+                <div className="flex-center">
+                  <div className="container-status-button">
+                    <div className="active">1</div>
+                    <div className={approveClick ? 'active' : ''}>2</div>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <a className="wrong-network">
+              <span>Wrong Network</span>
+            </a>
+          )
+        ) : (
           <div
             className="wrap-box-gradient-complete width-415 pointer"
             onClick={handleConnect}
           >
             <div>connect wallet</div>
           </div>
-        )}
-        {owner && (chainId == 1 || chainId == 4) ? (
-          <>
-            <div className={!approve ? 'flex-between' : 'flex-center'}>
-              {approve == 0 && (
-                <div
-                  className={`${
-                    !approveClick ? 'approve-btn' : 'stake-deposite-btn'
-                  } pointer`}
-                  onClick={handleApprove}
-                >
-                  Approve
-                </div>
-              )}
-
-              <div
-                className={`${
-                  approveClick ? 'approve-btn pointer' : 'stake-deposite-btn'
-                } ${approve ? 'pointer' : ''}`}
-                onClick={handleMint}
-              >
-                Mint
-              </div>
-            </div>
-            {approve == 0 && (
-              <div className="flex-center">
-                <div className="container-status-button">
-                  <div className="active">1</div>
-                  <div className={approveClick ? 'active' : ''}>2</div>
-                </div>
-              </div>
-            )}
-          </>
-        ) : (
-          <a className="wrong-network">
-            <span>Wrong Network</span>
-          </a>
         )}
       </div>
     </>
