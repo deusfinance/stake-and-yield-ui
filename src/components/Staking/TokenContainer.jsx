@@ -12,7 +12,6 @@ import Fluid from './Fluid'
 // import DepositBtn from './DepositBtn'
 import Deposite from './Deposite'
 import Mint from './Mint'
-import abis from '../../services/abis.json'
 
 const TokenContainer = (props) => {
   const {
@@ -78,7 +77,6 @@ const TokenContainer = (props) => {
   }, [owner])
 
   const StakeAndYieldContract = makeContract(StakeAndYieldABI, stakingContract)
-  const VaultContract = makeContract(abis['vaults'], vaultContract)
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -165,7 +163,6 @@ const TokenContainer = (props) => {
             stakedTokenAddress,
             StakedTokenContract,
             StakeAndYieldContract,
-            VaultContract,
             approve,
             approveVault,
             stakeType,

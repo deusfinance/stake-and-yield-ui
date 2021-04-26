@@ -1,13 +1,14 @@
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { injected } from '../../connectors'
-import { web3 } from '../../utils/Stakefun'
 import {
   ApproveTranaction,
   getEtherscanLink,
   CustomTranaction
 } from '../../utils/explorers'
 import { TransactionState } from '../../utils/constant'
+import abis from '../../services/abis.json'
+import { web3, makeContract } from '../../utils/Stakefun'
 
 const Mint = (props) => {
   const {
@@ -17,7 +18,6 @@ const Mint = (props) => {
     chainId,
     handleBack,
     vaultContract,
-    VaultContract,
     StakedTokenContract,
     title,
     approveVault,
@@ -28,6 +28,23 @@ const Mint = (props) => {
   const { activate } = web3React
   const [amount, setAmount] = React.useState('')
   const [approveClick, setApproveClick] = React.useState(false)
+  const [sealedTime, setSealedTime] = React.useState({
+    sealed: '',
+    time: ''
+  })
+
+  const VaultContract = makeContract(abis['vaults'], vaultContract)
+
+  const getSealedTimeAmount = async (amount) => {
+    setAmount(amount)
+    amount = web3.utils.toWei(amount)
+    console.log({ amount, owner })
+    const result = await VaultContract.methods
+      .sealedAndTimeAmount(owner, amount)
+      .call()
+    console.log('*************', result)
+  }
+
   const handleConnect = async () => {
     try {
       const data = await activate(injected)
@@ -175,11 +192,15 @@ const Mint = (props) => {
             className="input-transparent"
             placeholder="0 DEA"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => {
+              getSealedTimeAmount(e.target.value)
+            }}
           />
           <span
             className="box-balance-max pointer"
-            onClick={() => setAmount(balanceWallet)}
+            onClick={() => {
+              getSealedTimeAmount(balanceWallet)
+            }}
           >
             Max
           </span>
