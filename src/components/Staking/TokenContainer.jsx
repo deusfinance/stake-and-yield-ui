@@ -44,7 +44,6 @@ const TokenContainer = (props) => {
     stakeType: '0',
     stakeTypeName: '',
     approve: 0,
-    approveVault: 0,
     withDrawable: 0,
     withDrawableExit: 0,
     lockStakeType: false,
@@ -67,7 +66,6 @@ const TokenContainer = (props) => {
       stakeType: '0',
       stakeTypeName: '',
       approve: 0,
-      approveVault: 0,
       withDrawable: 0,
       withDrawableExit: 0,
       lockStakeType: false,
@@ -93,11 +91,7 @@ const TokenContainer = (props) => {
           .allowance(owner, stakingContract)
           .call()
         approve = Number(web3.utils.fromWei(approve, 'ether'))
-        let approveVault = await StakedTokenContract.methods
-          .allowance(owner, vaultContract)
-          .call()
-        approveVault = Number(web3.utils.fromWei(approveVault, 'ether'))
-        console.log({ approveVault })
+
         let apy = (
           (Number(web3.utils.fromWei(numbers[7], 'ether')) +
             Number(web3.utils.fromWei(numbers[8], 'ether'))) *
@@ -166,7 +160,6 @@ const TokenContainer = (props) => {
             StakedTokenContract,
             StakeAndYieldContract,
             approve,
-            approveVault,
             stakeType,
             stakeTypeName,
             balanceWallet,

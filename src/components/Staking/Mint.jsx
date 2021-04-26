@@ -20,13 +20,13 @@ const Mint = (props) => {
     vaultContract,
     StakedTokenContract,
     title,
-    approveVault,
     fetchData
   } = props
 
   const web3React = useWeb3React()
   const { activate } = web3React
   const [amount, setAmount] = React.useState('')
+  const [approve, setApprove] = React.useState(false)
   const [approveClick, setApproveClick] = React.useState(false)
   const [sealedTime, setSealedTime] = React.useState({
     sealed: '0',
@@ -34,6 +34,18 @@ const Mint = (props) => {
   })
 
   const VaultContract = makeContract(abis['vaults'], vaultContract)
+
+  React.useEffect(() => {
+    if (owner) checkApprove()
+  }, [owner, vaultContract, chainId])
+
+  const checkApprove = async () => {
+    let approve = await StakedTokenContract.methods
+      .allowance(owner, vaultContract)
+      .call()
+    approve = Number(web3.utils.fromWei(approve, 'ether'))
+    setApprove(approve)
+  }
 
   const getSealedTimeAmount = async (amount) => {
     setAmount(amount)
@@ -95,7 +107,6 @@ const Mint = (props) => {
             },
             chainId
           })
-          fetchData('approveLock')
         })
         .once('error', (error) => {
           CustomTranaction(TransactionState.FAILED, {
@@ -238,8 +249,8 @@ const Mint = (props) => {
         )}
         {owner && (chainId == 1 || chainId == 4) ? (
           <>
-            <div className={!approveVault ? 'flex-between' : 'flex-center'}>
-              {approveVault == 0 && (
+            <div className={!approve ? 'flex-between' : 'flex-center'}>
+              {approve == 0 && (
                 <div
                   className={`${
                     !approveClick ? 'approve-btn' : 'stake-deposite-btn'
@@ -253,13 +264,13 @@ const Mint = (props) => {
               <div
                 className={`${
                   approveClick ? 'approve-btn pointer' : 'stake-deposite-btn'
-                } ${approveVault ? 'pointer' : ''}`}
+                } ${approve ? 'pointer' : ''}`}
                 onClick={handleMint}
               >
                 Mint
               </div>
             </div>
-            {approveVault == 0 && (
+            {approve == 0 && (
               <div className="flex-center">
                 <div className="container-status-button">
                   <div className="active">1</div>
