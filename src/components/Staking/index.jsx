@@ -13,7 +13,15 @@ const Staking = () => {
   const [showTokens, setShowTokens] = React.useState(tokens[chainId])
   const [selesctedChainId, setSelesctedChainId] = React.useState(chainId)
   const [type, setType] = React.useState('all')
-  const [open, setOpen] = React.useState('')
+  const [open, setOpen] = React.useState({
+    sDEUS: false,
+    sDEA: false,
+    TIME: false,
+    BPT: false,
+    'sUNI-DD': false,
+    'sUNI-DU': false,
+    'sUNI-DE': false
+  })
 
   React.useEffect(() => {
     setType('all')
@@ -25,7 +33,7 @@ const Staking = () => {
   const chooseType = (e) => {
     let category = e.target.value
     setType(category)
-    setOpen(category)
+    setOpen(false)
     let result =
       category === 'all'
         ? tokens[selesctedChainId]
@@ -67,6 +75,15 @@ const Staking = () => {
               owner={account}
               chainId={chainId}
               open={open}
+              handleTriggerClick={(token) => {
+                console.log({ [token]: ![token] })
+                setOpen((prev) => {
+                  return {
+                    ...prev,
+                    [token]: !open[token]
+                  }
+                })
+              }}
             />
           ))}
         </div>

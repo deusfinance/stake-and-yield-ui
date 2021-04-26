@@ -26,7 +26,8 @@ const TokenContainer = (props) => {
     owner,
     chainId,
     category,
-    balancer
+    balancer,
+    handleTriggerClick
   } = props
   const [fetchData, setFetchData] = React.useState('')
   const [collapseContent, setCollapseContent] = React.useState('deposite')
@@ -219,7 +220,8 @@ const TokenContainer = (props) => {
   return (
     <div className="token-container">
       <Collapsible
-        open={open}
+        handleTriggerClick={() => handleTriggerClick(title)}
+        open={open[title]}
         trigger={
           <CollapseTrigger
             title={title}
