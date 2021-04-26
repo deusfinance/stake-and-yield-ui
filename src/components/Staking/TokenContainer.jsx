@@ -12,6 +12,8 @@ import Fluid from './Fluid'
 // import DepositBtn from './DepositBtn'
 import Deposite from './Deposite'
 import Mint from './Mint'
+import { CustomTranaction } from '../../utils/explorers'
+import { TransactionState } from '../../utils/constant'
 
 const TokenContainer = (props) => {
   const {
@@ -82,7 +84,6 @@ const TokenContainer = (props) => {
     const fetchData = async () => {
       try {
         let result = await StakeAndYieldContract.methods.userInfo(owner).call()
-        console.log('******************', result)
 
         let { numbers, exit, stakedTokenAddress } = result
         const StakedTokenContract = makeContract(abi, stakedTokenAddress)
@@ -209,10 +210,38 @@ const TokenContainer = (props) => {
       await StakeAndYieldContract.methods
         .unfreeze(amount)
         .send({ from: owner })
-        .once('receipt', () => {
+        .once('transactionHash', (hash) =>
+          CustomTranaction(TransactionState.LOADING, {
+            hash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title
+            },
+            chainId,
+            message: `Withdraw`
+          })
+        )
+        .once('receipt', ({ transactionHash }) => {
           setUnfreezStake('0')
+          CustomTranaction(TransactionState.SUCCESS, {
+            hash: transactionHash,
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title
+            },
+            chainId,
+            message: `Withdraw `
+          })
           setFetchData('unfreezStake')
         })
+        .once('error', () =>
+          CustomTranaction(TransactionState.FAILED, {
+            from: {
+              logo: `/img/bridge/${title}.svg`,
+              symbol: title
+            }
+          })
+        )
     } catch (error) {
       console.log('error happend in handleUnfreezStake', error)
     }
