@@ -253,7 +253,7 @@ const Deposite = (props) => {
             <div>connect wallet</div>
           </div>
         )}
-        {owner && (
+        {owner && (chainId == 1 || chainId == 4) ? (
           <>
             <div className={!approve ? 'flex-between' : 'flex-center'}>
               {approve == 0 && (
@@ -284,6 +284,10 @@ const Deposite = (props) => {
               </div>
             )}
           </>
+        ) : (
+          <a className="wrong-network">
+            <span>Wrong Network</span>
+          </a>
         )}
       </div>
     </>

@@ -67,7 +67,7 @@
   text-align: center;
 }
 /* TVL Box */
-.tvl-container {
+/* .tvl-container {
   position: absolute;
   width: 400px;
   height: 35px;
@@ -93,7 +93,6 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
-  /* identical to box height, or 143% */
 
   text-align: center;
 
@@ -104,7 +103,7 @@
   height: 35px;
 
   border: 1px solid #234645;
-}
+} */
 
 /* Description */
 
@@ -278,7 +277,7 @@
     font-size: 22px;
   }
 }
-@media screen and (max-width:1200px) {
+@media screen and (max-width: 1200px) {
   /* .expand-container {
     flex-direction: column;
   } */
@@ -297,14 +296,12 @@
   .stake-btn {
     margin-bottom: 3px;
   }
-  .stake-btn span{
+  .stake-btn span {
     width: 100%;
   }
   .container-staking {
- 
-   width: 100%; 
-   
-}
+    width: 100%;
+  }
 }
 
 /* end Content */
@@ -923,4 +920,29 @@ input:focus {
   background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%),
     linear-gradient(247.41deg, #a2fbb0 16.32%, #5ec4d6 87.6%);
   border-radius: 6px;
+}
+
+.wrong-network {
+  background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%);
+  border-radius: 6px;
+  color: #ffffff;
+  display: inline-block;
+  padding: 1px;
+  text-decoration: none;
+  margin: 0 3px;
+}
+.wrong-network span {
+  background: #0d0d0d;
+  display: block;
+  /* padding: 1px 10px; */
+  border-radius: 6px;
+  width: 100%;
+  height: 35px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

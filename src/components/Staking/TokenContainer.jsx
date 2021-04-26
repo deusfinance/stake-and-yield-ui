@@ -24,7 +24,8 @@ const TokenContainer = (props) => {
     yieldable,
     owner,
     chainId,
-    category
+    category,
+    balancer
   } = props
   const [fetchData, setFetchData] = React.useState('')
   const [collapseContent, setCollapseContent] = React.useState('deposite')
@@ -229,6 +230,7 @@ const TokenContainer = (props) => {
             onlyLocking={onlyLocking}
             apy={userInfo.apy}
             category={category}
+            balancer={balancer}
             balanceWallet={userInfo.balanceWallet}
             handleCollapseContent={(data) => handleCollapseContent(data)}
           />
@@ -239,6 +241,7 @@ const TokenContainer = (props) => {
             onlyLocking={onlyLocking}
             apy={userInfo.apy}
             category={category}
+            balancer={balancer}
             balanceWallet={userInfo.balanceWallet}
             handleCollapseContent={(data) => handleCollapseContent(data)}
           />

@@ -3,6 +3,7 @@ import React from 'react'
 const CollapseTrigger = ({
   title,
   category,
+  balancer,
   onlyLocking,
   apy,
   balanceWallet,
@@ -18,35 +19,43 @@ const CollapseTrigger = ({
       </div>
       <div className="apy">{`${apy}% apy`}</div>
       <div className="expand-container">
-        {/* {category === 'liquidity' ? (
-          <div
-            className="stake-btn pointer"
-            onClick={(e) => {
-              e.stopPropagation()
-              e.preventDefault()
-            }}
-          >
-            <a href="">Provide Liquidity</a>
-          </div>
-        ) : ( */}
-        <a
-          className="stake-btn pointer"
-          onClick={(e) => {
-            // e.stopPropagation()
-            // e.preventDefault()
-            handleCollapseContent('get')
-          }}
-        >
-          <span>{`GET ${title}`}</span>
-        </a>
-        {/* )} */}
-        {onlyLocking ? (
+        {balancer ? (
           <a
             className="stake-btn pointer"
             onClick={(e) => {
               e.stopPropagation()
               e.preventDefault()
-              // handleCollapseContent('deposite')
+              window.open(
+                'https://pools.balancer.exchange/#/pool/0x1dc2948b6db34e38291090b825518c1e8346938b/',
+                '_blank'
+              )
+            }}
+          >
+            <span>{`GET ${title}`}</span>
+          </a>
+        ) : (
+          <a
+            className="stake-btn pointer"
+            onClick={(e) => {
+              // e.stopPropagation()
+              // e.preventDefault()
+              handleCollapseContent('get')
+            }}
+          >
+            <span>{`GET ${title}`}</span>
+          </a>
+        )}
+        {onlyLocking ? (
+          <a
+            className="stake-btn pointer"
+            target="_blink"
+            onClick={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
+              window.open(
+                'https://pools.balancer.exchange/#/pool/0x1dc2948b6db34e38291090b825518c1e8346938b/',
+                '_blank'
+              )
             }}
           >
             <span>{`Deposite ${title}`}</span>

@@ -38,7 +38,6 @@ const Mint = (props) => {
   const getSealedTimeAmount = async (amount) => {
     setAmount(amount)
     amount = web3.utils.toWei(amount)
-    console.log({ amount, owner })
     const result = await VaultContract.methods
       .sealedAndTimeAmount(owner, amount)
       .call()
@@ -208,17 +207,17 @@ const Mint = (props) => {
         <div className="contract-box">
           <a
             className="show-contract pointer"
-            href={getEtherscanLink(vaultContract)}
+            href={getEtherscanLink(chainId, vaultContract)}
             target="_blink"
           >
             Show me the contract
           </a>
         </div>
         <div className="convert-box-mint">
-          <span>mint 1.345646 sDEA</span>
+          <span>{`mint ${sealedTime.sealed} ${title}`}</span>
         </div>
         <div className="convert-box-mint">
-          <span>mint 8000 TIME</span>
+          <span>{`mint ${sealedTime.time} TIME`}</span>
         </div>
 
         {!owner && (
@@ -229,7 +228,7 @@ const Mint = (props) => {
             <div>connect wallet</div>
           </div>
         )}
-        {owner && (
+        {owner && (chainId == 1 || chainId == 4) ? (
           <>
             <div className={!approveVault ? 'flex-between' : 'flex-center'}>
               {approveVault == 0 && (
@@ -261,6 +260,10 @@ const Mint = (props) => {
               </div>
             )}
           </>
+        ) : (
+          <a className="wrong-network">
+            <span>Wrong Network</span>
+          </a>
         )}
       </div>
     </>

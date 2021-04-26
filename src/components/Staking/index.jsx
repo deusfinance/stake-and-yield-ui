@@ -4,57 +4,35 @@ import { useWeb3React } from '@web3-react/core'
 import './style.css'
 
 import ToggleButtons from './ToggleButtons'
-import { web3 } from '../../utils/Stakefun'
 import TokenContainer from './TokenContainer'
 import tokens from './Data'
 
 const Staking = () => {
-  const [tvl, setTvl] = React.useState('')
-  const [vaultsAmount, setVaultsAmount] = React.useState('')
-  const [showTokens, setShowTokens] = React.useState(tokens)
-  const [type, setType] = React.useState('all')
   const { account, chainId } = useWeb3React()
+
+  const [showTokens, setShowTokens] = React.useState(tokens[chainId])
+  const [selesctedChainId, setSelesctedChainId] = React.useState(chainId)
+  const [type, setType] = React.useState('all')
+
   React.useEffect(() => {
-    // getTVL()
     setType('all')
-    setShowTokens(tokens)
+    let selectedChainId = chainId == 4 ? chainId : 1
+    setShowTokens(tokens[selectedChainId])
+    setSelesctedChainId(selectedChainId)
   }, [account, chainId])
 
-  // const getTVL = async () => {
-  //   const url = 'https://app.deus.finance/tvl.json'
-  //   try {
-  //     const resp = await fetch(url)
-  //     const result = await resp.json()
-  //     const intResult = parseFloat(result.stakingLockedValue)
-  //     const vaults = parseFloat(result.vaultLockedValue)
-
-  //     var formatter = new Intl.NumberFormat('en-US', {
-  //       style: 'currency',
-  //       currency: 'USD',
-  //       minimumFractionDigits: 0
-  //     })
-  //     setTvl(formatter.format(intResult))
-  //     setVaultsAmount(formatter.format(vaults))
-  //   } catch (error) {
-  //     console.log('fetch ' + url + ' had some error', error)
-  //   }
-  // }
   const chooseType = (e) => {
     let category = e.target.value
     setType(category)
     let result =
       category === 'all'
-        ? tokens
-        : tokens.filter((token) => token.category == category)
+        ? tokens[selesctedChainId]
+        : tokens[selesctedChainId].filter((token) => token.category == category)
     setShowTokens(result)
   }
+
   return (
     <div className="container-staking">
-      {/* <div className="tvl-container">
-        <div>TVL: {tvl}</div>
-        <div className="tvl-child-border"></div>
-        <div>VAULTS:{vaultsAmount}</div>
-      </div> */}
       <div className="staking-desc">
         <div className="title">Staking</div>
         <p>
