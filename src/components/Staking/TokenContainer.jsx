@@ -97,6 +97,7 @@ const TokenContainer = (props) => {
           .allowance(owner, vaultContract)
           .call()
         approveVault = Number(web3.utils.fromWei(approveVault, 'ether'))
+        console.log({ approveVault })
         let apy = (
           (Number(web3.utils.fromWei(numbers[7], 'ether')) +
             Number(web3.utils.fromWei(numbers[8], 'ether'))) *

@@ -26,6 +26,9 @@ ul.tab li label {
   line-height: 17px;
   text-align: center;
   color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 ul.tab li input[type='radio'] {
   opacity: 0;
@@ -60,13 +63,15 @@ ul.tab li input[type='radio']:checked ~ label {
   border: 2px solid #ffffff;
   box-sizing: border-box;
   border-radius: 6px;
-  padding: 8px 4.67px 8px 5.83px;
   position: absolute;
   z-index: 1;
   bottom: 100%;
   left: 30%;
   top: -37px;
   margin-left: -60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .tooltip .tooltip-text div {
   font-style: normal;

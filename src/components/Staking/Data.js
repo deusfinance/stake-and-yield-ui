@@ -68,7 +68,7 @@ const tokens = {
       title: 'sDEA',
       titleExit: 'DEA',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0xF8bcAF889F60E3d277EA0139e75047a0301D3307',
+      vaultContract: '0x09cb978bb7e6fb5583fc9107f92214451f6296a5',
       exitable: true,
       category: 'single',
       yieldable: true
@@ -77,7 +77,7 @@ const tokens = {
       title: 'sDEUS',
       titleExit: 'DEUS',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0xF8bcAF889F60E3d277EA0139e75047a0301D3307',
+      vaultContract: '0x09cb978bb7e6fb5583fc9107f92214451f6296a5',
       exitable: true,
       category: 'single',
       yieldable: true
@@ -86,7 +86,7 @@ const tokens = {
       title: 'TIME',
       titleExit: '',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0xF8bcAF889F60E3d277EA0139e75047a0301D3307',
+      vaultContract: '0x09cb978bb7e6fb5583fc9107f92214451f6296a5',
 
       exitable: false,
       category: '',
@@ -96,7 +96,7 @@ const tokens = {
       title: 'BPT',
       titleExit: '',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0xF8bcAF889F60E3d277EA0139e75047a0301D3307',
+      vaultContract: '0x09cb978bb7e6fb5583fc9107f92214451f6296a5',
       balancer: true,
       exitable: false,
       category: 'liquidity',
@@ -105,7 +105,7 @@ const tokens = {
     {
       title: 'sUNI-DD',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0xF8bcAF889F60E3d277EA0139e75047a0301D3307',
+      vaultContract: '0x09cb978bb7e6fb5583fc9107f92214451f6296a5',
 
       category: 'liquidity',
       onlyLocking: true
@@ -113,7 +113,7 @@ const tokens = {
     {
       title: 'sUNI-DU',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0xF8bcAF889F60E3d277EA0139e75047a0301D3307',
+      vaultContract: '0x09cb978bb7e6fb5583fc9107f92214451f6296a5',
 
       category: 'liquidity',
       onlyLocking: true
@@ -121,7 +121,7 @@ const tokens = {
     {
       title: 'sUNI-DE',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0xF8bcAF889F60E3d277EA0139e75047a0301D3307',
+      vaultContract: '0x09cb978bb7e6fb5583fc9107f92214451f6296a5',
 
       category: 'liquidity',
       onlyLocking: true

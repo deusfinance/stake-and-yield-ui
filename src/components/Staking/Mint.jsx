@@ -95,6 +95,7 @@ const Mint = (props) => {
             },
             chainId
           })
+          fetchData('approveLock')
         })
         .once('error', (error) => {
           CustomTranaction(TransactionState.FAILED, {
@@ -107,18 +108,15 @@ const Mint = (props) => {
           })
         })
     } catch (error) {
-      console
-        .log('Error Happend in Fun approve', error)
-        .once('error', (error) => {
-          CustomTranaction(TransactionState.FAILED, {
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title,
-              amount
-            },
-            chainId
-          })
-        })
+      console.log('Error Happend in Fun approve', error)
+      CustomTranaction(TransactionState.FAILED, {
+        from: {
+          logo: `/img/bridge/${title}.svg`,
+          symbol: title,
+          amount
+        },
+        chainId
+      })
     }
   }
   const handleMint = async () => {
@@ -254,8 +252,8 @@ const Mint = (props) => {
 
               <div
                 className={`${
-                  approveClick ? 'approve-btn' : 'stake-deposite-btn'
-                } pointer`}
+                  approveClick ? 'approve-btn pointer' : 'stake-deposite-btn'
+                } ${approveVault ? 'pointer' : ''}`}
                 onClick={handleMint}
               >
                 Mint
