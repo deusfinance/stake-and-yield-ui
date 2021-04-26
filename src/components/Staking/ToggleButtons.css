@@ -18,8 +18,7 @@ ul.tab li {
   position: relative;
 }
 ul.tab li label {
-  height: 35px;
-  min-width: 130px;
+  padding: 9px 31px;
   display: inline-block;
   font-style: normal;
   font-weight: normal;
@@ -27,10 +26,6 @@ ul.tab li label {
   line-height: 17px;
   text-align: center;
   color: #ffffff;
-  border: 1px solid transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 ul.tab li input[type='radio'] {
   opacity: 0;
@@ -65,15 +60,12 @@ ul.tab li input[type='radio']:checked ~ label {
   border: 2px solid #ffffff;
   box-sizing: border-box;
   border-radius: 6px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* padding: 8px 4.67px 8px 5.83px; */
+  padding: 8px 4.67px 8px 5.83px;
   position: absolute;
   z-index: 1;
   bottom: 100%;
   left: 30%;
-  top: -40px;
+  top: -37px;
   margin-left: -60px;
 }
 .tooltip .tooltip-text div {
@@ -98,57 +90,91 @@ ul.tab li input[type='radio']:checked ~ label {
 .tooltip:hover .tooltip-text {
   visibility: visible;
 }
+@media screen and (max-width: 799px) {
+  /* .expand-container {
+    flex-direction: column;
+  } */
+  .stake-btn {
+    margin-bottom: 3px;
+  }
+  .stake-btn span{
+    width: 100%;
+  }
+  .container-staking {
+ 
+   width: 100%; 
+   
+}
+}
 @media screen and (min-width: 445px) and (max-width: 570px) {
   ul.tab li label {
     width: 110px;
   }
-  ul.togglebuttontab {
-    /* display: flex;
+  ul.togglebuttontab{
+   /* display: flex;
    flex-direction: column; */
-    border-radius: 10px;
+   border-radius: 10px;
   }
-  ul.togglebuttontab li {
+  ul.togglebuttontab li{
     width: 100%;
   }
-  ul.togglebuttontab li label {
+  ul.togglebuttontab li label{
     width: 100%;
   }
 }
 @media screen and (min-width: 370px) and (max-width: 445px) {
-  ul.togglebuttontab {
+  ul.togglebuttontab{
     /* display: flex;
     flex-direction: column; */
     border-radius: 10px;
-  }
-  ul.togglebuttontab li {
+   }
+  ul.togglebuttontab li{
     width: 100%;
   }
-  ul.togglebuttontab li label {
+  ul.togglebuttontab li label{
     width: 100%;
   }
+
+
 }
 @media screen and (max-width: 500px) {
+  .token-title {
+    font-size: 19px;
+    white-space: nowrap;
+}
   .tvl-container {
     position: absolute;
     width: 400px;
     left: 0;
-  }
-  ul.togglebuttontab {
+}
+  ul.togglebuttontab{
     /* display: flex;
     flex-direction: column; */
     border-radius: 10px;
-  }
-  ul.tab li input[type='radio']:checked ~ label {
-    border-radius: 10px;
-  }
-  .stake-deposite-btn {
+    flex-direction: column!important;
+    min-width: 100%;
+   }
+   .stake-btn{
+    margin: 5px 0;
+
+   }
+   .stake-btn span {
     width: 100%;
+   }
+   ul.tab li input[type='radio']:checked ~ label {
+ 
+    border-radius: 10px;
+    
+}
+.stake-deposite-btn {
+  width: 100%;
   }
-  ul.togglebuttontab li {
+  ul.togglebuttontab li{
     width: 100%;
     min-width: none;
+
   }
-  ul.togglebuttontab li label {
+  ul.togglebuttontab li label{
     width: 100%;
     min-width: none;
   }
@@ -156,37 +182,39 @@ ul.tab li input[type='radio']:checked ~ label {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-  }
-  .expand-container {
-    flex-direction: column;
-    margin: 0 auto;
-  }
-  .deposite-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: 60px auto 0;
-  }
-  .approve-btn {
-    margin: 0 3px;
-  }
+}
+.expand-container {
+  flex-direction: column;
+  margin: 0 auto;
+}
+.deposite-container {
+ width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 60px auto 0;
+}
+.approve-btn {
+
+  margin: 0 3px;
+}
 }
 @media screen and (max-width: 370px) {
   .tvl-container {
     position: absolute;
     width: 360px;
     left: 0;
-  }
-  ul.togglebuttontab {
+}
+  ul.togglebuttontab{
     /* display: flex;
     flex-direction: column; */
     border-radius: 10px;
-  }
-  ul.togglebuttontab li {
+   }
+  ul.togglebuttontab li{
     width: 100%;
     min-width: none;
+
   }
-  ul.togglebuttontab li label {
+  ul.togglebuttontab li label{
     width: 100%;
     min-width: none;
   }
