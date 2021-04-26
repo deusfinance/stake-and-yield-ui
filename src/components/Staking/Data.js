@@ -64,7 +64,7 @@ const tokens = {
       title: 'sDEA',
       titleExit: 'DEA',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0x131ce6d543607786dd45182c0eddf58ad239c660',
+      vaultContract: '0xbA5d9F66f7545fa57c15da4002A33792A7E41F46',
       exitable: true,
       category: 'single',
       yieldable: true
@@ -73,7 +73,7 @@ const tokens = {
       title: 'sDEUS',
       titleExit: 'DEUS',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0xea59b13b2b383ec23029f659efd22469b6f42b04',
+      vaultContract: '0xbA5d9F66f7545fa57c15da4002A33792A7E41F46',
       exitable: true,
       category: 'single',
       yieldable: true
@@ -82,7 +82,7 @@ const tokens = {
       title: 'TIME',
       titleExit: '',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0x886f8586e1fbdc805e36fa3c871ae9e573db7a7f',
+      vaultContract: '0xbA5d9F66f7545fa57c15da4002A33792A7E41F46',
       exitable: false,
       category: '',
       yieldable: false
@@ -99,7 +99,7 @@ const tokens = {
     {
       title: 'sUNI-DD',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0xb91e3e0c16080a0df0b1e9f54f9467210383e45e',
+      vaultContract: '0xbA5d9F66f7545fa57c15da4002A33792A7E41F46',
 
       category: 'liquidity',
       onlyLocking: true
@@ -107,7 +107,7 @@ const tokens = {
     {
       title: 'sUNI-DU',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0xb91e3e0c16080a0df0b1e9f54f9467210383e45e',
+      vaultContract: '0xbA5d9F66f7545fa57c15da4002A33792A7E41F46',
 
       category: 'liquidity',
       onlyLocking: true
@@ -115,7 +115,7 @@ const tokens = {
     {
       title: 'sUNI-DE',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
-      vaultContract: '0xb91e3e0c16080a0df0b1e9f54f9467210383e45e',
+      vaultContract: '0xbA5d9F66f7545fa57c15da4002A33792A7E41F46',
       category: 'liquidity',
       onlyLocking: true
     }
