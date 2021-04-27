@@ -70,7 +70,7 @@ const Mint = (props) => {
 
   const getSealedTimeAmount = async (amount) => {
     setAmount(amount)
-    if (amount) {
+    if (amount && owner) {
       amount = web3.utils.toWei(amount)
       const result = await VaultContract.methods
         .sealedAndTimeAmount(owner, amount)
