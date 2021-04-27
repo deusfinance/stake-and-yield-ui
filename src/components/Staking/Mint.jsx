@@ -8,7 +8,7 @@ import {
 } from '../../utils/explorers'
 import { TransactionState } from '../../utils/constant'
 import abis from '../../services/abis.json'
-import { web3, makeContract } from '../../utils/Stakefun'
+import { web3, makeContract, sendTransaction } from '../../utils/Stakefun'
 
 const Mint = (props) => {
   const {
@@ -96,117 +96,92 @@ const Mint = (props) => {
     }
   }
 
-  const handleApprove = async () => {
-    try {
-      if (!owner) {
-        return
-      }
-      let amount = web3.utils.toWei('1000000000000000000')
-      await StakedTokenContract.methods
-        .approve(vaultContract, amount)
-        .send({ from: owner })
-        .once('transactionHash', (hash) =>
-          ApproveTranaction(TransactionState.LOADING, {
-            hash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title,
-              amount
-            },
-            chainId
-          })
-        )
-        .once('receipt', ({ transactionHash }) => {
-          setApproveClick(true)
-          ApproveTranaction(TransactionState.SUCCESS, {
-            hash: transactionHash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title,
-              amount
-            },
-            chainId
-          })
-        })
-        .once('error', (error) => {
-          CustomTranaction(TransactionState.FAILED, {
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title,
-              amount
-            },
-            chainId
-          })
-        })
-    } catch (error) {
-      console.log('Error Happend in Fun approve', error)
-      CustomTranaction(TransactionState.FAILED, {
-        from: {
-          logo: `/img/bridge/${title}.svg`,
-          symbol: title,
-          amount
-        },
-        chainId
-      })
+  const handleApprove = () => {
+    if (!owner) {
+      return
     }
+    let amount = web3.utils.toWei('1000000000000000000')
+    StakedTokenContract.methods
+      .approve(vaultContract, amount)
+      .send({ from: owner })
+      .once('transactionHash', (hash) =>
+        ApproveTranaction(TransactionState.LOADING, {
+          hash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title,
+            amount
+          },
+          chainId
+        })
+      )
+      .once('receipt', ({ transactionHash }) => {
+        setApproveClick(true)
+        ApproveTranaction(TransactionState.SUCCESS, {
+          hash: transactionHash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title,
+            amount
+          },
+          chainId
+        })
+      })
+      .once('error', (error) => {
+        CustomTranaction(TransactionState.FAILED, {
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title,
+            amount
+          },
+          chainId
+        })
+      })
   }
-  const handleMint = async () => {
-    try {
-      if (!owner) {
-        return
-      }
-      if (amount === '' || amount === '0') return
-      let amountVault = web3.utils.toWei(amount)
-      console.log(amountVault)
-      await VaultContract.methods
-        .lock(amountVault)
-        .send({ from: owner })
-        .once('transactionHash', (hash) =>
-          CustomTranaction(TransactionState.LOADING, {
-            hash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title,
-              amount
-            },
-            chainId,
-            message: `Mint ${amount} ${title}`
-          })
-        )
-        .once('receipt', ({ transactionHash }) => {
-          setAmount('')
-          console.log({ transactionHash })
-          CustomTranaction(TransactionState.SUCCESS, {
-            hash: transactionHash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title,
-              amount
-            },
-            chainId,
-            message: `Mint ${amount} ${title}`
-          })
-        })
-        .once('error', (hash) =>
-          CustomTranaction(TransactionState.FAILED, {
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            },
-            chainId
-          })
-        )
-    } catch (error) {
-      console.log(error)
-      CustomTranaction(TransactionState.FAILED, {
-        from: {
-          logo: `/img/bridge/${title}.svg`,
-          symbol: title,
-          amount
-        },
-        chainId
-      })
+  const handleMint = () => {
+    if (!owner) {
+      return
     }
+    if (amount === '' || amount === '0') return
+    let amountVault = web3.utils.toWei(amount)
+    VaultContract.methods
+      .lock(amountVault)
+      .send({ from: owner })
+      .once('transactionHash', (hash) =>
+        CustomTranaction(TransactionState.LOADING, {
+          hash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title,
+            amount
+          },
+          chainId,
+          message: `Mint ${amount} ${title}`
+        })
+      )
+      .once('receipt', ({ transactionHash }) => {
+        setAmount('')
+        console.log({ transactionHash })
+        CustomTranaction(TransactionState.SUCCESS, {
+          hash: transactionHash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title,
+            amount
+          },
+          chainId,
+          message: `Mint ${amount} ${title}`
+        })
+      })
+      .once('error', (hash) =>
+        CustomTranaction(TransactionState.FAILED, {
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId
+        })
+      )
   }
   return (
     <>

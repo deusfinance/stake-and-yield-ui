@@ -16,9 +16,8 @@ const Fluid = (props) => {
     showFluid
   } = props
 
-  const handleWithDraw = async () => {
-    // try {
-    await StakeAndYieldContract.methods
+  const handleWithDraw = () => {
+    StakeAndYieldContract.methods
       .withdrawUnfreezed()
       .send({ from: owner })
       .once('transactionHash', (hash) =>
@@ -52,17 +51,6 @@ const Fluid = (props) => {
           }
         })
       )
-    // } catch (error) {
-    //   console.log('Error happend in WithDraw Fluid', error)
-    //   CustomTranaction(TransactionState.FAILED, {
-    //     hash: error.transactionHash,
-    //     from: {
-    //       logo: `/img/bridge/${title}.svg`,
-    //       symbol: title
-    //     },
-    //     chainId
-    //   })
-    // }
   }
   return (
     <div className="userInfo-container">

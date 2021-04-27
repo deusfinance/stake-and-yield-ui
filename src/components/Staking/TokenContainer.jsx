@@ -79,30 +79,32 @@ const TokenContainer = (props) => {
   }, [owner, chainId])
 
   const StakeAndYieldContract = makeContract(StakeAndYieldABI, stakingContract)
-  let subscription = web3.eth.subscribe(
-    'newBlockHeaders',
-    function (error, result) {
-      if (!error) {
-        if (owner) {
-          updateInfo()
+  React.useEffect(() => {
+    let subscription = web3.eth.subscribe(
+      'newBlockHeaders',
+      function (error, result) {
+        if (!error) {
+          if (owner) {
+            updateInfo()
+          }
+          return
         }
-        return
+
+        console.error(error)
       }
-
-      console.error(error)
+    )
+    return () => {
+      // unsubscribes the subscription
+      subscription.unsubscribe(function (error, success) {
+        if (success) {
+          console.log('Successfully unsubscribed!')
+        }
+      })
     }
-  )
-
-  // unsubscribes the subscription
-  subscription.unsubscribe(function (error, success) {
-    if (success) {
-      console.log('Successfully unsubscribed!')
-    }
-  })
+  }, [])
 
   const updateInfo = async () => {
     let result = await StakeAndYieldContract.methods.userInfo(owner).call()
-
     let { numbers, exit, stakedTokenAddress } = result
     const StakedTokenContract = makeContract(abi, stakedTokenAddress)
     let balanceWallet = await StakedTokenContract.methods
@@ -325,46 +327,44 @@ const TokenContainer = (props) => {
   const handleBack = () => {
     setCollapseContent('default')
   }
-  const handleUnfreezStake = async () => {
-    try {
-      let amount = web3.utils.toWei(unfreezStake)
-      await StakeAndYieldContract.methods
-        .unfreeze(amount)
-        .send({ from: owner })
-        .once('transactionHash', (hash) =>
-          CustomTranaction(TransactionState.LOADING, {
-            hash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            },
-            chainId,
-            message: `Withdraw`
-          })
-        )
-        .once('receipt', ({ transactionHash }) => {
-          setUnfreezStake('0')
-          CustomTranaction(TransactionState.SUCCESS, {
-            hash: transactionHash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            },
-            chainId,
-            message: `Withdraw `
-          })
+  const handleUnfreezStake = () => {
+    if (unfreezStake == 0 || unfreezStake == '') return
+
+    let amount = web3.utils.toWei(unfreezStake)
+    StakeAndYieldContract.methods
+      .unfreeze(amount)
+      .send({ from: owner })
+      .once('transactionHash', (hash) =>
+        CustomTranaction(TransactionState.LOADING, {
+          hash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId,
+          message: `Withdraw`
         })
-        .once('error', () =>
-          CustomTranaction(TransactionState.FAILED, {
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            }
-          })
-        )
-    } catch (error) {
-      console.log('error happend in handleUnfreezStake', error)
-    }
+      )
+      .once('receipt', ({ transactionHash }) => {
+        setUnfreezStake('0')
+        CustomTranaction(TransactionState.SUCCESS, {
+          hash: transactionHash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId,
+          message: `Withdraw `
+        })
+      })
+      .once('error', () =>
+        CustomTranaction(TransactionState.FAILED, {
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          }
+        })
+      )
   }
 
   return (

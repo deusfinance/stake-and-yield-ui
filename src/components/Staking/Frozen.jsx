@@ -23,51 +23,45 @@ const Frozen = (props) => {
 
   const [unfreez, setUnfreez] = React.useState('0')
 
-  const handleUnfreeze = async () => {
-    try {
-      let amount = web3.utils.toWei(String(unfreez))
-      await StakeAndYieldContract.methods
-        .unfreeze(amount)
-        .send({ from: owner })
-        .once('transactionHash', (hash) =>
-          CustomTranaction(TransactionState.LOADING, {
-            hash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            },
-            chainId,
-            message: `Unfreeze ${amount} ${title}`
-          })
-        )
-        .once('receipt', ({ transactionHash }) => {
-          setUnfreez('0')
-          CustomTranaction(TransactionState.SUCCESS, {
-            hash: transactionHash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            },
-            chainId,
-            message: `Unfreeze ${amount} ${title}`
-          })
+  const handleUnfreeze = () => {
+    if (unfreez == 0 || unfreez == '') return
+
+    let amount = web3.utils.toWei(String(unfreez))
+
+    StakeAndYieldContract.methods
+      .unfreeze(amount)
+      .send({ from: owner })
+      .once('transactionHash', (hash) =>
+        CustomTranaction(TransactionState.LOADING, {
+          hash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId,
+          message: `Unfreeze ${amount} ${title}`
         })
-        .once('error', () =>
-          CustomTranaction(TransactionState.FAILED, {
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            }
-          })
-        )
-    } catch (error) {
-      CustomTranaction(TransactionState.FAILED, {
-        from: {
-          logo: `/img/bridge/${title}.svg`,
-          symbol: title
-        }
+      )
+      .once('receipt', ({ transactionHash }) => {
+        setUnfreez('0')
+        CustomTranaction(TransactionState.SUCCESS, {
+          hash: transactionHash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId,
+          message: `Unfreeze ${amount} ${title}`
+        })
       })
-    }
+      .once('error', () =>
+        CustomTranaction(TransactionState.FAILED, {
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          }
+        })
+      )
   }
   return (
     <div className="userInfo-container">

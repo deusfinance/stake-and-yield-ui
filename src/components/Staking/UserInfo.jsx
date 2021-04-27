@@ -18,96 +18,76 @@ const UserInfo = (props) => {
     fullyUnlock,
     exitable
   } = props
-  const handleClaim = async () => {
-    try {
-      await StakeAndYieldContract.methods
-        .claim()
-        .send({ from: owner })
-        .once('transactionHash', (hash) =>
-          CustomTranaction(TransactionState.LOADING, {
-            hash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            },
-            chainId,
-            message: `Claim ${claim} ${title}`
-          })
-        )
-        .once('receipt', ({ transactionHash }) => {
-          CustomTranaction(TransactionState.SUCCESS, {
-            hash: transactionHash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            },
-            chainId,
-            message: `Claim ${claim} ${title}`
-          })
+  const handleClaim = () => {
+    StakeAndYieldContract.methods
+      .claim()
+      .send({ from: owner })
+      .once('transactionHash', (hash) =>
+        CustomTranaction(TransactionState.LOADING, {
+          hash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId,
+          message: `Claim ${claim} ${title}`
         })
-        .once('error', () =>
-          CustomTranaction(TransactionState.FAILED, {
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            }
-          })
-        )
-    } catch (error) {
-      console.log('error happend in handleClaim', error)
-      CustomTranaction(TransactionState.FAILED, {
-        from: {
-          logo: `/img/bridge/${title}.svg`,
-          symbol: title
-        }
+      )
+      .once('receipt', ({ transactionHash }) => {
+        CustomTranaction(TransactionState.SUCCESS, {
+          hash: transactionHash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId,
+          message: `Claim ${claim} ${title}`
+        })
       })
-    }
+      .once('error', () =>
+        CustomTranaction(TransactionState.FAILED, {
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          }
+        })
+      )
   }
   // const handleRedeem = async () => {}
-  const handleStopExit = async () => {
-    try {
-      await StakeAndYieldContract.methods
-        .setExit(!exit)
-        .send({ from: owner })
-        .once('transactionHash', (hash) =>
-          CustomTranaction(TransactionState.LOADING, {
-            hash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            },
-            chainId,
-            message: `${exit ? 'Stop Vault Exit' : 'Enable Vault Exit'}`
-          })
-        )
-        .once('receipt', ({ transactionHash }) => {
-          CustomTranaction(TransactionState.SUCCESS, {
-            hash: transactionHash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            },
-            chainId,
-            message: `${exit ? 'Stop Vault Exit' : 'Enable Vault Exit'}`
-          })
+  const handleStopExit = () => {
+    StakeAndYieldContract.methods
+      .setExit(!exit)
+      .send({ from: owner })
+      .once('transactionHash', (hash) =>
+        CustomTranaction(TransactionState.LOADING, {
+          hash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId,
+          message: `${exit ? 'Stop Vault Exit' : 'Enable Vault Exit'}`
         })
-        .once('error', () =>
-          CustomTranaction(TransactionState.FAILED, {
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            }
-          })
-        )
-    } catch (error) {
-      console.log('error happend in set Exit', error)
-      CustomTranaction(TransactionState.FAILED, {
-        from: {
-          logo: `/img/bridge/${title}.svg`,
-          symbol: title
-        }
+      )
+      .once('receipt', ({ transactionHash }) => {
+        CustomTranaction(TransactionState.SUCCESS, {
+          hash: transactionHash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId,
+          message: `${exit ? 'Stop Vault Exit' : 'Enable Vault Exit'}`
+        })
       })
-    }
+      .once('error', () =>
+        CustomTranaction(TransactionState.FAILED, {
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          }
+        })
+      )
   }
   return (
     <div className="userInfo-container">

@@ -53,14 +53,13 @@ const Deposite = (props) => {
     }
   }
 
-  const handleApprove = async () => {
-    // try {
+  const handleApprove = () => {
     if (!owner) {
       return
     }
     let amount = web3.utils.toWei('1000000000000000000')
     let hash = ''
-    await StakedTokenContract.methods
+    StakedTokenContract.methods
       .approve(stakingContract, amount)
       .send({ from: owner })
       .once('transactionHash', (tx) => {
@@ -97,19 +96,8 @@ const Deposite = (props) => {
           chainId
         })
       )
-    // } catch (error) {
-    //   console.log('Error Happend in Fun approve', error)
-    //   CustomTranaction(TransactionState.FAILED, {
-    //     from: {
-    //       logo: `/img/bridge/${title}.svg`,
-    //       symbol: title
-    //     },
-    //     chainId
-    //   })
-    // }
   }
-  const handleStake = async () => {
-    // try {
+  const handleStake = () => {
     if (!owner) {
       return
     }
@@ -117,7 +105,7 @@ const Deposite = (props) => {
     let amount = web3.utils.toWei(stakeAmount)
     let type = selectedStakeType == '0' ? '1' : selectedStakeType
     let hash = ''
-    await StakeAndYieldContract.methods
+    StakeAndYieldContract.methods
       .deposit(amount, type, exitBtn)
       .send({ from: owner })
       .once('transactionHash', (tx) => {
@@ -157,16 +145,6 @@ const Deposite = (props) => {
           chainId
         })
       )
-    // } catch (error) {
-    //   console.log('Error Happend in Fun Stake', error)
-    //   CustomTranaction(TransactionState.FAILED, {
-    //     from: {
-    //       logo: `/img/bridge/${title}.svg`,
-    //       symbol: title
-    //     },
-    //     chainId
-    //   })
-    // }
   }
   const handleVaultExit = (data) => {
     if (lockStakeType) {
