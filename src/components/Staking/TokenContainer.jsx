@@ -14,11 +14,8 @@ import './style.css'
 import UserInfo from './UserInfo'
 import Frozen from './Frozen'
 import Fluid from './Fluid'
-// import DepositBtn from './DepositBtn'
 import Deposite from './Deposite'
 import Mint from './Mint'
-import { CustomTranaction } from '../../utils/explorers'
-import { TransactionState } from '../../utils/constant'
 
 const TokenContainer = (props) => {
   const {
@@ -89,13 +86,12 @@ const TokenContainer = (props) => {
     if (owner) {
       fetchDataUser()
     }
+
     let subscription = web3.eth.subscribe(
       'newBlockHeaders',
-      function (error, result) {
-        if (!error) {
-          if (owner) {
-            updateInfo()
-          }
+      (error, result) => {
+        if (!error && owner) {
+          fetchDataUser()
           return
         }
 
@@ -112,106 +108,13 @@ const TokenContainer = (props) => {
     }
   }, [owner, chainId])
 
-  const updateInfo = async () => {
-    let result = await StakeAndYieldContract.methods.userInfo(owner).call()
-    let { numbers, exit, stakedTokenAddress } = result
-    const StakedTokenContract = makeContract(abi, stakedTokenAddress)
-    let balanceWallet = await StakedTokenContract.methods
-      .balanceOf(owner)
-      .call()
-    balanceWallet = web3.utils.fromWei(balanceWallet, 'ether')
-    let approve = await StakedTokenContract.methods
-      .allowance(owner, stakingContract)
-      .call()
-    approve = Number(web3.utils.fromWei(approve, 'ether'))
-
-    let apy = (
-      (Number(web3.utils.fromWei(numbers[7], 'ether')) +
-        Number(web3.utils.fromWei(numbers[8], 'ether'))) *
-      100
-    ).toFixed(2)
-
-    let claim = web3.utils.fromWei(numbers[9], 'ether')
-    let balance = web3.utils.fromWei(numbers[0], 'ether')
-    let stakeType = numbers[1]
-    let totalSupply = Number(web3.utils.fromWei(numbers[4], 'ether'))
-    let totalSupplyYield = Number(web3.utils.fromWei(numbers[5], 'ether'))
-    let withDrawable = Number(web3.utils.fromWei(numbers[3], 'ether'))
-    let withDrawableExit = Number(web3.utils.fromWei(numbers[13], 'ether'))
-    let fullyUnlock = Number(numbers[10]) + 90 * 24 * 3600
-    fullyUnlock = moment(new Date(fullyUnlock * 1000)).format('DD.MM.YYYY')
-    let burn = balance / 90
-    let withDrawTime = Number(numbers[2]) + 24 * 3600
-    withDrawTime = new Date(withDrawTime * 1000)
-    let showFluid = moment(withDrawTime).diff(moment(new Date()))
-    // TODO check after transaction contract become ok
-    if (showFluid <= 0 && (withDrawable > 0 || withDrawableExit > 0)) {
-      setShowFluid(true)
-    }
-    let total = 0
-    let stakeTypeName = ''
-    switch (stakeType) {
-      case '1':
-        total = totalSupply
-        stakeTypeName = 'Stake'
-        break
-      case '2':
-        total = totalSupplyYield
-        stakeTypeName = 'Yield'
-        break
-      case '3':
-        total = totalSupplyYield + totalSupply
-        stakeTypeName = 'Stake & Yield'
-        break
-      default:
-        break
-    }
-
-    if (Number(balance) > 0) {
-      setUserInfo((prev) => {
-        return {
-          ...prev,
-          lockStakeType: true
-        }
-      })
+  React.useEffect(() => {
+    if (userInfo.stakeType === '0' || userInfo.balance == '0') {
+      setCollapseContent('deposite')
     } else {
-      {
-        setUserInfo((prev) => {
-          return {
-            ...prev,
-            lockStakeType: false
-          }
-        })
-      }
+      setCollapseContent('default')
     }
-    setUserInfo((prev) => {
-      return {
-        ...prev,
-        stakedTokenAddress,
-        StakedTokenContract,
-        StakeAndYieldContract,
-        approve,
-        stakeType,
-        stakeTypeName,
-        balanceWallet,
-        balance,
-        apy,
-        claim,
-        exit,
-        withDrawable,
-        withDrawableExit,
-        burn,
-        fullyUnlock,
-        withDrawTime
-      }
-    })
-    if (total > 0) {
-      const own = ((Number(balance) / total) * 100).toFixed(2)
-      setUserInfo((prev) => {
-        return { ...prev, own }
-      })
-    }
-  }
+  }, [owner, chainId, userInfo.balance])
 
   const fetchDataUser = async () => {
     try {
@@ -314,15 +217,11 @@ const TokenContainer = (props) => {
           return { ...prev, own }
         })
       }
-      if (stakeType === '0' || balance == '0') {
-        setCollapseContent('deposite')
-      } else {
-        setCollapseContent('default')
-      }
     } catch (error) {
       console.log('error Happend in Fetch data', error)
     }
   }
+
   const handleCollapseContent = (data) => {
     setCollapseContent(data)
   }
