@@ -13,7 +13,6 @@ const Frozen = (props) => {
     title,
     titleExit,
     StakeAndYieldContract,
-    fetchData,
     withDrawable,
     withDrawableExit,
     withDrawTime,
@@ -52,7 +51,6 @@ const Frozen = (props) => {
             chainId,
             message: `Unfreeze ${amount} ${title}`
           })
-          fetchData('unfreez')
         })
         .once('error', () =>
           CustomTranaction(TransactionState.FAILED, {

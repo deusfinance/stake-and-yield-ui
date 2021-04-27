@@ -31,7 +31,6 @@ const TokenContainer = (props) => {
     balancer,
     handleTriggerClick
   } = props
-  const [fetchData, setFetchData] = React.useState('')
   const [collapseContent, setCollapseContent] = React.useState('deposite')
   const [unfreezStake, setUnfreezStake] = React.useState('0')
   const [showFluid, setShowFluid] = React.useState(false)
@@ -80,123 +79,245 @@ const TokenContainer = (props) => {
   }, [owner, chainId])
 
   const StakeAndYieldContract = makeContract(StakeAndYieldABI, stakingContract)
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let result = await StakeAndYieldContract.methods.userInfo(owner).call()
-
-        let { numbers, exit, stakedTokenAddress } = result
-        const StakedTokenContract = makeContract(abi, stakedTokenAddress)
-        let balanceWallet = await StakedTokenContract.methods
-          .balanceOf(owner)
-          .call()
-        balanceWallet = web3.utils.fromWei(balanceWallet, 'ether')
-        let approve = await StakedTokenContract.methods
-          .allowance(owner, stakingContract)
-          .call()
-        approve = Number(web3.utils.fromWei(approve, 'ether'))
-
-        let apy = (
-          (Number(web3.utils.fromWei(numbers[7], 'ether')) +
-            Number(web3.utils.fromWei(numbers[8], 'ether'))) *
-          100
-        ).toFixed(2)
-
-        let claim = web3.utils.fromWei(numbers[9], 'ether')
-        let balance = web3.utils.fromWei(numbers[0], 'ether')
-        let stakeType = numbers[1]
-        let totalSupply = Number(web3.utils.fromWei(numbers[4], 'ether'))
-        let totalSupplyYield = Number(web3.utils.fromWei(numbers[5], 'ether'))
-        let withDrawable = Number(web3.utils.fromWei(numbers[3], 'ether'))
-        let withDrawableExit = Number(web3.utils.fromWei(numbers[13], 'ether'))
-        let fullyUnlock = Number(numbers[10]) + 90 * 24 * 3600
-        fullyUnlock = moment(new Date(fullyUnlock * 1000)).format('DD.MM.YYYY')
-        let burn = balance / 90
-        let withDrawTime = Number(numbers[2]) + 24 * 3600
-        withDrawTime = new Date(withDrawTime * 1000)
-        let showFluid = moment(withDrawTime).diff(moment(new Date()))
-        // TODO check after transaction contract become ok
-        if (showFluid <= 0 && (withDrawable > 0 || withDrawableExit > 0)) {
-          setShowFluid(true)
+  let subscription = web3.eth.subscribe(
+    'newBlockHeaders',
+    function (error, result) {
+      if (!error) {
+        if (owner) {
+          updateInfo()
         }
-        // let withDrawTimeRemain = diffHours(new Date(withDrawTime * 1000))
+        return
+      }
 
-        let total = 0
-        let stakeTypeName = ''
-        switch (stakeType) {
-          case '1':
-            total = totalSupply
-            stakeTypeName = 'Stake'
-            break
-          case '2':
-            total = totalSupplyYield
-            stakeTypeName = 'Yield'
-            break
-          case '3':
-            total = totalSupplyYield + totalSupply
-            stakeTypeName = 'Stake & Yield'
-            break
-          default:
-            break
-        }
+      console.error(error)
+    }
+  )
 
-        if (Number(balance) > 0) {
-          setUserInfo((prev) => {
-            return {
-              ...prev,
-              lockStakeType: true
-            }
-          })
-        } else {
-          {
-            setUserInfo((prev) => {
-              return {
-                ...prev,
-                lockStakeType: false
-              }
-            })
-          }
+  // unsubscribes the subscription
+  subscription.unsubscribe(function (error, success) {
+    if (success) {
+      console.log('Successfully unsubscribed!')
+    }
+  })
+
+  const updateInfo = async () => {
+    let result = await StakeAndYieldContract.methods.userInfo(owner).call()
+
+    let { numbers, exit, stakedTokenAddress } = result
+    const StakedTokenContract = makeContract(abi, stakedTokenAddress)
+    let balanceWallet = await StakedTokenContract.methods
+      .balanceOf(owner)
+      .call()
+    balanceWallet = web3.utils.fromWei(balanceWallet, 'ether')
+    let approve = await StakedTokenContract.methods
+      .allowance(owner, stakingContract)
+      .call()
+    approve = Number(web3.utils.fromWei(approve, 'ether'))
+
+    let apy = (
+      (Number(web3.utils.fromWei(numbers[7], 'ether')) +
+        Number(web3.utils.fromWei(numbers[8], 'ether'))) *
+      100
+    ).toFixed(2)
+
+    let claim = web3.utils.fromWei(numbers[9], 'ether')
+    let balance = web3.utils.fromWei(numbers[0], 'ether')
+    let stakeType = numbers[1]
+    let totalSupply = Number(web3.utils.fromWei(numbers[4], 'ether'))
+    let totalSupplyYield = Number(web3.utils.fromWei(numbers[5], 'ether'))
+    let withDrawable = Number(web3.utils.fromWei(numbers[3], 'ether'))
+    let withDrawableExit = Number(web3.utils.fromWei(numbers[13], 'ether'))
+    let fullyUnlock = Number(numbers[10]) + 90 * 24 * 3600
+    fullyUnlock = moment(new Date(fullyUnlock * 1000)).format('DD.MM.YYYY')
+    let burn = balance / 90
+    let withDrawTime = Number(numbers[2]) + 24 * 3600
+    withDrawTime = new Date(withDrawTime * 1000)
+    let showFluid = moment(withDrawTime).diff(moment(new Date()))
+    // TODO check after transaction contract become ok
+    if (showFluid <= 0 && (withDrawable > 0 || withDrawableExit > 0)) {
+      setShowFluid(true)
+    }
+    let total = 0
+    let stakeTypeName = ''
+    switch (stakeType) {
+      case '1':
+        total = totalSupply
+        stakeTypeName = 'Stake'
+        break
+      case '2':
+        total = totalSupplyYield
+        stakeTypeName = 'Yield'
+        break
+      case '3':
+        total = totalSupplyYield + totalSupply
+        stakeTypeName = 'Stake & Yield'
+        break
+      default:
+        break
+    }
+
+    if (Number(balance) > 0) {
+      setUserInfo((prev) => {
+        return {
+          ...prev,
+          lockStakeType: true
         }
+      })
+    } else {
+      {
         setUserInfo((prev) => {
           return {
             ...prev,
-            stakedTokenAddress,
-            StakedTokenContract,
-            StakeAndYieldContract,
-            approve,
-            stakeType,
-            stakeTypeName,
-            balanceWallet,
-            balance,
-            apy,
-            claim,
-            exit,
-            withDrawable,
-            withDrawableExit,
-            burn,
-            fullyUnlock,
-            withDrawTime
+            lockStakeType: false
           }
         })
-        if (total > 0) {
-          const own = ((Number(balance) / total) * 100).toFixed(2)
-          setUserInfo((prev) => {
-            return { ...prev, own }
-          })
-        }
-        if (stakeType === '0' || balance == '0') {
-          setCollapseContent('deposite')
-        } else {
-          setCollapseContent('default')
-        }
-        setFetchData('')
-      } catch (error) {
-        console.log('error Happend in Fetch data', error)
       }
     }
-    if (owner) fetchData()
-  }, [owner, fetchData, chainId])
+    setUserInfo((prev) => {
+      return {
+        ...prev,
+        stakedTokenAddress,
+        StakedTokenContract,
+        StakeAndYieldContract,
+        approve,
+        stakeType,
+        stakeTypeName,
+        balanceWallet,
+        balance,
+        apy,
+        claim,
+        exit,
+        withDrawable,
+        withDrawableExit,
+        burn,
+        fullyUnlock,
+        withDrawTime
+      }
+    })
+    if (total > 0) {
+      const own = ((Number(balance) / total) * 100).toFixed(2)
+      setUserInfo((prev) => {
+        return { ...prev, own }
+      })
+    }
+  }
 
+  React.useEffect(() => {
+    if (owner) {
+      fetchDataUser()
+    }
+  }, [owner, chainId])
+
+  const fetchDataUser = async () => {
+    try {
+      let result = await StakeAndYieldContract.methods.userInfo(owner).call()
+
+      let { numbers, exit, stakedTokenAddress } = result
+      const StakedTokenContract = makeContract(abi, stakedTokenAddress)
+      let balanceWallet = await StakedTokenContract.methods
+        .balanceOf(owner)
+        .call()
+      balanceWallet = web3.utils.fromWei(balanceWallet, 'ether')
+      let approve = await StakedTokenContract.methods
+        .allowance(owner, stakingContract)
+        .call()
+      approve = Number(web3.utils.fromWei(approve, 'ether'))
+
+      let apy = (
+        (Number(web3.utils.fromWei(numbers[7], 'ether')) +
+          Number(web3.utils.fromWei(numbers[8], 'ether'))) *
+        100
+      ).toFixed(2)
+
+      let claim = web3.utils.fromWei(numbers[9], 'ether')
+      let balance = web3.utils.fromWei(numbers[0], 'ether')
+      let stakeType = numbers[1]
+      let totalSupply = Number(web3.utils.fromWei(numbers[4], 'ether'))
+      let totalSupplyYield = Number(web3.utils.fromWei(numbers[5], 'ether'))
+      let withDrawable = Number(web3.utils.fromWei(numbers[3], 'ether'))
+      let withDrawableExit = Number(web3.utils.fromWei(numbers[13], 'ether'))
+      let fullyUnlock = Number(numbers[10]) + 90 * 24 * 3600
+      fullyUnlock = moment(new Date(fullyUnlock * 1000)).format('DD.MM.YYYY')
+      let burn = balance / 90
+      let withDrawTime = Number(numbers[2]) + 24 * 3600
+      withDrawTime = new Date(withDrawTime * 1000)
+      let showFluid = moment(withDrawTime).diff(moment(new Date()))
+      // TODO check after transaction contract become ok
+      if (showFluid <= 0 && (withDrawable > 0 || withDrawableExit > 0)) {
+        setShowFluid(true)
+      }
+      let total = 0
+      let stakeTypeName = ''
+      switch (stakeType) {
+        case '1':
+          total = totalSupply
+          stakeTypeName = 'Stake'
+          break
+        case '2':
+          total = totalSupplyYield
+          stakeTypeName = 'Yield'
+          break
+        case '3':
+          total = totalSupplyYield + totalSupply
+          stakeTypeName = 'Stake & Yield'
+          break
+        default:
+          break
+      }
+
+      if (Number(balance) > 0) {
+        setUserInfo((prev) => {
+          return {
+            ...prev,
+            lockStakeType: true
+          }
+        })
+      } else {
+        {
+          setUserInfo((prev) => {
+            return {
+              ...prev,
+              lockStakeType: false
+            }
+          })
+        }
+      }
+      setUserInfo((prev) => {
+        return {
+          ...prev,
+          stakedTokenAddress,
+          StakedTokenContract,
+          StakeAndYieldContract,
+          approve,
+          stakeType,
+          stakeTypeName,
+          balanceWallet,
+          balance,
+          apy,
+          claim,
+          exit,
+          withDrawable,
+          withDrawableExit,
+          burn,
+          fullyUnlock,
+          withDrawTime
+        }
+      })
+      if (total > 0) {
+        const own = ((Number(balance) / total) * 100).toFixed(2)
+        setUserInfo((prev) => {
+          return { ...prev, own }
+        })
+      }
+      if (stakeType === '0' || balance == '0') {
+        setCollapseContent('deposite')
+      } else {
+        setCollapseContent('default')
+      }
+    } catch (error) {
+      console.log('error Happend in Fetch data', error)
+    }
+  }
   const handleCollapseContent = (data) => {
     setCollapseContent(data)
   }
@@ -232,7 +353,6 @@ const TokenContainer = (props) => {
             chainId,
             message: `Withdraw `
           })
-          setFetchData('unfreezStake')
         })
         .once('error', () =>
           CustomTranaction(TransactionState.FAILED, {
@@ -283,7 +403,6 @@ const TokenContainer = (props) => {
               title={title}
               owner={owner}
               chainId={chainId}
-              fetchData={(data) => setFetchData(data)}
               exitable={exitable}
             />
             {userInfo.stakeType !== '1' ? (
@@ -294,7 +413,6 @@ const TokenContainer = (props) => {
                   title={title}
                   titleExit={titleExit}
                   chainId={chainId}
-                  fetchData={(data) => setFetchData(data)}
                   showFluid={() => setShowFluid(true)}
                 />
                 {showFluid && (
@@ -304,7 +422,6 @@ const TokenContainer = (props) => {
                     owner={owner}
                     title={title}
                     titleExit={titleExit}
-                    fetchData={(data) => setFetchData(data)}
                     showFluid={() => setShowFluid(false)}
                   />
                 )}
@@ -341,7 +458,6 @@ const TokenContainer = (props) => {
           <Deposite
             {...userInfo}
             stakingContract={stakingContract}
-            fetchData={(data) => setFetchData(data)}
             owner={owner}
             chainId={chainId}
             title={title}
@@ -354,7 +470,6 @@ const TokenContainer = (props) => {
           <Mint
             {...userInfo}
             vaultContract={vaultContract}
-            fetchData={(data) => setFetchData(data)}
             owner={owner}
             chainId={chainId}
             title={title}

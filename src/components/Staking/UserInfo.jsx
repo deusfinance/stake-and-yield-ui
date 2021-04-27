@@ -14,7 +14,6 @@ const UserInfo = (props) => {
     StakeAndYieldContract,
     owner,
     exit,
-    fetchData,
     burn,
     fullyUnlock,
     exitable
@@ -45,7 +44,6 @@ const UserInfo = (props) => {
             chainId,
             message: `Claim ${claim} ${title}`
           })
-          fetchData('claim')
         })
         .once('error', () =>
           CustomTranaction(TransactionState.FAILED, {
@@ -92,7 +90,6 @@ const UserInfo = (props) => {
             chainId,
             message: `${exit ? 'Stop Vault Exit' : 'Enable Vault Exit'}`
           })
-          fetchData('setExit')
         })
         .once('error', () =>
           CustomTranaction(TransactionState.FAILED, {

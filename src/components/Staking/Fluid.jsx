@@ -11,7 +11,6 @@ const Fluid = (props) => {
     title,
     titleExit,
     StakeAndYieldContract,
-    fetchData,
     exit,
     chainId,
     showFluid
@@ -43,7 +42,6 @@ const Fluid = (props) => {
           chainId,
           message: `Withdraw + Claim`
         })
-        fetchData('withdrawUnfreezed')
         showFluid()
       })
       .once('error', () =>

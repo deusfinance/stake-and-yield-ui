@@ -19,7 +19,6 @@ const Deposite = (props) => {
     stakingContract,
     StakedTokenContract,
     StakeAndYieldContract,
-    fetchData,
     exit,
     owner,
     chainId,
@@ -55,115 +54,119 @@ const Deposite = (props) => {
   }
 
   const handleApprove = async () => {
-    try {
-      if (!owner) {
-        return
-      }
-      let amount = web3.utils.toWei('1000000000000000000')
-
-      await StakedTokenContract.methods
-        .approve(stakingContract, amount)
-        .send({ from: owner })
-        .once('transactionHash', (hash) =>
-          ApproveTranaction(TransactionState.LOADING, {
-            hash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title,
-              amount
-            },
-            chainId
-          })
-        )
-        .once('receipt', ({ transactionHash }) => {
-          setApproveClick(true)
-          ApproveTranaction(TransactionState.SUCCESS, {
-            hash: transactionHash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title,
-              amount
-            },
-            chainId
-          })
-        })
-        .once('error', () =>
-          CustomTranaction(TransactionState.FAILED, {
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            },
-            chainId
-          })
-        )
-    } catch (error) {
-      console.log('Error Happend in Fun approve', error)
-      CustomTranaction(TransactionState.FAILED, {
-        from: {
-          logo: `/img/bridge/${title}.svg`,
-          symbol: title
-        },
-        chainId
-      })
+    // try {
+    if (!owner) {
+      return
     }
+    let amount = web3.utils.toWei('1000000000000000000')
+    let hash = ''
+    await StakedTokenContract.methods
+      .approve(stakingContract, amount)
+      .send({ from: owner })
+      .once('transactionHash', (tx) => {
+        hash = tx
+        ApproveTranaction(TransactionState.LOADING, {
+          hash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title,
+            amount
+          },
+          chainId
+        })
+      })
+      .once('receipt', ({ transactionHash }) => {
+        setApproveClick(true)
+        ApproveTranaction(TransactionState.SUCCESS, {
+          hash: transactionHash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title,
+            amount
+          },
+          chainId
+        })
+      })
+      .once('error', () =>
+        CustomTranaction(TransactionState.FAILED, {
+          hash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId
+        })
+      )
+    // } catch (error) {
+    //   console.log('Error Happend in Fun approve', error)
+    //   CustomTranaction(TransactionState.FAILED, {
+    //     from: {
+    //       logo: `/img/bridge/${title}.svg`,
+    //       symbol: title
+    //     },
+    //     chainId
+    //   })
+    // }
   }
   const handleStake = async () => {
-    try {
-      if (!owner) {
-        return
-      }
-      if (stakeAmount == 0 || stakeAmount == '') return
-      let amount = web3.utils.toWei(stakeAmount)
-      let type = selectedStakeType == '0' ? '1' : selectedStakeType
-      await StakeAndYieldContract.methods
-        .deposit(amount, type, exitBtn)
-        .send({ from: owner })
-        .once('transactionHash', (hash) =>
-          CustomTranaction(TransactionState.LOADING, {
-            hash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title,
-              stakeAmount
-            },
-            chainId,
-            message: `Staked ${stakeAmount} ${title}`
-          })
-        )
-        .once('receipt', ({ transactionHash }) => {
-          setStakeAmount('')
-          console.log({ transactionHash })
-          CustomTranaction(TransactionState.SUCCESS, {
-            hash: transactionHash,
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title,
-              stakeAmount
-            },
-            chainId,
-            message: `Staked ${stakeAmount} ${title}`
-          })
-          fetchData('stake')
-        })
-        .once('error', (hash) =>
-          CustomTranaction(TransactionState.FAILED, {
-            from: {
-              logo: `/img/bridge/${title}.svg`,
-              symbol: title
-            },
-            chainId
-          })
-        )
-    } catch (error) {
-      console.log('Error Happend in Fun Stake', error)
-      CustomTranaction(TransactionState.FAILED, {
-        from: {
-          logo: `/img/bridge/${title}.svg`,
-          symbol: title
-        },
-        chainId
-      })
+    // try {
+    if (!owner) {
+      return
     }
+    if (stakeAmount == 0 || stakeAmount == '') return
+    let amount = web3.utils.toWei(stakeAmount)
+    let type = selectedStakeType == '0' ? '1' : selectedStakeType
+    let hash = ''
+    await StakeAndYieldContract.methods
+      .deposit(amount, type, exitBtn)
+      .send({ from: owner })
+      .once('transactionHash', (tx) => {
+        hash = tx
+        CustomTranaction(TransactionState.LOADING, {
+          hash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title,
+            stakeAmount
+          },
+          chainId,
+          message: `Staked ${stakeAmount} ${title}`
+        })
+      })
+      .once('receipt', ({ transactionHash }) => {
+        setStakeAmount('')
+        console.log({ transactionHash })
+        CustomTranaction(TransactionState.SUCCESS, {
+          hash: transactionHash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title,
+            stakeAmount
+          },
+          chainId,
+          message: `Staked ${stakeAmount} ${title}`
+        })
+      })
+      .once('error', () =>
+        CustomTranaction(TransactionState.FAILED, {
+          hash,
+          from: {
+            logo: `/img/bridge/${title}.svg`,
+            symbol: title
+          },
+          chainId
+        })
+      )
+    // } catch (error) {
+    //   console.log('Error Happend in Fun Stake', error)
+    //   CustomTranaction(TransactionState.FAILED, {
+    //     from: {
+    //       logo: `/img/bridge/${title}.svg`,
+    //       symbol: title
+    //     },
+    //     chainId
+    //   })
+    // }
   }
   const handleVaultExit = (data) => {
     if (lockStakeType) {

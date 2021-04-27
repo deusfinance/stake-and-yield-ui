@@ -19,8 +19,7 @@ const Mint = (props) => {
     handleBack,
     vaultContract,
     StakedTokenContract,
-    title,
-    fetchData
+    title
   } = props
 
   const web3React = useWeb3React()
@@ -38,6 +37,26 @@ const Mint = (props) => {
   React.useEffect(() => {
     if (owner && vaultContract) checkApprove()
   }, [owner, vaultContract])
+
+  let subscription = web3.eth.subscribe(
+    'newBlockHeaders',
+    function (error, result) {
+      if (!error) {
+        if (owner && vaultContract) {
+          checkApprove()
+        }
+        return
+      }
+      console.error(error)
+    }
+  )
+
+  // unsubscribes the subscription
+  subscription.unsubscribe(function (error, success) {
+    if (success) {
+      console.log('Successfully unsubscribed!')
+    }
+  })
 
   const checkApprove = async () => {
     if (StakedTokenContract) {
@@ -99,7 +118,6 @@ const Mint = (props) => {
         )
         .once('receipt', ({ transactionHash }) => {
           setApproveClick(true)
-          // fetchData('approveMint')
           ApproveTranaction(TransactionState.SUCCESS, {
             hash: transactionHash,
             from: {
@@ -168,7 +186,6 @@ const Mint = (props) => {
             chainId,
             message: `Mint ${amount} ${title}`
           })
-          fetchData('Mint')
         })
         .once('error', (hash) =>
           CustomTranaction(TransactionState.FAILED, {

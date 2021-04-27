@@ -314,15 +314,15 @@ export function CustomTranaction(type, payload) {
       ToastTransaction(
         'warn',
         'Transaction Failed',
-        // <ExternalLink
-        //   href={getTransactionLink(
-        //     payload.chainId,
-        //     payload.hash,
-        //     'transaction'
-        //   )}
-        // >
-        //   {`View On Explorer`}
-        // </ExternalLink>
+        <ExternalLink
+          href={getTransactionLink(
+            payload.chainId,
+            payload.hash,
+            'transaction'
+          )}
+        >
+          {`View On Explorer`}
+        </ExternalLink>
       )
       break
 
