@@ -3,7 +3,12 @@ import Collapsible from 'react-collapsible'
 import moment from 'moment'
 import CollapseTrigger from './CollapseTrigger'
 import CollapseTriggerOpen from './CollapseTriggerOpen'
-import { web3, makeContract, diffHours } from '../../utils/Stakefun'
+import {
+  web3,
+  makeContract,
+  sendTransaction,
+  diffHours
+} from '../../utils/Stakefun'
 import { abi, StakeAndYieldABI } from '../../utils/ABIERC20'
 import './style.css'
 import UserInfo from './UserInfo'
@@ -79,7 +84,11 @@ const TokenContainer = (props) => {
   }, [owner, chainId])
 
   const StakeAndYieldContract = makeContract(StakeAndYieldABI, stakingContract)
+
   React.useEffect(() => {
+    if (owner) {
+      fetchDataUser()
+    }
     let subscription = web3.eth.subscribe(
       'newBlockHeaders',
       function (error, result) {
@@ -101,7 +110,7 @@ const TokenContainer = (props) => {
         }
       })
     }
-  }, [])
+  }, [owner, chainId])
 
   const updateInfo = async () => {
     let result = await StakeAndYieldContract.methods.userInfo(owner).call()
@@ -203,12 +212,6 @@ const TokenContainer = (props) => {
       })
     }
   }
-
-  React.useEffect(() => {
-    if (owner) {
-      fetchDataUser()
-    }
-  }, [owner, chainId])
 
   const fetchDataUser = async () => {
     try {
@@ -331,40 +334,16 @@ const TokenContainer = (props) => {
     if (unfreezStake == 0 || unfreezStake == '') return
 
     let amount = web3.utils.toWei(unfreezStake)
-    StakeAndYieldContract.methods
-      .unfreeze(amount)
-      .send({ from: owner })
-      .once('transactionHash', (hash) =>
-        CustomTranaction(TransactionState.LOADING, {
-          hash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId,
-          message: `Withdraw`
-        })
-      )
-      .once('receipt', ({ transactionHash }) => {
-        setUnfreezStake('0')
-        CustomTranaction(TransactionState.SUCCESS, {
-          hash: transactionHash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId,
-          message: `Withdraw `
-        })
-      })
-      .once('error', () =>
-        CustomTranaction(TransactionState.FAILED, {
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          }
-        })
-      )
+    sendTransaction(
+      StakeAndYieldContract,
+      `unfreeze`,
+      [amount],
+      owner,
+      chainId,
+      `Withdraw`
+    ).then(() => {
+      setUnfreezStake(0)
+    })
   }
 
   return (

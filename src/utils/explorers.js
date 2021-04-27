@@ -329,16 +329,16 @@ export function CustomTranaction(type, payload) {
     default:
       ToastTransaction(
         'info',
-        'Transaction Unhandled',
-        <ExternalLink
-          href={getTransactionLink(
-            payload.chainId,
-            payload.hash,
-            'transaction'
-          )}
-        >
-          {`View On Explorer`}
-        </ExternalLink>
+        'Transaction Unhandled'
+        // <ExternalLink
+        //   href={getTransactionLink(
+        //     payload.chainId,
+        //     payload.hash,
+        //     'transaction'
+        //   )}
+        // >
+        //   {`View On Explorer ↗ `}
+        // </ExternalLink>
       )
   }
   return

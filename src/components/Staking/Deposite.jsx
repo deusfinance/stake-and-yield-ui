@@ -1,14 +1,9 @@
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 import ToggleButtons from './ToggleButtons'
-import { web3 } from '../../utils/Stakefun'
+import { web3, sendTransaction } from '../../utils/Stakefun'
 import { injected } from '../../connectors'
-import {
-  ApproveTranaction,
-  CustomTranaction,
-  getEtherscanLink
-} from '../../utils/explorers'
-import { TransactionState } from '../../utils/constant'
+import { getEtherscanLink } from '../../utils/explorers'
 
 const Deposite = (props) => {
   const {
@@ -58,44 +53,16 @@ const Deposite = (props) => {
       return
     }
     let amount = web3.utils.toWei('1000000000000000000')
-    let hash = ''
-    StakedTokenContract.methods
-      .approve(stakingContract, amount)
-      .send({ from: owner })
-      .once('transactionHash', (tx) => {
-        hash = tx
-        ApproveTranaction(TransactionState.LOADING, {
-          hash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title,
-            amount
-          },
-          chainId
-        })
-      })
-      .once('receipt', ({ transactionHash }) => {
-        setApproveClick(true)
-        ApproveTranaction(TransactionState.SUCCESS, {
-          hash: transactionHash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title,
-            amount
-          },
-          chainId
-        })
-      })
-      .once('error', () =>
-        CustomTranaction(TransactionState.FAILED, {
-          hash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId
-        })
-      )
+    sendTransaction(
+      StakedTokenContract,
+      `approve`,
+      [stakingContract, amount],
+      owner,
+      chainId,
+      `Approved ${title}`
+    ).then(() => {
+      setApproveClick(true)
+    })
   }
   const handleStake = () => {
     if (!owner) {
@@ -104,47 +71,16 @@ const Deposite = (props) => {
     if (stakeAmount == 0 || stakeAmount == '') return
     let amount = web3.utils.toWei(stakeAmount)
     let type = selectedStakeType == '0' ? '1' : selectedStakeType
-    let hash = ''
-    StakeAndYieldContract.methods
-      .deposit(amount, type, exitBtn)
-      .send({ from: owner })
-      .once('transactionHash', (tx) => {
-        hash = tx
-        CustomTranaction(TransactionState.LOADING, {
-          hash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title,
-            stakeAmount
-          },
-          chainId,
-          message: `Staked ${stakeAmount} ${title}`
-        })
-      })
-      .once('receipt', ({ transactionHash }) => {
-        setStakeAmount('')
-        console.log({ transactionHash })
-        CustomTranaction(TransactionState.SUCCESS, {
-          hash: transactionHash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title,
-            stakeAmount
-          },
-          chainId,
-          message: `Staked ${stakeAmount} ${title}`
-        })
-      })
-      .once('error', () =>
-        CustomTranaction(TransactionState.FAILED, {
-          hash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId
-        })
-      )
+    sendTransaction(
+      StakeAndYieldContract,
+      `deposit`,
+      [amount, type, exitBtn],
+      owner,
+      chainId,
+      `Staked ${stakeAmount} ${title}`
+    ).then(() => {
+      setStakeAmount('0')
+    })
   }
   const handleVaultExit = (data) => {
     if (lockStakeType) {

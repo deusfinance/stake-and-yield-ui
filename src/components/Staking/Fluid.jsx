@@ -1,7 +1,6 @@
 import React from 'react'
 import DrawableAmount from './DrawableAmount'
-import { CustomTranaction } from '../../utils/explorers'
-import { TransactionState } from '../../utils/constant'
+import { sendTransaction } from '../../utils/Stakefun'
 
 const Fluid = (props) => {
   const {
@@ -17,40 +16,16 @@ const Fluid = (props) => {
   } = props
 
   const handleWithDraw = () => {
-    StakeAndYieldContract.methods
-      .withdrawUnfreezed()
-      .send({ from: owner })
-      .once('transactionHash', (hash) =>
-        CustomTranaction(TransactionState.LOADING, {
-          hash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId,
-          message: `With Draw Unfreeze`
-        })
-      )
-      .once('receipt', ({ transactionHash }) => {
-        CustomTranaction(TransactionState.SUCCESS, {
-          hash: transactionHash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId,
-          message: `Withdraw + Claim`
-        })
-        showFluid()
-      })
-      .once('error', () =>
-        CustomTranaction(TransactionState.FAILED, {
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          }
-        })
-      )
+    sendTransaction(
+      StakeAndYieldContract,
+      `withdrawUnfreezed`,
+      [],
+      owner,
+      chainId,
+      `Withdraw + Claim`
+    ).then(() => {
+      showFluid()
+    })
   }
   return (
     <div className="userInfo-container">

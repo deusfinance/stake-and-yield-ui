@@ -1,12 +1,7 @@
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { injected } from '../../connectors'
-import {
-  ApproveTranaction,
-  getEtherscanLink,
-  CustomTranaction
-} from '../../utils/explorers'
-import { TransactionState } from '../../utils/constant'
+import { getEtherscanLink } from '../../utils/explorers'
 import abis from '../../services/abis.json'
 import { web3, makeContract, sendTransaction } from '../../utils/Stakefun'
 
@@ -101,42 +96,16 @@ const Mint = (props) => {
       return
     }
     let amount = web3.utils.toWei('1000000000000000000')
-    StakedTokenContract.methods
-      .approve(vaultContract, amount)
-      .send({ from: owner })
-      .once('transactionHash', (hash) =>
-        ApproveTranaction(TransactionState.LOADING, {
-          hash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title,
-            amount
-          },
-          chainId
-        })
-      )
-      .once('receipt', ({ transactionHash }) => {
-        setApproveClick(true)
-        ApproveTranaction(TransactionState.SUCCESS, {
-          hash: transactionHash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title,
-            amount
-          },
-          chainId
-        })
-      })
-      .once('error', (error) => {
-        CustomTranaction(TransactionState.FAILED, {
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title,
-            amount
-          },
-          chainId
-        })
-      })
+    sendTransaction(
+      StakedTokenContract,
+      `approve`,
+      [vaultContract, amount],
+      owner,
+      chainId,
+      `Approved ${title}`
+    ).then(() => {
+      setApproveClick(true)
+    })
   }
   const handleMint = () => {
     if (!owner) {
@@ -144,44 +113,16 @@ const Mint = (props) => {
     }
     if (amount === '' || amount === '0') return
     let amountVault = web3.utils.toWei(amount)
-    VaultContract.methods
-      .lock(amountVault)
-      .send({ from: owner })
-      .once('transactionHash', (hash) =>
-        CustomTranaction(TransactionState.LOADING, {
-          hash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title,
-            amount
-          },
-          chainId,
-          message: `Mint ${amount} ${title}`
-        })
-      )
-      .once('receipt', ({ transactionHash }) => {
-        setAmount('')
-        console.log({ transactionHash })
-        CustomTranaction(TransactionState.SUCCESS, {
-          hash: transactionHash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title,
-            amount
-          },
-          chainId,
-          message: `Mint ${amount} ${title}`
-        })
-      })
-      .once('error', (hash) =>
-        CustomTranaction(TransactionState.FAILED, {
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId
-        })
-      )
+    sendTransaction(
+      VaultContract,
+      `lock`,
+      [amountVault],
+      owner,
+      chainId,
+      `Mint ${amount} ${title}`
+    ).then(() => {
+      // setAmount('0')
+    })
   }
   return (
     <>

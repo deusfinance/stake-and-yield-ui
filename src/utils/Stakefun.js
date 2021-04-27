@@ -6,6 +6,7 @@ import {
   CustomTranaction
 } from './explorers'
 import { TransactionState } from './constant'
+import { reject } from 'lodash'
 
 const INFURA_URL =
   'wss://rinkeby.infura.io/ws/v3/4e955a81217a477e88e3793856deb18b'
@@ -25,50 +26,40 @@ const sendTransaction = (
   methodName,
   params,
   owner,
-  title,
   chainId,
-  amount
+  message
 ) => {
-  let hash = ''
+  return new Promise((resolve, reject) => {
+    let hash = null
 
-  contract.methods[methodName](...params)
-    .send({ from: owner })
-    .once('transactionHash', (tx) => {
-      hash = tx
-      CustomTranaction(TransactionState.LOADING, {
-        hash,
-        from: {
-          logo: `/img/bridge/${title}.svg`,
-          symbol: title,
-          amount
-        },
-        chainId,
-        message: `Mint ${amount} ${title}`
+    contract.methods[methodName](...params)
+      .send({ from: owner })
+      .once('transactionHash', (tx) => {
+        hash = tx
+        CustomTranaction(TransactionState.LOADING, {
+          hash,
+          chainId,
+          message
+        })
       })
-    })
-    .once('receipt', ({ transactionHash }) => {
-      console.log({ transactionHash })
-      CustomTranaction(TransactionState.SUCCESS, {
-        hash: transactionHash,
-        from: {
-          logo: `/img/bridge/${title}.svg`,
-          symbol: title,
-          amount
-        },
-        chainId,
-        message: `Mint ${amount} ${title}`
+
+      .once('receipt', ({ transactionHash }) => {
+        console.log({ transactionHash })
+        CustomTranaction(TransactionState.SUCCESS, {
+          hash: transactionHash,
+          chainId,
+          message
+        })
+        resolve()
       })
-    })
-    .once('error', () =>
-      CustomTranaction(TransactionState.FAILED, {
-        hash,
-        from: {
-          logo: `/img/bridge/${title}.svg`,
-          symbol: title
-        },
-        chainId
+      .once('error', () => {
+        CustomTranaction(TransactionState.FAILED, {
+          hash,
+          chainId
+        })
+        reject()
       })
-    )
+  })
 }
 
 const diffHours = (customDate) => {

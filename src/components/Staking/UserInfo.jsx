@@ -1,6 +1,5 @@
 import React from 'react'
-import { CustomTranaction } from '../../utils/explorers'
-import { TransactionState } from '../../utils/constant'
+import { sendTransaction } from '../../utils/Stakefun'
 
 const UserInfo = (props) => {
   const {
@@ -19,75 +18,25 @@ const UserInfo = (props) => {
     exitable
   } = props
   const handleClaim = () => {
-    StakeAndYieldContract.methods
-      .claim()
-      .send({ from: owner })
-      .once('transactionHash', (hash) =>
-        CustomTranaction(TransactionState.LOADING, {
-          hash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId,
-          message: `Claim ${claim} ${title}`
-        })
-      )
-      .once('receipt', ({ transactionHash }) => {
-        CustomTranaction(TransactionState.SUCCESS, {
-          hash: transactionHash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId,
-          message: `Claim ${claim} ${title}`
-        })
-      })
-      .once('error', () =>
-        CustomTranaction(TransactionState.FAILED, {
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          }
-        })
-      )
+    sendTransaction(
+      StakeAndYieldContract,
+      `claim`,
+      [],
+      owner,
+      chainId,
+      `Claim ${claim} ${title}`
+    )
   }
   // const handleRedeem = async () => {}
   const handleStopExit = () => {
-    StakeAndYieldContract.methods
-      .setExit(!exit)
-      .send({ from: owner })
-      .once('transactionHash', (hash) =>
-        CustomTranaction(TransactionState.LOADING, {
-          hash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId,
-          message: `${exit ? 'Stop Vault Exit' : 'Enable Vault Exit'}`
-        })
-      )
-      .once('receipt', ({ transactionHash }) => {
-        CustomTranaction(TransactionState.SUCCESS, {
-          hash: transactionHash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId,
-          message: `${exit ? 'Stop Vault Exit' : 'Enable Vault Exit'}`
-        })
-      })
-      .once('error', () =>
-        CustomTranaction(TransactionState.FAILED, {
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          }
-        })
-      )
+    sendTransaction(
+      StakeAndYieldContract,
+      `setExit`,
+      [!exit],
+      owner,
+      chainId,
+      `${exit ? 'Stop Vault Exit' : 'Enable Vault Exit'}`
+    )
   }
   return (
     <div className="userInfo-container">

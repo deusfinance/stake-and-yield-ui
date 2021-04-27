@@ -1,5 +1,5 @@
 import React from 'react'
-import { web3 } from '../../utils/Stakefun'
+import { web3, sendTransaction } from '../../utils/Stakefun'
 import DrawableAmount from './DrawableAmount'
 import WaitingTime from './WaitingTime'
 import { CustomTranaction } from '../../utils/explorers'
@@ -28,40 +28,16 @@ const Frozen = (props) => {
 
     let amount = web3.utils.toWei(String(unfreez))
 
-    StakeAndYieldContract.methods
-      .unfreeze(amount)
-      .send({ from: owner })
-      .once('transactionHash', (hash) =>
-        CustomTranaction(TransactionState.LOADING, {
-          hash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId,
-          message: `Unfreeze ${amount} ${title}`
-        })
-      )
-      .once('receipt', ({ transactionHash }) => {
-        setUnfreez('0')
-        CustomTranaction(TransactionState.SUCCESS, {
-          hash: transactionHash,
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          },
-          chainId,
-          message: `Unfreeze ${amount} ${title}`
-        })
-      })
-      .once('error', () =>
-        CustomTranaction(TransactionState.FAILED, {
-          from: {
-            logo: `/img/bridge/${title}.svg`,
-            symbol: title
-          }
-        })
-      )
+    sendTransaction(
+      StakeAndYieldContract,
+      `unfreeze`,
+      [amount],
+      owner,
+      chainId,
+      `Unfreeze ${unfreez} ${title}`
+    ).then(() => {
+      setUnfreez('0')
+    })
   }
   return (
     <div className="userInfo-container">
