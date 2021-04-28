@@ -21,6 +21,7 @@ const Mint = (props) => {
   const { activate } = web3React
   const [amount, setAmount] = React.useState('')
   const [approve, setApprove] = React.useState(false)
+
   const [approveClick, setApproveClick] = React.useState(false)
   const [sealedTime, setSealedTime] = React.useState({
     sealed: '0',
@@ -30,28 +31,27 @@ const Mint = (props) => {
   const VaultContract = makeContract(abis['vaults'], vaultContract)
 
   React.useEffect(() => {
-    if (owner && vaultContract) checkApprove()
+    if (owner && vaultContract) {
+      checkApprove()
+    }
+    // let subscription = web3.eth.subscribe(
+    //   'newBlockHeaders',
+    //   function (error, result) {
+    //     if (!error && owner && vaultContract) {
+    //       checkApprove()
+    //       return
+    //     }
+    //     console.error(error)
+    //   }
+    // )
+
+    // // unsubscribes the subscription
+    // subscription.unsubscribe(function (error, success) {
+    //   if (success) {
+    //     console.log('Successfully unsubscribed!')
+    //   }
+    // })
   }, [owner, vaultContract])
-
-  let subscription = web3.eth.subscribe(
-    'newBlockHeaders',
-    function (error, result) {
-      if (!error) {
-        if (owner && vaultContract) {
-          checkApprove()
-        }
-        return
-      }
-      console.error(error)
-    }
-  )
-
-  // unsubscribes the subscription
-  subscription.unsubscribe(function (error, success) {
-    if (success) {
-      console.log('Successfully unsubscribed!')
-    }
-  })
 
   const checkApprove = async () => {
     if (StakedTokenContract) {
