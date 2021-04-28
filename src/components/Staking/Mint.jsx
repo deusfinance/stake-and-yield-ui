@@ -14,7 +14,8 @@ const Mint = (props) => {
     handleBack,
     vaultContract,
     StakedTokenContract,
-    title
+    title,
+    titleExit
   } = props
 
   const web3React = useWeb3React()
@@ -133,92 +134,100 @@ const Mint = (props) => {
       )}
 
       <div className="deposite-container">
-        <div>
-          <p className="lock-text">LOCK TO RECEIVE sTOKENS</p>
-        </div>
-        <div>
-          <p className="balance-wallet"> {`Balance: ${balanceWallet}`}</p>
-        </div>
-        <div className="gray-box flex-between">
-          <input
-            type="text"
-            className="input-transparent"
-            placeholder="0 DEA"
-            value={amount}
-            onChange={(e) => {
-              getSealedTimeAmount(e.target.value)
-            }}
-          />
-          <span
-            className="box-balance-max pointer"
-            onClick={() => {
-              getSealedTimeAmount(balanceWallet)
-            }}
-          >
-            Max
-          </span>
-        </div>
-        <div className="contract-box">
-          <a
-            className="show-contract pointer"
-            href={getEtherscanLink(chainId, vaultContract)}
-            target="_blink"
-          >
-            Show me the contract
-          </a>
-        </div>
-        <div className="convert-box-mint">
-          <span>{`mint ${sealedTime.sealed} ${title}`}</span>
-        </div>
-        <div className="convert-box-mint">
-          <span>{`mint ${sealedTime.time} TIME`}</span>
-        </div>
-
-        {owner ? (
-          chainId == 1 || chainId == 4 ? (
-            <>
-              <div className={!approve ? 'flex-between' : 'flex-center'}>
-                {approve == 0 && (
-                  <div
-                    className={`${
-                      !approveClick ? 'approve-btn' : 'stake-deposite-btn'
-                    } pointer`}
-                    onClick={handleApprove}
-                  >
-                    Approve
-                  </div>
-                )}
-
-                <div
-                  className={`${
-                    approveClick ? 'approve-btn pointer' : 'stake-deposite-btn'
-                  } ${approve ? 'pointer' : ''}`}
-                  onClick={handleMint}
-                >
-                  Mint
-                </div>
-              </div>
-              {approve == 0 && (
-                <div className="flex-center">
-                  <div className="container-status-button">
-                    <div className="active">1</div>
-                    <div className={approveClick ? 'active' : ''}>2</div>
-                  </div>
-                </div>
-              )}
-            </>
-          ) : (
-            <a className="wrong-network">
-              <span>Wrong Network</span>
-            </a>
-          )
+        {title === 'TIME' ? (
+          <p>HOW GET TIME</p>
         ) : (
-          <div
-            className="wrap-box-gradient-complete width-415 pointer"
-            onClick={handleConnect}
-          >
-            <div>connect wallet</div>
-          </div>
+          <>
+            <div>
+              <p className="lock-text">LOCK TO RECEIVE sTOKENS</p>
+            </div>
+            <div>
+              <p className="balance-wallet"> {`Balance: ${balanceWallet}`}</p>
+            </div>
+            <div className="gray-box flex-between">
+              <input
+                type="text"
+                className="input-transparent"
+                placeholder={`0 ${titleExit}`}
+                value={amount}
+                onChange={(e) => {
+                  getSealedTimeAmount(e.target.value)
+                }}
+              />
+              <span
+                className="box-balance-max pointer"
+                onClick={() => {
+                  getSealedTimeAmount(balanceWallet)
+                }}
+              >
+                Max
+              </span>
+            </div>
+            <div className="contract-box">
+              <a
+                className="show-contract pointer"
+                href={getEtherscanLink(chainId, vaultContract)}
+                target="_blink"
+              >
+                Show me the contract
+              </a>
+            </div>
+            <div className="convert-box-mint">
+              <span>{`mint ${sealedTime.sealed} ${title}`}</span>
+            </div>
+            <div className="convert-box-mint">
+              <span>{`mint ${sealedTime.time} TIME`}</span>
+            </div>
+
+            {owner ? (
+              chainId == 1 || chainId == 4 ? (
+                <>
+                  <div className={!approve ? 'flex-between' : 'flex-center'}>
+                    {approve == 0 && (
+                      <div
+                        className={`${
+                          !approveClick ? 'approve-btn' : 'stake-deposite-btn'
+                        } pointer`}
+                        onClick={handleApprove}
+                      >
+                        Approve
+                      </div>
+                    )}
+
+                    <div
+                      className={`${
+                        approveClick
+                          ? 'approve-btn pointer'
+                          : 'stake-deposite-btn'
+                      } ${approve ? 'pointer' : ''}`}
+                      onClick={handleMint}
+                    >
+                      Mint
+                    </div>
+                  </div>
+                  {approve == 0 && (
+                    <div className="flex-center">
+                      <div className="container-status-button">
+                        <div className="active">1</div>
+                        <div className={approveClick ? 'active' : ''}>2</div>
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <a className="wrong-network">
+                  <span>Wrong Network</span>
+                </a>
+              )
+            ) : (
+              <div
+                className="wrap-box-gradient-complete width-415 pointer"
+                onClick={handleConnect}
+              >
+                <div>connect wallet</div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </>

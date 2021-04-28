@@ -149,7 +149,7 @@ const Deposite = (props) => {
             type="text"
             className="input-transparent"
             value={stakeAmount}
-            placeholder="0 DEA"
+            placeholder={`0 ${title}`}
             onChange={(e) => setStakeAmount(e.target.value)}
           />
           <span

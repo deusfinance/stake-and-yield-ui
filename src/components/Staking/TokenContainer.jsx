@@ -351,6 +351,7 @@ const TokenContainer = (props) => {
             owner={owner}
             chainId={chainId}
             title={title}
+            titleExit={titleExit}
             handleBack={handleBack}
           />
         )}
