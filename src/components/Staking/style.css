@@ -154,6 +154,7 @@
 }
 .yearn-finance img {
   vertical-align: -2px;
+  width: 15px;
 }
 .blue-color {
   color: #08a4f5;
@@ -810,15 +811,16 @@
 
 .container-status-button div {
   background-color: #1c1c1c;
-  font-weight: bold;
+  font-weight: normal;
   margin-top: -35px;
   width: 20px;
   height: 20px;
-  line-height: 20px;
-  text-align: center;
   border-radius: 50%;
   color: #ffffff;
   font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .container-status-button .active {
   background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%),

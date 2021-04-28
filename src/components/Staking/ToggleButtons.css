@@ -87,6 +87,7 @@ ul.tab li input[type='radio']:checked ~ label {
 }
 .tooltip .tooltip-text div img {
   padding-left: 5px;
+  width: 15px;
 }
 
 .tooltip .tooltip-text::after {
