@@ -8,7 +8,8 @@ ul.tab {
   border: 1px solid #1c1c1c;
   border-radius: 100px;
   display: block;
-  min-width: 415px;
+  max-width: 415px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
