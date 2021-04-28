@@ -669,7 +669,8 @@
 /*  Deposite Content */
 
 .deposite-container {
-  width: 415px;
+  width: 100%;
+  max-width: 415px;
   display: flex;
   flex-direction: column;
   margin: 60px auto 0;
