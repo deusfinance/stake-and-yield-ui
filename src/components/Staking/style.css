@@ -120,6 +120,7 @@
 }
 .title-container img {
   padding-left: 5px;
+  width: 28px;
 }
 .title {
   height: 42px;
@@ -144,18 +145,18 @@
   line-height: 21px;
   text-align: center;
 
-  color: rgba(255, 255, 255, 0.7);
+  color: #bab7b7;
 
   text-shadow: 0px 0px 4px rgba(255, 142, 142, 0.25);
 }
 .yearn-finance {
-  color: #016ae3;
+  color: #006ae3;
 }
 .yearn-finance img {
   vertical-align: -2px;
 }
 .blue-color {
-  color: #4bc4cd;
+  color: #08a4f5;
 }
 
 /* Content */

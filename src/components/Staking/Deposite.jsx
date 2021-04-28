@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import ToggleButtons from './ToggleButtons'
 import { web3, sendTransaction } from '../../utils/Stakefun'
@@ -29,11 +29,17 @@ const Deposite = (props) => {
   const [stakeAmount, setStakeAmount] = React.useState('')
   const [exitBtn, setExitBtn] = React.useState(exit)
   const [approveClick, setApproveClick] = React.useState(false)
+  const [preApprove, setPreApprove] = React.useState(approve)
 
   React.useEffect(() => {
     setSelectedStakeType(stakeType)
     setExitBtn(exit)
   }, [owner])
+  React.useEffect(() => {
+    return () => {
+      setPreApprove(approve)
+    }
+  }, [])
 
   const chooseTypeStake = (e) => {
     setSelectedStakeType(e.target.value)
@@ -166,8 +172,8 @@ const Deposite = (props) => {
         {owner ? (
           chainId == 1 || chainId == 4 ? (
             <>
-              <div className={!approve ? 'flex-between' : 'flex-center'}>
-                {approve == 0 && (
+              <div className={!preApprove ? 'flex-between' : 'flex-center'}>
+                {preApprove == 0 && (
                   <div
                     className={`${
                       !approveClick ? 'approve-btn' : 'stake-deposite-btn'
@@ -179,7 +185,7 @@ const Deposite = (props) => {
                 )}
                 <div
                   className={`${
-                    approve == 0 && approveClick
+                    preApprove == 0 && approveClick
                       ? 'approve-btn'
                       : 'stake-deposite-btn'
                   } pointer`}
@@ -188,7 +194,7 @@ const Deposite = (props) => {
                   stake
                 </div>
               </div>
-              {approve == 0 && (
+              {preApprove == 0 && (
                 <div className="flex-center">
                   <div className="container-status-button">
                     <div className="active">1</div>
