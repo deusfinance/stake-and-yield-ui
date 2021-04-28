@@ -4,7 +4,7 @@ const tokens = {
       title: 'sDEA',
       titleExit: 'DEA',
       stakingContract: '0x7cF207F174654a9B3da775b79AF407ea5306e462',
-      vaultContract: '0xd8C33488B76D4a2C06D5cCB75574f10F6ccaC3D7',
+      vaultContract: '0x1591Da306e9726CF8a60BfF1CE96d7714D7b24cd',
       exitable: true,
       category: 'single',
       yieldable: true
@@ -13,7 +13,7 @@ const tokens = {
       title: 'sDEUS',
       titleExit: 'DEUS',
       stakingContract: '0x7cF207F174654a9B3da775b79AF407ea5306e462',
-      vaultContract: '0xc586AeA83A96d57764A431B9F4e2E84844075a01',
+      vaultContract: '0xF8bcAF889F60E3d277EA0139e75047a0301D3307',
       exitable: true,
       category: 'single',
       yieldable: true
@@ -40,21 +40,21 @@ const tokens = {
     {
       title: 'sUNI-DD',
       stakingContract: '0x7cF207F174654a9B3da775b79AF407ea5306e462',
-      vaultContract: '0x2EdE9CB92a6dE0916889E5936B1aAd0e99ddf242',
+      vaultContract: '0xEC7269Ebb7D219C905c28E3fD5Cc35F30dfB870b',
       category: 'liquidity',
       onlyLocking: true
     },
     {
       title: 'sUNI-DU',
       stakingContract: '0x7cF207F174654a9B3da775b79AF407ea5306e462',
-      vaultContract: '0xB7b52c3523Af9c237817a49D17E656283cC59678',
+      vaultContract: '0x4D01703442509233eFa9879E638278a59b4A5EBB',
       category: 'liquidity',
       onlyLocking: true
     },
     {
       title: 'sUNI-DE',
       stakingContract: '0x7cF207F174654a9B3da775b79AF407ea5306e462',
-      vaultContract: '0x670431fCdAf39280deE488C6D8277B9865E22d08',
+      vaultContract: '0xc8c91801Bed699598b5483F2ad55f89eBd35157F',
       category: 'liquidity',
       onlyLocking: true
     }
