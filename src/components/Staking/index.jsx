@@ -46,17 +46,25 @@ const Staking = () => {
   return (
     <div className="container-staking">
       <div className="staking-desc">
-        <div className="title">Staking</div>
+        <div className="title-container">
+          <div className="title">STAKE AND YIELD WITH YEARN FINANCE</div>
+          <img src="/img/staking/yearn-finance-logo.svg" />
+        </div>
+
         <p>
           Stake your locked DEUS/DEA, your Time Tokens or Balancer Liquidity to
           earn trading fees.
         </p>
         <p>
           You can also opt for Stake+Yield where the underlying ETH value of
-          your stake will be used to earn yield on yearn finance –{' '}
-          <span className="blue-color">basically double rewards!</span>
+          your stake will be used to earn yield on{' '}
+          <span className="yearn-finance">
+            YEARN FINANCE <img src="/img/staking/yearn-finance-logo.svg" />{' '}
+          </span>
+          – <span className="blue-color">basically double rewards!</span>
         </p>
       </div>
+
       <div className="staking-content">
         <ToggleButtons
           data={[
