@@ -35,7 +35,10 @@ const ToggleButtons = ({
             </label>
             {item.tooltip && (
               <span className="tooltip-text">
-                <div>{item.tooltip}</div>
+                <div>
+                  {item.tooltip}
+                  <img src="/img/staking/yearn-finance-logo.svg" />
+                </div>
               </span>
             )}
           </li>

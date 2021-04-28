@@ -106,7 +106,7 @@ const Deposite = (props) => {
             {
               title: 'STAKE & YIELD',
               value: '3',
-              tooltip: 'earn double rewards',
+              tooltip: 'Earn double rewards with Yearn Finance ',
               disabled: yieldable ? false : true
             },
             { title: 'YIELD', value: '2', disabled: yieldable ? false : true }
@@ -179,7 +179,9 @@ const Deposite = (props) => {
                 )}
                 <div
                   className={`${
-                    approveClick ? 'approve-btn' : 'stake-deposite-btn'
+                    approve == 0 && approveClick
+                      ? 'approve-btn'
+                      : 'stake-deposite-btn'
                   } pointer`}
                   onClick={handleStake}
                 >

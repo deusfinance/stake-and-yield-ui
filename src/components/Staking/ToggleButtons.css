@@ -58,7 +58,7 @@ ul.tab li input[type='radio']:checked ~ label {
 
 .tooltip .tooltip-text {
   visibility: hidden;
-  width: 175px;
+  width: 285px;
   height: 35px;
   background: #ffffff;
   border: 2px solid #ffffff;
@@ -68,8 +68,8 @@ ul.tab li input[type='radio']:checked ~ label {
   z-index: 1;
   bottom: 100%;
   left: 30%;
-  top: -37px;
-  margin-left: -60px;
+  top: -45px;
+  margin-left: -112px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,19 +77,25 @@ ul.tab li input[type='radio']:checked ~ label {
 .tooltip .tooltip-text div {
   font-style: normal;
   font-weight: normal;
-  font-size: 13.5px;
-  line-height: 19px;
-  background: linear-gradient(0deg, #6d6afd, #6d6afd);
+  font-size: 10.5px;
+  line-height: 15px;
+  background: linear-gradient(0deg, #006ae3, #006ae3);
+
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: flex;
 }
+.tooltip .tooltip-text div img {
+  padding-left: 5px;
+}
+
 .tooltip .tooltip-text::after {
   content: ' ';
   position: absolute;
   top: 100%; /* At the bottom of the tooltip */
   left: 50%;
   margin-left: -5px;
-  border-width: 5px;
+  border-width: 9px;
   border-style: solid;
   border-color: #ffffff transparent transparent transparent;
 }
