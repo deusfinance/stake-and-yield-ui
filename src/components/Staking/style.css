@@ -721,7 +721,7 @@
   font-weight: normal;
   font-size: 12px;
   line-height: 14px;
-
+  padding: 0 21px;
   color: rgba(255, 255, 255, 0.5);
 }
 .contract-box {
