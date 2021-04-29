@@ -52,7 +52,7 @@ const Mint = (props) => {
     //     console.log('Successfully unsubscribed!')
     //   }
     // })
-  }, [owner, vaultContract])
+  }, [owner, vaultContract, chainId])
 
   const checkApprove = async () => {
     if (StakedTokenContract) {
@@ -65,21 +65,25 @@ const Mint = (props) => {
   }
 
   const getSealedTimeAmount = async (amount) => {
-    setAmount(amount)
-    if (amount && owner) {
-      amount = web3.utils.toWei(amount)
-      const result = await VaultContract.methods
-        .sealedAndTimeAmount(owner, amount)
-        .call()
-      setSealedTime({
-        sealed: web3.utils.fromWei(result[0], 'ether'),
-        time: web3.utils.fromWei(result[1], 'ether')
-      })
-    } else {
-      setSealedTime({
-        sealed: 0,
-        time: 0
-      })
+    try {
+      setAmount(amount)
+      if (amount && owner) {
+        amount = web3.utils.toWei(amount)
+        const result = await VaultContract.methods
+          .sealedAndTimeAmount(owner, amount)
+          .call()
+        setSealedTime({
+          sealed: web3.utils.fromWei(result[0], 'ether'),
+          time: web3.utils.fromWei(result[1], 'ether')
+        })
+      } else {
+        setSealedTime({
+          sealed: 0,
+          time: 0
+        })
+      }
+    } catch (error) {
+      console.log('error happend in GetSealedTime ', error)
     }
   }
 

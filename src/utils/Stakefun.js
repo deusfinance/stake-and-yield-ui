@@ -30,35 +30,39 @@ const sendTransaction = (
   message
 ) => {
   return new Promise((resolve, reject) => {
-    let hash = null
+    try {
+      let hash = null
 
-    contract.methods[methodName](...params)
-      .send({ from: owner })
-      .once('transactionHash', (tx) => {
-        hash = tx
-        CustomTranaction(TransactionState.LOADING, {
-          hash,
-          chainId,
-          message
+      contract.methods[methodName](...params)
+        .send({ from: owner })
+        .once('transactionHash', (tx) => {
+          hash = tx
+          CustomTranaction(TransactionState.LOADING, {
+            hash,
+            chainId,
+            message
+          })
         })
-      })
 
-      .once('receipt', ({ transactionHash }) => {
-        console.log({ transactionHash })
-        CustomTranaction(TransactionState.SUCCESS, {
-          hash: transactionHash,
-          chainId,
-          message
+        .once('receipt', ({ transactionHash }) => {
+          console.log({ transactionHash })
+          CustomTranaction(TransactionState.SUCCESS, {
+            hash: transactionHash,
+            chainId,
+            message
+          })
+          resolve()
         })
-        resolve()
-      })
-      .once('error', () => {
-        CustomTranaction(TransactionState.FAILED, {
-          hash,
-          chainId
+        .once('error', () => {
+          CustomTranaction(TransactionState.FAILED, {
+            hash,
+            chainId
+          })
+          reject()
         })
-        reject()
-      })
+    } catch (error) {
+      console.log('error happend in send Transaction', error)
+    }
   })
 }
 

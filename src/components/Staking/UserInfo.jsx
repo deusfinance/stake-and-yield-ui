@@ -28,7 +28,7 @@ const UserInfo = (props) => {
         `Claim ${claim} ${title}`
       )
     } catch (error) {
-      console.log('error happend in Claim', error)
+      console.log('Error happend in Claim', error)
     }
   }
   // const handleRedeem = async () => {}
