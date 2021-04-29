@@ -31,6 +31,7 @@ ul.tab li label {
   justify-content: center;
   align-items: center;
   border: 1px solid transparent;
+  text-transform: uppercase;
 }
 ul.tab li input[type='radio'] {
   opacity: 0;

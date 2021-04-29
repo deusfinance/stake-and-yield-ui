@@ -6,6 +6,7 @@ const UserInfo = (props) => {
     own,
     balance,
     title,
+    titleExit,
     chainId,
     stakeType,
     stakeTypeName,
@@ -68,7 +69,7 @@ const UserInfo = (props) => {
           > */}
           <div className="wrap-box-gray">
             <div>{`${claim} DEA `}</div>
-            <div className="opacity-5">claimable</div>
+            {/* <div className="opacity-5">claimable</div> */}
           </div>
           <div className="wrap-box-gradient pointer" onClick={handleClaim}>
             Claim

@@ -283,6 +283,7 @@ const TokenContainer = (props) => {
             <UserInfo
               {...userInfo}
               title={title}
+              titleExit={titleExit}
               owner={owner}
               chainId={chainId}
               exitable={exitable}
