@@ -116,8 +116,6 @@
   padding: 0px 90px;
 }
 .title-container {
-  display: flex;
-  justify-content: center;
   padding: 10px;
 }
 .title-container img {

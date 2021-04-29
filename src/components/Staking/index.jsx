@@ -47,7 +47,7 @@ const Staking = () => {
     <div className="container-staking">
       <div className="staking-desc">
         <div className="title-container">
-          <div className="title">STAKE AND YIELD WITH YEARN FINANCE</div>
+          <span className="title">STAKE AND YIELD WITH YEARN FINANCE</span>
           <img src="/img/staking/yearn-finance-logo.svg" />
         </div>
 
