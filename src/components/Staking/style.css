@@ -473,7 +473,8 @@
 .wrap-box-gradient-complete {
   position: relative;
   padding: 8px 10px;
-  width: 571px;
+  max-width: 571px;
+  width: 100%;
   height: 35px;
   text-align: center;
 }
