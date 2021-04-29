@@ -24,20 +24,24 @@ const Frozen = (props) => {
   const [unfreez, setUnfreez] = React.useState('0')
 
   const handleUnfreeze = () => {
-    if (unfreez == 0 || unfreez == '') return
+    try {
+      if (unfreez == 0 || unfreez == '') return
 
-    let amount = web3.utils.toWei(String(unfreez))
+      let amount = web3.utils.toWei(String(unfreez))
 
-    sendTransaction(
-      StakeAndYieldContract,
-      `unfreeze`,
-      [amount],
-      owner,
-      chainId,
-      `Unfreeze ${unfreez} ${title}`
-    ).then(() => {
-      setUnfreez('0')
-    })
+      sendTransaction(
+        StakeAndYieldContract,
+        `unfreeze`,
+        [amount],
+        owner,
+        chainId,
+        `Unfreeze ${unfreez} ${title}`
+      ).then(() => {
+        setUnfreez('0')
+      })
+    } catch (error) {
+      console.log('error happend in un freez', error)
+    }
   }
   return (
     <div className="userInfo-container">

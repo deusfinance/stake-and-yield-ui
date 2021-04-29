@@ -18,25 +18,33 @@ const UserInfo = (props) => {
     exitable
   } = props
   const handleClaim = () => {
-    sendTransaction(
-      StakeAndYieldContract,
-      `claim`,
-      [],
-      owner,
-      chainId,
-      `Claim ${claim} ${title}`
-    )
+    try {
+      sendTransaction(
+        StakeAndYieldContract,
+        `claim`,
+        [],
+        owner,
+        chainId,
+        `Claim ${claim} ${title}`
+      )
+    } catch (error) {
+      console.log('error happend in Claim', error)
+    }
   }
   // const handleRedeem = async () => {}
   const handleStopExit = () => {
-    sendTransaction(
-      StakeAndYieldContract,
-      `setExit`,
-      [!exit],
-      owner,
-      chainId,
-      `${exit ? 'Stop Vault Exit' : 'Enable Vault Exit'}`
-    )
+    try {
+      sendTransaction(
+        StakeAndYieldContract,
+        `setExit`,
+        [!exit],
+        owner,
+        chainId,
+        `${exit ? 'Stop Vault Exit' : 'Enable Vault Exit'}`
+      )
+    } catch (error) {
+      console.log('error happend in exit', error)
+    }
   }
   return (
     <div className="userInfo-container">

@@ -93,37 +93,45 @@ const Mint = (props) => {
   }
 
   const handleApprove = () => {
-    if (!owner) {
-      return
+    try {
+      if (!owner) {
+        return
+      }
+      let amount = web3.utils.toWei('1000000000000000000')
+      sendTransaction(
+        StakedTokenContract,
+        `approve`,
+        [vaultContract, amount],
+        owner,
+        chainId,
+        `Approved ${title}`
+      ).then(() => {
+        setApproveClick(true)
+      })
+    } catch (error) {
+      console.log('error happend in Approve lock', error)
     }
-    let amount = web3.utils.toWei('1000000000000000000')
-    sendTransaction(
-      StakedTokenContract,
-      `approve`,
-      [vaultContract, amount],
-      owner,
-      chainId,
-      `Approved ${title}`
-    ).then(() => {
-      setApproveClick(true)
-    })
   }
   const handleMint = () => {
-    if (!owner) {
-      return
+    try {
+      if (!owner) {
+        return
+      }
+      if (amount === '' || amount === '0') return
+      let amountVault = web3.utils.toWei(amount)
+      sendTransaction(
+        VaultContract,
+        `lock`,
+        [amountVault],
+        owner,
+        chainId,
+        `Mint ${amount} ${title}`
+      ).then(() => {
+        // setAmount('0')
+      })
+    } catch (error) {
+      console.log('error happend in Mint', error)
     }
-    if (amount === '' || amount === '0') return
-    let amountVault = web3.utils.toWei(amount)
-    sendTransaction(
-      VaultContract,
-      `lock`,
-      [amountVault],
-      owner,
-      chainId,
-      `Mint ${amount} ${title}`
-    ).then(() => {
-      // setAmount('0')
-    })
   }
   return (
     <>

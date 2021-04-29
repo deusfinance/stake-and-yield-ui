@@ -34,7 +34,8 @@ const Deposite = (props) => {
   React.useEffect(() => {
     setSelectedStakeType(stakeType)
     setExitBtn(exit)
-  }, [owner])
+  }, [owner, chainId])
+
   React.useEffect(() => {
     return () => {
       setPreApprove(approve)
@@ -55,38 +56,46 @@ const Deposite = (props) => {
   }
 
   const handleApprove = () => {
-    if (!owner) {
-      return
+    try {
+      if (!owner) {
+        return
+      }
+      let amount = web3.utils.toWei('1000000000000000000')
+      sendTransaction(
+        StakedTokenContract,
+        `approve`,
+        [stakingContract, amount],
+        owner,
+        chainId,
+        `Approved ${title}`
+      ).then(() => {
+        setApproveClick(true)
+      })
+    } catch (error) {
+      console.log('error happend in Approve', error)
     }
-    let amount = web3.utils.toWei('1000000000000000000')
-    sendTransaction(
-      StakedTokenContract,
-      `approve`,
-      [stakingContract, amount],
-      owner,
-      chainId,
-      `Approved ${title}`
-    ).then(() => {
-      setApproveClick(true)
-    })
   }
   const handleStake = () => {
-    if (!owner) {
-      return
+    try {
+      if (!owner) {
+        return
+      }
+      if (stakeAmount == 0 || stakeAmount == '') return
+      let amount = web3.utils.toWei(stakeAmount)
+      let type = selectedStakeType == '0' ? '1' : selectedStakeType
+      sendTransaction(
+        StakeAndYieldContract,
+        `deposit`,
+        [amount, type, exitBtn],
+        owner,
+        chainId,
+        `Staked ${stakeAmount} ${title}`
+      ).then(() => {
+        setStakeAmount('0')
+      })
+    } catch (error) {
+      console.log('error happend in Stake', error)
     }
-    if (stakeAmount == 0 || stakeAmount == '') return
-    let amount = web3.utils.toWei(stakeAmount)
-    let type = selectedStakeType == '0' ? '1' : selectedStakeType
-    sendTransaction(
-      StakeAndYieldContract,
-      `deposit`,
-      [amount, type, exitBtn],
-      owner,
-      chainId,
-      `Staked ${stakeAmount} ${title}`
-    ).then(() => {
-      setStakeAmount('0')
-    })
   }
   const handleVaultExit = (data) => {
     if (lockStakeType) {

@@ -230,19 +230,23 @@ const TokenContainer = (props) => {
     setCollapseContent('default')
   }
   const handleUnfreezStake = () => {
-    if (unfreezStake == 0 || unfreezStake == '') return
+    try {
+      if (unfreezStake == 0 || unfreezStake == '') return
 
-    let amount = web3.utils.toWei(unfreezStake)
-    sendTransaction(
-      StakeAndYieldContract,
-      `unfreeze`,
-      [amount],
-      owner,
-      chainId,
-      `Withdraw`
-    ).then(() => {
-      setUnfreezStake(0)
-    })
+      let amount = web3.utils.toWei(unfreezStake)
+      sendTransaction(
+        StakeAndYieldContract,
+        `unfreeze`,
+        [amount],
+        owner,
+        chainId,
+        `Withdraw`
+      ).then(() => {
+        setUnfreezStake(0)
+      })
+    } catch (error) {
+      console.log('error happend in withDraw Stake', error)
+    }
   }
 
   return (

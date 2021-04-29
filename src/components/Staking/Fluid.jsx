@@ -16,16 +16,20 @@ const Fluid = (props) => {
   } = props
 
   const handleWithDraw = () => {
-    sendTransaction(
-      StakeAndYieldContract,
-      `withdrawUnfreezed`,
-      [],
-      owner,
-      chainId,
-      `Withdraw + Claim`
-    ).then(() => {
-      showFluid()
-    })
+    try {
+      sendTransaction(
+        StakeAndYieldContract,
+        `withdrawUnfreezed`,
+        [],
+        owner,
+        chainId,
+        `Withdraw + Claim`
+      ).then(() => {
+        showFluid()
+      })
+    } catch (error) {
+      console.log('error happend in Withdraw', error)
+    }
   }
   return (
     <div className="userInfo-container">
