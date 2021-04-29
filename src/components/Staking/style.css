@@ -10,7 +10,8 @@
 .container-staking {
   font-family: 'Monument Grotesk Semi';
   padding: 5px;
-  width: 1200px;
+  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
 }
 
