@@ -55,8 +55,10 @@
   width: 202px !important;
 }
 .width-415 {
-  width: 415px !important;
+  max-width: 415px !important;
+  width: 100%;
 }
+
 .mt-20 {
   margin-top: 20px;
 }
