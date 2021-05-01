@@ -86,7 +86,6 @@ const Staking = () => {
               chainId={chainId}
               open={open}
               handleTriggerClick={(token) => {
-                console.log({ [token]: ![token] })
                 setOpen((prev) => {
                   return {
                     ...prev,

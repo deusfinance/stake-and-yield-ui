@@ -49,7 +49,6 @@ const Deposite = (props) => {
   const handleConnect = async () => {
     try {
       const data = await activate(injected)
-      console.log(data)
     } catch (error) {
       console.log(error)
     }
