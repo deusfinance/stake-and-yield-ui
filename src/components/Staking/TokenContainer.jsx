@@ -119,6 +119,10 @@ const TokenContainer = (props) => {
   const fetchDataUser = async () => {
     try {
       let result = await StakeAndYieldContract.methods.userInfo(owner).call()
+      const users = await StakeAndYieldContract.methods.users(owner).call()
+      const { exitStartTime } = users
+      let fullyUnlock = Number(exitStartTime) + 90 * 24 * 3600
+      fullyUnlock = moment(new Date(fullyUnlock * 1000)).format('DD.MM.YYYY')
       let { numbers, exit, stakedTokenAddress } = result
       const StakedTokenContract = makeContract(abi, stakedTokenAddress)
       let balanceWallet = await StakedTokenContract.methods
@@ -143,8 +147,7 @@ const TokenContainer = (props) => {
       let totalSupplyYield = Number(web3.utils.fromWei(numbers[5], 'ether'))
       let withDrawable = Number(web3.utils.fromWei(numbers[3], 'ether'))
       let withDrawableExit = Number(web3.utils.fromWei(numbers[13], 'ether'))
-      let fullyUnlock = Number(numbers[10]) + 90 * 24 * 3600
-      fullyUnlock = moment(new Date(fullyUnlock * 1000)).format('DD.MM.YYYY')
+
       let burn = balance / 90
       let withDrawTime = Number(numbers[2]) + 24 * 3600
       withDrawTime = new Date(withDrawTime * 1000)

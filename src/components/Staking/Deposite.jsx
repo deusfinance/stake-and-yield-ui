@@ -30,7 +30,6 @@ const Deposite = (props) => {
   const [exitBtn, setExitBtn] = React.useState(exit)
   const [approveClick, setApproveClick] = React.useState(false)
   const [preApprove, setPreApprove] = React.useState(approve)
-  console.log(preApprove)
   React.useEffect(() => {
     setSelectedStakeType(stakeType)
     setExitBtn(exit)
@@ -48,7 +47,7 @@ const Deposite = (props) => {
 
   const handleConnect = async () => {
     try {
-      const data = await activate(injected)
+      await activate(injected)
     } catch (error) {
       console.log(error)
     }

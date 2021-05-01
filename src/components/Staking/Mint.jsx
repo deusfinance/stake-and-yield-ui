@@ -89,8 +89,7 @@ const Mint = (props) => {
 
   const handleConnect = async () => {
     try {
-      const data = await activate(injected)
-      console.log(data)
+      await activate(injected)
     } catch (error) {
       console.log(error)
     }
