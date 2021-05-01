@@ -46,7 +46,7 @@ function App() {
               <Route exact path="/synchronizer2" component={Sync2} />
               <Route exact path="/swap2" component={Swap2} />
               <Route exact path="/test-style" component={Test} />
-              <Route exact path="/staking2" component={Staking} />
+              <Route exact path="/stakeandyield" component={Staking} />
               <Route exact path="/bridge" component={Bridge} />
               <Redirect exact from="/" to="/swap" />
               <Route path="/" component={Deus} />
