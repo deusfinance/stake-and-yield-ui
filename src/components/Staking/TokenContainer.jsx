@@ -119,7 +119,6 @@ const TokenContainer = (props) => {
   const fetchDataUser = async () => {
     try {
       let result = await StakeAndYieldContract.methods.userInfo(owner).call()
-      console.log({ result })
       let { numbers, exit, stakedTokenAddress } = result
       const StakedTokenContract = makeContract(abi, stakedTokenAddress)
       let balanceWallet = await StakedTokenContract.methods
