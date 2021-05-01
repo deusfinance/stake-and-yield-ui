@@ -124,7 +124,7 @@ const UserInfo = (props) => {
             <p>
               You burn
               <span className="blue-color">{` ${burn.toFixed(
-                2
+                4
               )} ${title} per day `}</span>
               {`(fully unlocked at ${fullyUnlock})`}
             </p>
