@@ -30,7 +30,7 @@ const Deposite = (props) => {
   const [exitBtn, setExitBtn] = React.useState(exit)
   const [approveClick, setApproveClick] = React.useState(false)
   const [preApprove, setPreApprove] = React.useState(approve)
-
+  console.log(preApprove)
   React.useEffect(() => {
     setSelectedStakeType(stakeType)
     setExitBtn(exit)
@@ -184,8 +184,10 @@ const Deposite = (props) => {
                 {preApprove == 0 && (
                   <div
                     className={`${
-                      !approveClick ? 'approve-btn' : 'stake-deposite-btn'
-                    } pointer`}
+                      !approveClick
+                        ? 'approve-btn pointer'
+                        : 'stake-deposite-btn'
+                    } `}
                     onClick={handleApprove}
                   >
                     Approve
@@ -193,10 +195,8 @@ const Deposite = (props) => {
                 )}
                 <div
                   className={`${
-                    preApprove == 0 && approveClick
-                      ? 'approve-btn'
-                      : 'stake-deposite-btn'
-                  } pointer`}
+                    approve ? 'approve-btn pointer' : 'stake-deposite-btn'
+                  } `}
                   onClick={handleStake}
                 >
                   stake

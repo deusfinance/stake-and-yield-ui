@@ -90,6 +90,7 @@ const Mint = (props) => {
   const handleConnect = async () => {
     try {
       const data = await activate(injected)
+      console.log(data)
     } catch (error) {
       console.log(error)
     }
@@ -210,7 +211,7 @@ const Mint = (props) => {
                         approveClick
                           ? 'approve-btn pointer'
                           : 'stake-deposite-btn'
-                      } ${approve ? 'pointer' : ''}`}
+                      } ${approve ? 'pointer approve-btn' : ''}`}
                       onClick={handleMint}
                     >
                       Mint
