@@ -1,14 +1,52 @@
 import React from 'react'
+import ActionButton from './ActionButton'
 
 const CollapseTriggerOpen = ({
   title,
   category,
+  link,
   balancer,
   onlyLocking,
   apy,
   balanceWallet,
   handleCollapseContent
 }) => {
+  const handleGet = (e) => {
+    if (link) {
+      e.stopPropagation()
+      e.preventDefault()
+      window.open(link, '_blank')
+    } else {
+      e.stopPropagation()
+      e.preventDefault()
+      handleCollapseContent('get')
+    }
+  }
+  const handleLock = (e) => {
+    if (balancer) {
+      e.stopPropagation()
+      e.preventDefault()
+      window.open(link, '_blank')
+    } else {
+      e.stopPropagation()
+      e.preventDefault()
+      handleCollapseContent('get')
+    }
+  }
+  const handleStake = (e) => {
+    if (onlyLocking) {
+      e.stopPropagation()
+      e.preventDefault()
+      window.open(
+        'https://pools.balancer.exchange/#/pool/0x1dc2948b6db34e38291090b825518c1e8346938b/',
+        '_blank'
+      )
+    } else {
+      e.stopPropagation()
+      e.preventDefault()
+      handleCollapseContent('deposit')
+    }
+  }
   return (
     <div className="collapse-trigger">
       <div>
@@ -17,60 +55,31 @@ const CollapseTriggerOpen = ({
           <span className="blue-color">{balanceWallet}</span> in your wallet
         </p>
       </div>
-      <div className="apy">{`${apy}% apy`}</div>
+      {onlyLocking ? (
+        <div className="swap-BPT">swap to BPT and stake for APY</div>
+      ) : (
+        <div className="apy">{`${apy}% apy`}</div>
+      )}
       <div className="expand-container">
-        {balancer ? (
-          <a
-            className="stake-btn pointer"
-            onClick={(e) => {
-              e.stopPropagation()
-              e.preventDefault()
-              window.open(
-                'https://pools.balancer.exchange/#/pool/0x1dc2948b6db34e38291090b825518c1e8346938b/',
-                '_blank'
-              )
-            }}
-          >
-            <span>{`GET ${title}`}</span>
-          </a>
-        ) : (
-          <a
-            className="stake-btn pointer"
-            onClick={(e) => {
-              e.stopPropagation()
-              e.preventDefault()
-              handleCollapseContent('get')
-            }}
-          >
-            <span>{`GET ${title}`}</span>
-          </a>
-        )}
-        {onlyLocking ? (
-          <a
-            className="stake-btn pointer"
-            onClick={(e) => {
-              e.stopPropagation()
-              e.preventDefault()
-              window.open(
-                'https://pools.balancer.exchange/#/pool/0x1dc2948b6db34e38291090b825518c1e8346938b/',
-                '_blank'
-              )
-            }}
-          >
-            <span> {`Deposit ${title}`}</span>
-          </a>
-        ) : (
-          <a
-            className="stake-btn pointer"
-            onClick={(e) => {
-              e.stopPropagation()
-              e.preventDefault()
-              handleCollapseContent('deposit')
-            }}
-          >
-            <span>{`Stake ${title}`}</span>
-          </a>
-        )}
+        <ActionButton
+          type="GET"
+          title={title}
+          onlyLocking={onlyLocking}
+          onClick={handleGet}
+        />
+        <ActionButton
+          type="LOCK"
+          title={title}
+          onlyLocking={onlyLocking}
+          onClick={handleLock}
+        />
+        <ActionButton
+          type="STAKE"
+          title={title}
+          onlyLocking={onlyLocking}
+          onClick={handleStake}
+        />
+
         <span className="expand-btn pointer" name="expand-btn">
           Collapse
           <img

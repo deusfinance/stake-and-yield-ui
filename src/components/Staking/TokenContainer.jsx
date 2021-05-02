@@ -23,6 +23,7 @@ const TokenContainer = (props) => {
     title,
     titleExit,
     onlyLocking,
+    link,
     stakingContract,
     vaultContract,
     exitable,
@@ -252,7 +253,7 @@ const TokenContainer = (props) => {
   }
 
   return (
-    <div className="token-container">
+    <div className={`token-container ${onlyLocking ? 'uni-background' : ''}`}>
       <Collapsible
         handleTriggerClick={() => handleTriggerClick(title)}
         open={open[title]}
@@ -260,6 +261,7 @@ const TokenContainer = (props) => {
           <CollapseTrigger
             title={title}
             onlyLocking={onlyLocking}
+            link={link}
             apy={userInfo.apy}
             category={category}
             balancer={balancer}
@@ -271,6 +273,7 @@ const TokenContainer = (props) => {
           <CollapseTriggerOpen
             title={title}
             onlyLocking={onlyLocking}
+            link={link}
             apy={userInfo.apy}
             category={category}
             balancer={balancer}

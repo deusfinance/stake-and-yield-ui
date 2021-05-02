@@ -137,7 +137,9 @@
 
   color: #ffffff;
 }
-
+.uppercase {
+  text-transform: uppercase;
+}
 .staking-desc p {
   max-width: 895px;
   margin: 0 auto;
@@ -215,6 +217,16 @@
   text-align: center;
   color: #ffffff;
   text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.swap-BPT {
+  font-style: normal;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -916,8 +928,7 @@ input:focus {
   color: #ffffff;
 }
 
-.stake-btn {
-  background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%);
+.action-btn {
   border-radius: 6px;
   color: #ffffff;
   display: inline-block;
@@ -925,7 +936,16 @@ input:focus {
   text-decoration: none;
   margin: 0 3px;
 }
-.stake-btn span {
+.lock-btn {
+  background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%);
+}
+.get-btn {
+  background: linear-gradient(247.41deg, #a2fbb0 16.32%, #5ec4d6 87.6%);
+}
+.uni-get-btn {
+  background: #ec357a;
+}
+.action-btn span {
   background: #0d0d0d;
   display: block;
   /* padding: 1px 10px; */
@@ -940,7 +960,7 @@ input:focus {
   justify-content: center;
   align-items: center;
 }
-.stake-btn:hover {
+.action-btn:hover {
   background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%),
     linear-gradient(247.41deg, #a2fbb0 16.32%, #5ec4d6 87.6%);
   border-radius: 6px;
@@ -969,4 +989,8 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.uni-background {
+  background: #2d2f35 !important;
 }
