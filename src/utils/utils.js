@@ -95,7 +95,7 @@ export function dollarPrice(price, fixed = 0) {
 
 export function getLibrary(provider) {
     // const currProvider = provider ? provider : InfuraProvider.getWebSocketProvider("homestead", "cf6ea736e00b4ee4bc43dfdb68f51093")
-    const library = new Web3Provider(provider, 'any')
+    const library = new Web3Provider(provider)
     library.pollingInterval = 15000
     return library
 }
