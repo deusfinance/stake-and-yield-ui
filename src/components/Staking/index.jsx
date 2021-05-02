@@ -26,7 +26,10 @@ const Staking = () => {
   React.useEffect(() => {
     if (account) {
       setType('all')
+      setOpen(false)
+
       let selectedChainId = chainId == 4 ? chainId : 1
+      console.log({ selectedChainId, tokens: tokens[selectedChainId] })
       setShowTokens(tokens[selectedChainId])
       setSelesctedChainId(selectedChainId)
     }

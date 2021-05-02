@@ -40,6 +40,9 @@ const TokenContainer = (props) => {
     stakedTokenAddress: '',
     StakedTokenContract: '',
     StakeAndYieldContract: '',
+    ContractToken: '',
+    balanceToken: 0,
+    allowance: '',
     balanceWallet: 0,
     balance: 0,
     apy: 0,
@@ -62,6 +65,9 @@ const TokenContainer = (props) => {
       stakedTokenAddress: '',
       StakedTokenContract: '',
       StakeAndYieldContract: '',
+      ContractToken: '',
+      balanceToken: 0,
+      allowance: '',
       balanceWallet: 0,
       balance: 0,
       apy: 0,
@@ -79,8 +85,6 @@ const TokenContainer = (props) => {
       withDrawTime: ''
     })
   }, [owner, chainId])
-
-  const StakeAndYieldContract = makeContract(StakeAndYieldABI, stakingContract)
 
   React.useEffect(() => {
     if (owner && tokenName) {
@@ -130,8 +134,14 @@ const TokenContainer = (props) => {
         .allowance(owner, addresses['vaults'][tokenName][chainId])
         .call()
       allowance = Number(web3.utils.fromWei(allowance, 'ether'))
-
+      console.log({ allowance, stakingContract })
+      const StakeAndYieldContract = makeContract(
+        StakeAndYieldABI,
+        stakingContract
+      )
       let result = await StakeAndYieldContract.methods.userInfo(owner).call()
+      console.log('********************', result)
+
       const users = await StakeAndYieldContract.methods.users(owner).call()
       const { exitStartTime } = users
       let fullyUnlock = Number(exitStartTime) + 90 * 24 * 3600
@@ -292,7 +302,7 @@ const TokenContainer = (props) => {
 
       let amount = web3.utils.toWei(unfreezStake)
       sendTransaction(
-        StakeAndYieldContract,
+        userInfo.StakeAndYieldContract,
         `unfreeze`,
         [amount],
         owner,
