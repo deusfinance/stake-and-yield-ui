@@ -155,6 +155,21 @@ ul.tab li input[type='radio']:checked ~ label {
     width: 100%;
   }
 }
+@media screen and (min-width: 465px) and (max-width: 570px) {
+  .tooltip .tooltip-text {
+    left: 40%;
+  }
+}
+@media screen and (max-width: 465px) {
+  .tooltip .tooltip-text {
+    left: 57%;
+    width: 200px;
+  }
+  .tooltip .tooltip-text div {
+    font-size: 8.5px;
+  }
+}
+
 @media screen and (min-width: 370px) and (max-width: 445px) {
   .wrap-box-gray {
     padding: 8px 5px;
