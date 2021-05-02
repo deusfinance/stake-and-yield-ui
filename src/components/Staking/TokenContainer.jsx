@@ -148,6 +148,7 @@ const TokenContainer = (props) => {
       let totalSupplyYield = Number(web3.utils.fromWei(numbers[5], 'ether'))
       let withDrawable = Number(web3.utils.fromWei(numbers[3], 'ether'))
       let withDrawableExit = Number(web3.utils.fromWei(numbers[13], 'ether'))
+      let earned = Number(web3.utils.fromWei(numbers[9], 'ether'))
 
       let burn = balance / 90
       let withDrawTime = Number(numbers[2]) + 24 * 3600
@@ -209,6 +210,7 @@ const TokenContainer = (props) => {
           exit,
           withDrawable,
           withDrawableExit,
+          earned,
           burn,
           fullyUnlock,
           withDrawTime

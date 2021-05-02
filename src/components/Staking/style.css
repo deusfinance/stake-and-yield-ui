@@ -367,6 +367,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  width: 100%;
 }
 .wrap-box > * {
   font-style: normal;
@@ -568,14 +569,18 @@
   opacity: 0.5;
 }
 .frozen-desc {
-  width: 347px;
-  height: 42px;
-
+  width: 400px;
   font-family: 'Monument Grotesk Semi';
   font-size: 12.5px;
   line-height: 15px;
 
   color: #ffffff;
+}
+.frozen-desc p:first-child {
+  padding-top: 0;
+}
+.frozen-desc p {
+  padding-top: 10px;
 }
 .width-271 {
   width: 271px !important;
@@ -993,4 +998,19 @@ input:focus {
 
 .uni-background {
   background: #2d2f35 !important;
+}
+.unfreez-text {
+  margin-bottom: 15px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 9px;
+  line-height: 20px;
+  /* identical to box height, or 222% */
+
+  color: #ffffff;
+  padding: 0 25px;
+  opacity: 0.5;
+}
+.pt-3 {
+  padding-top: 3px;
 }

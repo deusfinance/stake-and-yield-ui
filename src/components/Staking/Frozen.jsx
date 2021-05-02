@@ -48,9 +48,16 @@ const Frozen = (props) => {
       <div className="flex-between mb-15">
         <div className="frozen-desc">
           <p>Frozen </p>
-          <p className="opacity-5">
-            Tokens that are currently being used as collateral to borrow ETH to
-            generate Yield on other protocols.
+          <p>
+            <span className="blue-color">{balance} </span>
+            <span className="opacity-5">
+              {` ${title} are currently being used as collateral to borrow
+            ETH to generate Yield on other protocols.`}
+            </span>
+          </p>
+          <p className="opacity-5 pt-3">
+            You can unfreeze them over period of 24 hours to withdraw them
+            again.
           </p>
         </div>
         <div>
@@ -84,25 +91,28 @@ const Frozen = (props) => {
             </div>
           </div>
           {(withDrawable > 0 || withDrawableExit > 0) && (
-            <div className="wrap-box mb-15">
-              <DrawableAmount
-                withDrawable={withDrawable}
-                withDrawableExit={withDrawableExit}
-                title={title}
-                titleExit={titleExit}
-                width="width-271"
-              />
+            <>
+              <div className="wrap-box ">
+                <DrawableAmount
+                  withDrawable={withDrawable}
+                  withDrawableExit={withDrawableExit}
+                  title={title}
+                  titleExit={titleExit}
+                  width="width-271"
+                />
 
-              <div className="wrap-box-gradient" onClick={handleUnfreeze}>
-                <span className="fluid">FLUID IN: </span>
-                <span className="hour">
-                  <WaitingTime
-                    withDrawTime={withDrawTime}
-                    showFluid={showFluid}
-                  />
-                </span>
+                <div className="wrap-box-gradient" onClick={handleUnfreeze}>
+                  <span className="fluid">FLUID IN: </span>
+                  <span className="hour">
+                    <WaitingTime
+                      withDrawTime={withDrawTime}
+                      showFluid={showFluid}
+                    />
+                  </span>
+                </div>
               </div>
-            </div>
+              <div className="unfreez-text">currently unfreezing</div>
+            </>
           )}
         </div>
       </div>
