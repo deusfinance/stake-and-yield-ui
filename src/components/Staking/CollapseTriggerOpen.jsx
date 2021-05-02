@@ -20,7 +20,7 @@ const CollapseTriggerOpen = ({
     } else {
       e.stopPropagation()
       e.preventDefault()
-      handleCollapseContent('get')
+      handleCollapseContent('lock')
     }
   }
   const handleLock = (e) => {
@@ -31,7 +31,7 @@ const CollapseTriggerOpen = ({
     } else {
       e.stopPropagation()
       e.preventDefault()
-      handleCollapseContent('get')
+      handleCollapseContent('lock')
     }
   }
   const handleStake = (e) => {
@@ -45,7 +45,7 @@ const CollapseTriggerOpen = ({
     } else {
       e.stopPropagation()
       e.preventDefault()
-      handleCollapseContent('deposit')
+      handleCollapseContent('stake')
     }
   }
   return (

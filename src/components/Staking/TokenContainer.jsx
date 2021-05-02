@@ -16,6 +16,7 @@ import Frozen from './Frozen'
 import Fluid from './Fluid'
 import Deposit from './Deposit'
 import Mint from './Mint'
+import { tokenABI } from '../../utils/abis'
 
 const TokenContainer = (props) => {
   const {
@@ -24,6 +25,7 @@ const TokenContainer = (props) => {
     titleExit,
     onlyLocking,
     link,
+    tokenAddress,
     stakingContract,
     vaultContract,
     exitable,
@@ -34,7 +36,7 @@ const TokenContainer = (props) => {
     balancer,
     handleTriggerClick
   } = props
-  const [collapseContent, setCollapseContent] = React.useState('deposit')
+  const [collapseContent, setCollapseContent] = React.useState('lock')
   const [unfreezStake, setUnfreezStake] = React.useState('0')
   const [showFluid, setShowFluid] = React.useState(false)
   const [userInfo, setUserInfo] = React.useState({
@@ -85,14 +87,14 @@ const TokenContainer = (props) => {
 
   React.useEffect(() => {
     if (owner) {
-      fetchDataUser()
+      onlyLocking ? fetchUNIToken() : fetchDataUser()
     }
 
     let subscription = web3.eth.subscribe(
       'newBlockHeaders',
       (error, result) => {
         if (!error && owner) {
-          fetchDataUser()
+          onlyLocking ? fetchUNIToken() : fetchDataUser()
           return
         }
 
@@ -110,10 +112,12 @@ const TokenContainer = (props) => {
   }, [owner, chainId])
 
   React.useEffect(() => {
-    if (userInfo.stakeType === '0' || userInfo.balance == '0') {
-      setCollapseContent('deposit')
-    } else {
-      setCollapseContent('default')
+    if (!onlyLocking) {
+      if (userInfo.stakeType === '0' || userInfo.balance == '0') {
+        setCollapseContent('stake')
+      } else {
+        setCollapseContent('default')
+      }
     }
   }, [owner, chainId, userInfo.balance])
 
@@ -225,6 +229,18 @@ const TokenContainer = (props) => {
     } catch (error) {
       console.log('error Happend in Fetch data', error)
     }
+  }
+
+  const fetchUNIToken = async () => {
+    console.log({ tokenAddress })
+    // const Contract = makeContract(tokenABI, tokenAddress)
+    // let balanceWallet = await Contract.methods.balanceOf(owner).call()
+    // setUserInfo((prev) => {
+    //   return {
+    //     ...prev,
+    //     balanceWallet
+    //   }
+    // })
   }
 
   const handleCollapseContent = (data) => {
@@ -345,7 +361,7 @@ const TokenContainer = (props) => {
             )}
           </>
         )}
-        {collapseContent === 'deposit' && (
+        {collapseContent === 'stake' && (
           <Deposit
             {...userInfo}
             stakingContract={stakingContract}
@@ -357,7 +373,7 @@ const TokenContainer = (props) => {
             yieldable={yieldable}
           />
         )}
-        {collapseContent === 'get' && (
+        {collapseContent === 'lock' && (
           <Mint
             {...userInfo}
             vaultContract={vaultContract}
@@ -366,6 +382,7 @@ const TokenContainer = (props) => {
             title={title}
             titleExit={titleExit}
             handleBack={handleBack}
+            onlyLocking={onlyLocking}
           />
         )}
       </Collapsible>

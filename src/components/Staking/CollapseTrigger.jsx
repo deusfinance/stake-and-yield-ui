@@ -18,7 +18,7 @@ const CollapseTrigger = ({
       e.preventDefault()
       window.open(link, '_blank')
     } else {
-      handleCollapseContent('get')
+      handleCollapseContent('lock')
     }
   }
   const handleLock = (e) => {
@@ -27,7 +27,7 @@ const CollapseTrigger = ({
       e.preventDefault()
       window.open(link, '_blank')
     } else {
-      handleCollapseContent('get')
+      handleCollapseContent('lock')
     }
   }
   const handleStake = (e) => {
@@ -39,7 +39,7 @@ const CollapseTrigger = ({
         '_blank'
       )
     } else {
-      handleCollapseContent('deposit')
+      handleCollapseContent('stake')
     }
   }
   return (

@@ -7,6 +7,7 @@ import { web3, makeContract, sendTransaction } from '../../utils/Stakefun'
 
 const Mint = (props) => {
   const {
+    onlyLocking,
     lockStakeType,
     balanceWallet,
     owner,
@@ -138,7 +139,7 @@ const Mint = (props) => {
   }
   return (
     <>
-      {lockStakeType && (
+      {onlyLocking && lockStakeType && (
         <div className="back-btn pointer" onClick={handleBack}>
           Back
         </div>

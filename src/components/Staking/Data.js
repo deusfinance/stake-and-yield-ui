@@ -118,7 +118,7 @@ const tokens = {
       titleExit: 'UNI-DD',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
       vaultContract: '0xbA5d9F66f7545fa57c15da4002A33792A7E41F46',
-
+      tokenAddress: '0xb91e3e0c16080a0df0b1e9f54f9467210383e45e',
       category: 'liquidity',
       onlyLocking: true,
       link:
@@ -127,9 +127,9 @@ const tokens = {
     {
       title: 'sUNI-DU',
       titleExit: 'UNI-DU',
-
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
       vaultContract: '0xbA5d9F66f7545fa57c15da4002A33792A7E41F46',
+      tokenAddress: '0xb91e3e0c16080a0df0b1e9f54f9467210383e45e',
       category: 'liquidity',
       onlyLocking: true,
       link:
@@ -140,6 +140,7 @@ const tokens = {
       titleExit: 'UNI-DE',
       stakingContract: '0xd8D02269dba3071f83Cf6e99E3D6DeEB318836C4',
       vaultContract: '0xbA5d9F66f7545fa57c15da4002A33792A7E41F46',
+      tokenAddress: '0xb91e3e0c16080a0df0b1e9f54f9467210383e45e',
       category: 'liquidity',
       onlyLocking: true,
       link:
