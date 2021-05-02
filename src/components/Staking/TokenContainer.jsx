@@ -3,12 +3,7 @@ import Collapsible from 'react-collapsible'
 import moment from 'moment'
 import CollapseTrigger from './CollapseTrigger'
 import CollapseTriggerOpen from './CollapseTriggerOpen'
-import {
-  web3,
-  makeContract,
-  sendTransaction,
-  diffHours
-} from '../../utils/Stakefun'
+import { web3, makeContract, sendTransaction } from '../../utils/Stakefun'
 import { abi, StakeAndYieldABI, ControllerABI } from '../../utils/StakingABI'
 import './style.css'
 import UserInfo from './UserInfo'
