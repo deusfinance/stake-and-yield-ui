@@ -244,12 +244,17 @@ const TokenContainer = (props) => {
   const fetchUNIToken = async () => {
     console.log({ tokenAddress })
     if (tokenAddress) {
+      let result = await StakeAndYieldContract.methods.userInfo(owner).call()
+      let { stakedTokenAddress } = result
+      const StakedTokenContract = makeContract(abi, stakedTokenAddress)
       const Contract = makeContract(abi, tokenAddress)
       let balanceWallet = await Contract.methods.balanceOf(owner).call()
       setUserInfo((prev) => {
         return {
           ...prev,
-          balanceWallet
+          balanceWallet,
+          StakedTokenContract,
+          stakedTokenAddress
         }
       })
     }
