@@ -50,7 +50,7 @@ const CollapseTriggerOpen = ({
   }
   return (
     <div className="collapse-trigger">
-      <div>
+      <div className="token-info">
         <p className="token-title">{title}</p>
         <p className="wallet-amount">
           <span className="blue-color">{balanceWallet}</span> in your wallet

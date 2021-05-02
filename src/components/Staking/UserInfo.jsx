@@ -49,7 +49,7 @@ const UserInfo = (props) => {
   }
   return (
     <div className="userInfo-container">
-      <div className="flex-between mb-15">
+      <div className="flex-between flex-column mb-15">
         <div className="mb-15">
           <div className="userInfo-pool mb-15">
             <p>{`You own ${own}% of the pool `}</p>

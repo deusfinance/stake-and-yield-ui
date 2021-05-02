@@ -408,7 +408,8 @@
   border-radius: 6px;
   display: flex;
   justify-content: space-between;
-  width: 571px;
+  /* max-width: 571px; */
+  width: 100%;
   height: 35px;
 }
 .wrap-box-gray-complete > div {
@@ -549,7 +550,7 @@
   mask-composite: exclude;
 }
 .exit-valuet {
-  height: 34px;
+  /* height: 34px; */
   font-size: 12.5px;
   line-height: 15px;
 }
@@ -569,11 +570,11 @@
   opacity: 0.5;
 }
 .frozen-desc {
-  width: 400px;
+  max-width: 400px;
   font-family: 'Monument Grotesk Semi';
   font-size: 12.5px;
   line-height: 15px;
-
+  margin-bottom: 15px;
   color: #ffffff;
 }
 .frozen-desc p:first-child {
@@ -583,7 +584,7 @@
   padding-top: 10px;
 }
 .width-271 {
-  width: 271px !important;
+  max-width: 271px !important;
 }
 .input-transparent {
   background: transparent;
@@ -651,8 +652,8 @@
   opacity: 0.5;
   display: flex;
   justify-content: space-between;
-  width: 571px;
-  height: 35px;
+  max-width: 571px;
+  width: 100%;
   float: right;
 }
 .fluid-footer > div {
@@ -853,14 +854,10 @@
   font-weight: normal;
   font-size: 12px;
   line-height: 20px;
-  /* identical to box height, or 167% */
-
   text-align: right;
-
   color: #ffffff;
 }
 .lock-text {
-  height: 15px;
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
@@ -872,12 +869,9 @@
 .pointer {
   cursor: pointer;
 }
-@media screen and (max-width: 799px) {
+@media screen and (max-width: 930px) {
   .expand-container {
     flex-direction: column;
-  }
-  .stake-btn {
-    margin-bottom: 3px;
   }
 }
 
@@ -1013,4 +1007,9 @@ input:focus {
 }
 .pt-3 {
   padding-top: 3px;
+}
+.token-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

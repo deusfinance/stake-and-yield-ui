@@ -45,7 +45,7 @@ const Frozen = (props) => {
   }
   return (
     <div className="userInfo-container">
-      <div className="flex-between mb-15">
+      <div className="flex-between flex-column mb-15">
         <div className="frozen-desc">
           <p>Frozen </p>
           <p>

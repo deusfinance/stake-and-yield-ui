@@ -34,7 +34,7 @@ const Fluid = (props) => {
   }
   return (
     <div className="userInfo-container">
-      <div className="flex-between">
+      <div className="flex-between flex-column">
         <div>
           <div className="frozen-desc">
             <p>Fluid</p>
