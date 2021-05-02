@@ -16,7 +16,6 @@ import Frozen from './Frozen'
 import Fluid from './Fluid'
 import Deposit from './Deposit'
 import Mint from './Mint'
-import { tokenABI } from '../../utils/abis'
 
 const TokenContainer = (props) => {
   const {
@@ -233,14 +232,16 @@ const TokenContainer = (props) => {
 
   const fetchUNIToken = async () => {
     console.log({ tokenAddress })
-    // const Contract = makeContract(tokenABI, tokenAddress)
-    // let balanceWallet = await Contract.methods.balanceOf(owner).call()
-    // setUserInfo((prev) => {
-    //   return {
-    //     ...prev,
-    //     balanceWallet
-    //   }
-    // })
+    if (tokenAddress) {
+      const Contract = makeContract(abi, tokenAddress)
+      let balanceWallet = await Contract.methods.balanceOf(owner).call()
+      setUserInfo((prev) => {
+        return {
+          ...prev,
+          balanceWallet
+        }
+      })
+    }
   }
 
   const handleCollapseContent = (data) => {
