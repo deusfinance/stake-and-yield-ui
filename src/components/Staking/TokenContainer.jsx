@@ -260,6 +260,7 @@ const TokenContainer = (props) => {
         trigger={
           <CollapseTrigger
             title={title}
+            titleExit={titleExit}
             onlyLocking={onlyLocking}
             link={link}
             apy={userInfo.apy}
@@ -272,6 +273,7 @@ const TokenContainer = (props) => {
         triggerWhenOpen={
           <CollapseTriggerOpen
             title={title}
+            titleExit={titleExit}
             onlyLocking={onlyLocking}
             link={link}
             apy={userInfo.apy}

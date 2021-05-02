@@ -3,6 +3,7 @@ import ActionButton from './ActionButton'
 
 const CollapseTrigger = ({
   title,
+  titleExit,
   category,
   balancer,
   link,
@@ -58,13 +59,13 @@ const CollapseTrigger = ({
       <div className="expand-container">
         <ActionButton
           type="GET"
-          title={title}
+          title={titleExit}
           onlyLocking={onlyLocking}
           onClick={handleGet}
         />
         <ActionButton
           type="LOCK"
-          title={title}
+          title={titleExit}
           onlyLocking={onlyLocking}
           onClick={handleLock}
         />
