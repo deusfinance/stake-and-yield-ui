@@ -12,10 +12,12 @@ import Fluid from './Fluid'
 import Deposit from './Deposit'
 import Mint from './Mint'
 import { getEtherscanLink } from '../../utils/explorers'
+import addresses from '../../services/addresses.json'
 
 const TokenContainer = (props) => {
   const {
     open,
+    tokenName,
     title,
     titleExit,
     onlyLocking,
@@ -81,7 +83,7 @@ const TokenContainer = (props) => {
   const StakeAndYieldContract = makeContract(StakeAndYieldABI, stakingContract)
 
   React.useEffect(() => {
-    if (owner) {
+    if (owner && tokenName) {
       onlyLocking ? fetchUNIToken() : fetchDataUser()
     }
 
@@ -104,7 +106,7 @@ const TokenContainer = (props) => {
         }
       })
     }
-  }, [owner, chainId])
+  }, [owner, chainId, tokenName])
 
   React.useEffect(() => {
     if (!onlyLocking) {
@@ -118,6 +120,12 @@ const TokenContainer = (props) => {
 
   const fetchDataUser = async () => {
     try {
+      const ContractToken = makeContract(
+        abi,
+        addresses['token'][tokenName][chainId]
+      )
+      let balanceToken = await ContractToken.methods.balanceOf(owner).call()
+      balanceToken = web3.utils.fromWei(balanceToken, 'ether')
       let result = await StakeAndYieldContract.methods.userInfo(owner).call()
       const users = await StakeAndYieldContract.methods.users(owner).call()
       const { exitStartTime } = users
@@ -213,6 +221,7 @@ const TokenContainer = (props) => {
           stakeTypeName,
           balanceWallet,
           balance,
+          balanceToken,
           apy,
           claim,
           exit,
@@ -237,18 +246,23 @@ const TokenContainer = (props) => {
   }
 
   const fetchUNIToken = async () => {
-    if (tokenAddress) {
-      let result = await StakeAndYieldContract.methods.userInfo(owner).call()
-      let { stakedTokenAddress } = result
-      const StakedTokenContract = makeContract(abi, stakedTokenAddress)
+    if (tokenAddress && tokenName) {
+      const ContractToken = makeContract(
+        abi,
+        addresses['token'][tokenName][chainId]
+      )
+      let balanceToken = await ContractToken.methods.balanceOf(owner).call()
+      balanceToken = web3.utils.fromWei(balanceToken, 'ether')
       const Contract = makeContract(abi, tokenAddress)
       let balanceWallet = await Contract.methods.balanceOf(owner).call()
+      balanceWallet = web3.utils.fromWei(balanceWallet, 'ether')
+
       setUserInfo((prev) => {
         return {
           ...prev,
           balanceWallet,
-          StakedTokenContract,
-          stakedTokenAddress
+          balanceToken,
+          ContractToken
         }
       })
     }
@@ -392,6 +406,7 @@ const TokenContainer = (props) => {
             chainId={chainId}
             title={title}
             titleExit={titleExit}
+            tokenName={tokenName}
             handleBack={handleBack}
             onlyLocking={onlyLocking}
           />

@@ -4,37 +4,38 @@ import { injected } from '../../connectors'
 import { getEtherscanLink } from '../../utils/explorers'
 import abis from '../../services/abis.json'
 import { web3, makeContract, sendTransaction } from '../../utils/Stakefun'
+import addresses from '../../services/addresses.json'
 
 const Mint = (props) => {
   const {
     onlyLocking,
     lockStakeType,
-    balanceWallet,
     owner,
     chainId,
     handleBack,
-    vaultContract,
-    StakedTokenContract,
+    balanceToken,
+    // vaultContract,
+    ContractToken,
     title,
-    titleExit
+    titleExit,
+    tokenName,
+    tokenAddress
   } = props
 
   const web3React = useWeb3React()
   const { activate } = web3React
   const [amount, setAmount] = React.useState('')
   const [approve, setApprove] = React.useState(false)
-
+  const [contractLink, setContractLink] = React.useState('')
   const [approveClick, setApproveClick] = React.useState(false)
   const [sealedTime, setSealedTime] = React.useState({
     sealed: '0',
     time: '0'
   })
 
-  const VaultContract = makeContract(abis['vaults'], vaultContract)
-
   React.useEffect(() => {
-    if (owner && vaultContract) {
-      checkApprove()
+    if (owner && tokenName && tokenAddress) {
+      fetchData()
     }
     // let subscription = web3.eth.subscribe(
     //   'newBlockHeaders',
@@ -53,22 +54,29 @@ const Mint = (props) => {
     //     console.log('Successfully unsubscribed!')
     //   }
     // })
-  }, [owner, vaultContract, chainId])
+  }, [owner, chainId, tokenName, tokenAddress])
 
-  const checkApprove = async () => {
-    if (StakedTokenContract) {
-      let approve = await StakedTokenContract.methods
-        .allowance(owner, vaultContract)
-        .call()
-      approve = Number(web3.utils.fromWei(approve, 'ether'))
-      setApprove(approve)
-    }
+  const fetchData = async () => {
+    let allowance = await ContractToken.methods
+      .allowance(owner, addresses['vaults'][tokenName][chainId])
+      .call()
+    allowance = Number(web3.utils.fromWei(allowance, 'ether'))
+    let link = getEtherscanLink(
+      chainId,
+      addresses['vaults'][tokenName][chainId]
+    )
+    setContractLink(link)
+    setApprove(approve)
   }
 
   const getSealedTimeAmount = async (amount) => {
     try {
       setAmount(amount)
       if (amount && owner) {
+        const VaultContract = makeContract(
+          abis['vaults'],
+          addresses['vaults'][tokenName][chainId]
+        )
         amount = web3.utils.toWei(amount)
         const result = await VaultContract.methods
           .sealedAndTimeAmount(owner, amount)
@@ -103,9 +111,9 @@ const Mint = (props) => {
       }
       let amount = web3.utils.toWei('1000000000000000000')
       sendTransaction(
-        StakedTokenContract,
+        ContractToken,
         `approve`,
-        [vaultContract, amount],
+        [addresses['vaults'][tokenName][chainId], amount],
         owner,
         chainId,
         `Approved ${title}`
@@ -123,6 +131,10 @@ const Mint = (props) => {
       }
       if (amount === '' || amount === '0') return
       let amountVault = web3.utils.toWei(amount)
+      const VaultContract = makeContract(
+        abis['vaults'],
+        addresses['vaults'][tokenName][chainId]
+      )
       sendTransaction(
         VaultContract,
         `lock`,
@@ -154,7 +166,7 @@ const Mint = (props) => {
               <p className="lock-text">LOCK TO RECEIVE sTOKENS</p>
             </div>
             <div>
-              <p className="balance-wallet"> {`Balance: ${balanceWallet}`}</p>
+              <p className="balance-wallet"> {`Balance: ${balanceToken}`}</p>
             </div>
             <div className="gray-box flex-between">
               <input
@@ -169,7 +181,7 @@ const Mint = (props) => {
               <span
                 className="box-balance-max pointer"
                 onClick={() => {
-                  getSealedTimeAmount(balanceWallet)
+                  getSealedTimeAmount(balanceToken)
                 }}
               >
                 Max
@@ -178,7 +190,7 @@ const Mint = (props) => {
             <div className="contract-box">
               <a
                 className="show-contract pointer"
-                href={getEtherscanLink(chainId, vaultContract)}
+                href={contractLink}
                 target="_blink"
               >
                 Show me the contract

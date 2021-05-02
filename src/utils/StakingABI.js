@@ -156,7 +156,8 @@ export const StakeAndYieldABI = [
       { internalType: 'address', name: '_yieldRewardToken', type: 'address' },
       { internalType: 'uint256', name: '_daoShare', type: 'uint256' },
       { internalType: 'address', name: '_daoWallet', type: 'address' },
-      { internalType: 'address', name: '_controller', type: 'address' }
+      { internalType: 'address', name: '_controller', type: 'address' },
+      { internalType: 'bool', name: '_exitable', type: 'bool' }
     ],
     stateMutability: 'nonpayable',
     type: 'constructor'
@@ -340,6 +341,13 @@ export const StakeAndYieldABI = [
   },
   {
     inputs: [],
+    name: '_totalBurned',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
     name: '_totalExit',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
@@ -490,6 +498,13 @@ export const StakeAndYieldABI = [
   },
   {
     inputs: [],
+    name: 'exitable',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
     name: 'getRewardToken',
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
@@ -524,6 +539,13 @@ export const StakeAndYieldABI = [
     name: 'notifyRewardAmount',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'operator',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
     type: 'function'
   },
   {
@@ -634,6 +656,27 @@ export const StakeAndYieldABI = [
     type: 'function'
   },
   {
+    inputs: [{ internalType: 'bool', name: '_val', type: 'bool' }],
+    name: 'setExitable',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'address', name: '_addr', type: 'address' }],
+    name: 'setOperator',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: 'period', type: 'uint256' }],
+    name: 'setPeriod',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
     inputs: [],
     name: 'stakedToken',
     outputs: [
@@ -645,6 +688,13 @@ export const StakeAndYieldABI = [
   {
     inputs: [],
     name: 'totalExit',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: 'stakeType', type: 'uint256' }],
+    name: 'totalSupply',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function'
@@ -713,6 +763,13 @@ export const StakeAndYieldABI = [
       { internalType: 'uint256', name: 'exitAmountTillNow', type: 'uint256' }
     ],
     stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'withdrawToBurn',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function'
   },
   {
