@@ -1,12 +1,7 @@
 import Web3 from 'web3'
 import moment from 'moment'
-import {
-  ApproveTranaction,
-  getEtherscanLink,
-  CustomTranaction
-} from './explorers'
+import { CustomTranaction } from './explorers'
 import { TransactionState } from './constant'
-import { reject } from 'lodash'
 
 const INFURA_URL =
   'wss://rinkeby.infura.io/ws/v3/4e955a81217a477e88e3793856deb18b'

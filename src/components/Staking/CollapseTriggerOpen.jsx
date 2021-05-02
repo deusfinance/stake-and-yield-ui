@@ -57,7 +57,7 @@ const CollapseTriggerOpen = ({
               )
             }}
           >
-            <span> {`Deposite ${title}`}</span>
+            <span> {`Deposit ${title}`}</span>
           </a>
         ) : (
           <a
@@ -65,7 +65,7 @@ const CollapseTriggerOpen = ({
             onClick={(e) => {
               e.stopPropagation()
               e.preventDefault()
-              handleCollapseContent('deposite')
+              handleCollapseContent('deposit')
             }}
           >
             <span>{`Stake ${title}`}</span>

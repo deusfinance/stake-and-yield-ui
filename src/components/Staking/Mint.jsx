@@ -144,7 +144,7 @@ const Mint = (props) => {
         </div>
       )}
 
-      <div className="deposite-container">
+      <div className="deposit-container">
         {title === 'TIME' ? (
           <p>HOW GET TIME</p>
         ) : (
@@ -197,7 +197,7 @@ const Mint = (props) => {
                     {approve == 0 && (
                       <div
                         className={`${
-                          !approveClick ? 'approve-btn' : 'stake-deposite-btn'
+                          !approveClick ? 'approve-btn' : 'stake-deposit-btn'
                         } pointer`}
                         onClick={handleApprove}
                       >
@@ -209,7 +209,7 @@ const Mint = (props) => {
                       className={`${
                         approveClick
                           ? 'approve-btn pointer'
-                          : 'stake-deposite-btn'
+                          : 'stake-deposit-btn'
                       } ${approve ? 'pointer approve-btn' : ''}`}
                       onClick={handleMint}
                     >

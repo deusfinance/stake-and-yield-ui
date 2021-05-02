@@ -174,7 +174,7 @@ ul.tab li input[type='radio']:checked ~ label {
   ul.tab li input[type='radio']:checked ~ label {
     border-radius: 10px;
   }
-  .stake-deposite-btn {
+  .stake-deposit-btn {
     width: 100%;
   }
   ul.togglebuttontab li {
@@ -194,7 +194,7 @@ ul.tab li input[type='radio']:checked ~ label {
     flex-direction: column;
     margin: 0 auto;
   }
-  .deposite-container {
+  .deposit-container {
     width: 100%;
     display: flex;
     flex-direction: column;

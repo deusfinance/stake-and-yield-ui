@@ -14,7 +14,7 @@ import './style.css'
 import UserInfo from './UserInfo'
 import Frozen from './Frozen'
 import Fluid from './Fluid'
-import Deposite from './Deposite'
+import Deposit from './Deposit'
 import Mint from './Mint'
 
 const TokenContainer = (props) => {
@@ -33,7 +33,7 @@ const TokenContainer = (props) => {
     balancer,
     handleTriggerClick
   } = props
-  const [collapseContent, setCollapseContent] = React.useState('deposite')
+  const [collapseContent, setCollapseContent] = React.useState('deposit')
   const [unfreezStake, setUnfreezStake] = React.useState('0')
   const [showFluid, setShowFluid] = React.useState(false)
   const [userInfo, setUserInfo] = React.useState({
@@ -110,7 +110,7 @@ const TokenContainer = (props) => {
 
   React.useEffect(() => {
     if (userInfo.stakeType === '0' || userInfo.balance == '0') {
-      setCollapseContent('deposite')
+      setCollapseContent('deposit')
     } else {
       setCollapseContent('default')
     }
@@ -336,11 +336,10 @@ const TokenContainer = (props) => {
                 </div>
               </div>
             )}
-            {/* <DepositBtn onClickDeposite={data =>handleCollapseContent(data)} /> */}
           </>
         )}
-        {collapseContent === 'deposite' && (
-          <Deposite
+        {collapseContent === 'deposit' && (
+          <Deposit
             {...userInfo}
             stakingContract={stakingContract}
             owner={owner}

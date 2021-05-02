@@ -5,7 +5,7 @@ import { web3, sendTransaction } from '../../utils/Stakefun'
 import { injected } from '../../connectors'
 import { getEtherscanLink } from '../../utils/explorers'
 
-const Deposite = (props) => {
+const Deposit = (props) => {
   const {
     title,
     stakeType,
@@ -108,7 +108,7 @@ const Deposite = (props) => {
           Back
         </div>
       )}
-      <div className="deposite-container">
+      <div className="deposit-container">
         <ToggleButtons
           data={[
             {
@@ -185,7 +185,7 @@ const Deposite = (props) => {
                     className={`${
                       !approveClick
                         ? 'approve-btn pointer'
-                        : 'stake-deposite-btn'
+                        : 'stake-deposit-btn'
                     } `}
                     onClick={handleApprove}
                   >
@@ -194,7 +194,7 @@ const Deposite = (props) => {
                 )}
                 <div
                   className={`${
-                    approve ? 'approve-btn pointer' : 'stake-deposite-btn'
+                    approve ? 'approve-btn pointer' : 'stake-deposit-btn'
                   } `}
                   onClick={handleStake}
                 >
@@ -228,4 +228,4 @@ const Deposite = (props) => {
   )
 }
 
-export default Deposite
+export default Deposit

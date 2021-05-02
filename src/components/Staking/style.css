@@ -669,21 +669,21 @@
   justify-content: flex-end;
 }
 
-/*  Deposite Content */
+/*  Deposit Content */
 
-.deposite-container {
+.deposit-container {
   width: 100%;
   max-width: 415px;
   display: flex;
   flex-direction: column;
   margin: 60px auto 0;
 }
-.deposite-container > * {
+.deposit-container > * {
   margin-bottom: 10px;
 }
 .vault-exit {
   background: #0d0d0d;
-  border: 1px solid #1c1c1c;
+  border: 1px solid rgba(0, 209, 108, 0.5);
   border-radius: 100px;
   display: block;
   width: 100%;
@@ -695,7 +695,7 @@
 .vault-exit-title {
   font-style: normal;
   font-weight: normal;
-  font-size: 10px;
+  font-size: 12.5px;
   line-height: 14px;
 
   color: #ffffff;
@@ -785,7 +785,7 @@
   border-radius: 6px;
 }
 
-.stake-deposite-btn {
+.stake-deposit-btn {
   width: 190px;
   height: 35px;
   font-style: normal;
