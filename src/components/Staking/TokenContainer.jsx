@@ -126,6 +126,11 @@ const TokenContainer = (props) => {
       )
       let balanceToken = await ContractToken.methods.balanceOf(owner).call()
       balanceToken = web3.utils.fromWei(balanceToken, 'ether')
+      let allowance = await ContractToken.methods
+        .allowance(owner, addresses['vaults'][tokenName][chainId])
+        .call()
+      allowance = Number(web3.utils.fromWei(allowance, 'ether'))
+
       let result = await StakeAndYieldContract.methods.userInfo(owner).call()
       const users = await StakeAndYieldContract.methods.users(owner).call()
       const { exitStartTime } = users
@@ -213,10 +218,12 @@ const TokenContainer = (props) => {
       setUserInfo((prev) => {
         return {
           ...prev,
+          ContractToken,
           stakedTokenAddress,
           StakedTokenContract,
           StakeAndYieldContract,
           approve,
+          allowance,
           stakeType,
           stakeTypeName,
           balanceWallet,
@@ -256,13 +263,17 @@ const TokenContainer = (props) => {
       const Contract = makeContract(abi, tokenAddress)
       let balanceWallet = await Contract.methods.balanceOf(owner).call()
       balanceWallet = web3.utils.fromWei(balanceWallet, 'ether')
-
+      let allowance = await ContractToken.methods
+        .allowance(owner, addresses['vaults'][tokenName][chainId])
+        .call()
+      allowance = Number(web3.utils.fromWei(allowance, 'ether'))
       setUserInfo((prev) => {
         return {
           ...prev,
           balanceWallet,
           balanceToken,
-          ContractToken
+          ContractToken,
+          allowance
         }
       })
     }

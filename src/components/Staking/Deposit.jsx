@@ -58,6 +58,9 @@ const Deposit = (props) => {
       if (!owner) {
         return
       }
+      if (approve || approveClick) {
+        return
+      }
       let amount = web3.utils.toWei('1000000000000000000')
       sendTransaction(
         StakedTokenContract,
@@ -79,18 +82,20 @@ const Deposit = (props) => {
         return
       }
       if (stakeAmount == 0 || stakeAmount == '') return
-      let amount = web3.utils.toWei(stakeAmount)
-      let type = selectedStakeType == '0' ? '1' : selectedStakeType
-      sendTransaction(
-        StakeAndYieldContract,
-        `deposit`,
-        [amount, type, exitBtn],
-        owner,
-        chainId,
-        `Staked ${stakeAmount} ${title}`
-      ).then(() => {
-        setStakeAmount('0')
-      })
+      if (approve || approveClick) {
+        let amount = web3.utils.toWei(stakeAmount)
+        let type = selectedStakeType == '0' ? '1' : selectedStakeType
+        sendTransaction(
+          StakeAndYieldContract,
+          `deposit`,
+          [amount, type, exitBtn],
+          owner,
+          chainId,
+          `Staked ${stakeAmount} ${title}`
+        ).then(() => {
+          setStakeAmount('0')
+        })
+      }
     } catch (error) {
       console.log('error happend in Stake', error)
     }

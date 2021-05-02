@@ -8,6 +8,7 @@ import addresses from '../../services/addresses.json'
 
 const Mint = (props) => {
   const {
+    allowance,
     onlyLocking,
     lockStakeType,
     owner,
@@ -25,7 +26,6 @@ const Mint = (props) => {
   const web3React = useWeb3React()
   const { activate } = web3React
   const [amount, setAmount] = React.useState('')
-  const [approve, setApprove] = React.useState(false)
   const [contractLink, setContractLink] = React.useState('')
   const [approveClick, setApproveClick] = React.useState(false)
   const [sealedTime, setSealedTime] = React.useState({
@@ -34,40 +34,14 @@ const Mint = (props) => {
   })
 
   React.useEffect(() => {
-    if (owner && tokenName && tokenAddress) {
-      fetchData()
+    if (chainId && tokenName) {
+      let link = getEtherscanLink(
+        chainId,
+        addresses['vaults'][tokenName][chainId]
+      )
+      setContractLink(link)
     }
-    // let subscription = web3.eth.subscribe(
-    //   'newBlockHeaders',
-    //   function (error, result) {
-    //     if (!error && owner && vaultContract) {
-    //       checkApprove()
-    //       return
-    //     }
-    //     console.error(error)
-    //   }
-    // )
-
-    // // unsubscribes the subscription
-    // subscription.unsubscribe(function (error, success) {
-    //   if (success) {
-    //     console.log('Successfully unsubscribed!')
-    //   }
-    // })
-  }, [owner, chainId, tokenName, tokenAddress])
-
-  const fetchData = async () => {
-    let allowance = await ContractToken.methods
-      .allowance(owner, addresses['vaults'][tokenName][chainId])
-      .call()
-    allowance = Number(web3.utils.fromWei(allowance, 'ether'))
-    let link = getEtherscanLink(
-      chainId,
-      addresses['vaults'][tokenName][chainId]
-    )
-    setContractLink(link)
-    setApprove(approve)
-  }
+  }, [tokenName, chainId])
 
   const getSealedTimeAmount = async (amount) => {
     try {
@@ -109,6 +83,10 @@ const Mint = (props) => {
       if (!owner) {
         return
       }
+      if (allowance || approveClick) {
+        return
+      }
+      console.log({ ContractToken })
       let amount = web3.utils.toWei('1000000000000000000')
       sendTransaction(
         ContractToken,
@@ -130,21 +108,23 @@ const Mint = (props) => {
         return
       }
       if (amount === '' || amount === '0') return
-      let amountVault = web3.utils.toWei(amount)
-      const VaultContract = makeContract(
-        abis['vaults'],
-        addresses['vaults'][tokenName][chainId]
-      )
-      sendTransaction(
-        VaultContract,
-        `lock`,
-        [amountVault],
-        owner,
-        chainId,
-        `Mint ${amount} ${title}`
-      ).then(() => {
-        // setAmount('0')
-      })
+      if (allowance || approveClick) {
+        let amountVault = web3.utils.toWei(amount)
+        const VaultContract = makeContract(
+          abis['vaults'],
+          addresses['vaults'][tokenName][chainId]
+        )
+        sendTransaction(
+          VaultContract,
+          `lock`,
+          [amountVault],
+          owner,
+          chainId,
+          `Mint ${amount} ${title}`
+        ).then(() => {
+          // setAmount('0')
+        })
+      }
     } catch (error) {
       console.log('error happend in Mint', error)
     }
@@ -206,12 +186,14 @@ const Mint = (props) => {
             {owner ? (
               chainId == 1 || chainId == 4 ? (
                 <>
-                  <div className={!approve ? 'flex-between' : 'flex-center'}>
-                    {approve == 0 && (
+                  <div className={allowance ? 'flex-center' : 'flex-between'}>
+                    {allowance == 0 && (
                       <div
                         className={`${
-                          !approveClick ? 'approve-btn' : 'stake-deposit-btn'
-                        } pointer`}
+                          !approveClick
+                            ? 'approve-btn pointer'
+                            : 'stake-deposit-btn'
+                        } `}
                         onClick={handleApprove}
                       >
                         Approve
@@ -223,13 +205,13 @@ const Mint = (props) => {
                         approveClick
                           ? 'approve-btn pointer'
                           : 'stake-deposit-btn'
-                      } ${approve ? 'pointer approve-btn' : ''}`}
+                      } ${allowance ? 'pointer approve-btn' : ''}`}
                       onClick={handleMint}
                     >
                       Mint
                     </div>
                   </div>
-                  {approve == 0 && (
+                  {allowance == 0 && (
                     <div className="flex-center">
                       <div className="container-status-button">
                         <div className="active">1</div>
