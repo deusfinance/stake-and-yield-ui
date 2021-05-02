@@ -9,13 +9,14 @@ import {
   sendTransaction,
   diffHours
 } from '../../utils/Stakefun'
-import { abi, StakeAndYieldABI } from '../../utils/ABIERC20'
+import { abi, StakeAndYieldABI, ControllerABI } from '../../utils/StakingABI'
 import './style.css'
 import UserInfo from './UserInfo'
 import Frozen from './Frozen'
 import Fluid from './Fluid'
 import Deposit from './Deposit'
 import Mint from './Mint'
+import { getEtherscanLink } from '../../utils/explorers'
 
 const TokenContainer = (props) => {
   const {
@@ -163,6 +164,15 @@ const TokenContainer = (props) => {
       }
       let total = 0
       let stakeTypeName = ''
+      let strategyLink = ''
+      if (stakeType === '2' || stakeType === '3') {
+        let controller = await StakeAndYieldContract.methods.controller().call()
+        const ControllerContract = makeContract(ControllerABI, controller)
+        let strategy = await ControllerContract.methods
+          .getStrategy(stakingContract)
+          .call()
+        strategyLink = getEtherscanLink(chainId, strategy)
+      }
       switch (stakeType) {
         case '1':
           total = totalSupply
@@ -216,7 +226,8 @@ const TokenContainer = (props) => {
           earned,
           burn,
           fullyUnlock,
-          withDrawTime
+          withDrawTime,
+          strategyLink
         }
       })
       if (total > 0) {

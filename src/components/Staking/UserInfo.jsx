@@ -16,7 +16,8 @@ const UserInfo = (props) => {
     exit,
     burn,
     fullyUnlock,
-    exitable
+    exitable,
+    strategyLink
   } = props
   const handleClaim = () => {
     try {
@@ -63,7 +64,15 @@ const UserInfo = (props) => {
           <div className="userInfo-pool mb-15">
             <p>
               <span> Staketype: </span>
-              <span className="blue-color">{stakeTypeName}</span>
+              <span className="blue-color">
+                {stakeTypeName !== 'Stake' ? (
+                  <a href={strategyLink} target="_blink">
+                    {stakeTypeName}
+                  </a>
+                ) : (
+                  stakeTypeName
+                )}
+              </span>
             </p>
             <p className="opacity-5">generating yield with this strategy</p>
           </div>
