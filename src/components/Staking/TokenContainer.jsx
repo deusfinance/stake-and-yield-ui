@@ -237,7 +237,6 @@ const TokenContainer = (props) => {
   }
 
   const fetchUNIToken = async () => {
-    console.log({ tokenAddress })
     if (tokenAddress) {
       let result = await StakeAndYieldContract.methods.userInfo(owner).call()
       let { stakedTokenAddress } = result
