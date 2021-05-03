@@ -1,7 +1,7 @@
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 
-import './style.css'
+import './StakingStyle.css'
 
 import ToggleButtons from './ToggleButtons'
 import TokenContainer from './TokenContainer'
