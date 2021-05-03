@@ -1,11 +1,11 @@
 import React from 'react';
 import { notify, formatBalance } from '../../utils/utils';
-// import ChainPupop from '../common/Popup/ChainPopup';
-// import { useWeb3React } from '@web3-react/core';
+import { useTranslation } from 'react-i18next'
 
-const Title = ({ claimable_amount, web3, isStock, isSPCx, isCoinbase, isBakkt, isDEA }) => {
+const Title = ({ claimable_amount, web3, isStock, isSPCx, isCoinbase, isBakkt, isDEA, isMigrator }) => {
     const isClaimBtn = web3 && claimable_amount && claimable_amount !== "" && claimable_amount !== "0" && formatBalance(claimable_amount) !== 0
     const isMobile = window.innerWidth < 670
+    const { t } = useTranslation()
     // const { chainId } = useWeb3React()
     const handleClaim = async () => {
         try {
@@ -17,40 +17,19 @@ const Title = ({ claimable_amount, web3, isStock, isSPCx, isCoinbase, isBakkt, i
 
     return (<>
 
-        {/*         <ChainPupop
-            title={"ARE YOU IN THE RIGHT PLACE?"}
-            show={chainId && (chainId !== 1 && chainId !== 4)}
-            close={false}
-            handlePopup={() => console.log()}
-            popBody={<div className="description" style={{ padding: "30px  10px", textAlign: "center" }}>
-                <div>
-                    This page is specific for Ethereum mainnet and it seems like you are connected to another network.
-                </div>
-                <div style={{ marginTop: "20px" }}>
-                    1) Change your wallets network to Ethereum <br />
-                        2) Go to  <a href="/crosschain/xdai/tutorial" style={{ marginTop: "10px" }}>Crosschain</a>
-                </div>
-
-                <div style={{ marginTop: "20px" }}>
-                    Need more help?<br />
-                    <a href="https://wiki.deus.finance" target="_blank" style={{ marginTop: "10px" }}>Visit our wiki ↗</a>
-                </div>
-
-            </div>}
-        /> */}
 
         {isClaimBtn && isMobile && <div className="grad-wrap claimable-btn" onClick={handleClaim}>
             <div className={`grad `}>
                 <div> {formatBalance(claimable_amount)} ETH</div>
-                <div>claim</div>
+                <div>{t("claim")}</div>
             </div>
         </div>
         }
         <div className="swap-title">
-            {!(isStock || isSPCx || isDEA) && <> <img src={process.env.PUBLIC_URL + "/img/DEUSName.svg"} alt="DEUS" />
+            {!(isStock || isSPCx || isDEA || isMigrator) && <> <img src={process.env.PUBLIC_URL + "/img/DEUSName.svg"} alt="DEUS" />
                 <div className="swap-wrap">
                     <div className="swap">
-                        Swap
+                        {t("swap")}
                     </div>
                 </div>
             </>}
@@ -58,15 +37,27 @@ const Title = ({ claimable_amount, web3, isStock, isSPCx, isCoinbase, isBakkt, i
             {isStock && <> <img src={process.env.PUBLIC_URL + "/img/sync-logo.svg"} alt="DEUS" />
                 <div className="sync-wrap" >
                     <div className="sync" style={{ textTransform: "uppercase" }}>
-                        synchronizer
+                        {t("synchronizer")}
                     </div>
                 </div>
             </>}
 
         </div>
+        {isMigrator && <div className="swap-title">
+            <div className="swap-wrap">
+                <div className="swap">
+                    {t("swap")}
+                </div>
+            </div>
+        </div>}
+
         {isCoinbase && <div className="coinbase-wrap">
             <div className="top">coinbase</div>
             <img src={process.env.PUBLIC_URL + "/img/futures.svg"} alt="CoinBase" />
+        </div>}
+        {isMigrator && <div className="coinbase-wrap migrator-wrap">
+            <div className="top">coinbase</div>
+            <img src={process.env.PUBLIC_URL + "/img/migrator.svg"} alt="migrator" />
         </div>}
 
         {isBakkt && <div className="bakkt-wrap" style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -75,9 +66,9 @@ const Title = ({ claimable_amount, web3, isStock, isSPCx, isCoinbase, isBakkt, i
 
         {isSPCx && <div className="spcx-wrap" style={{ textAlign: "center", marginBottom: "20px" }}>
             <img src={process.env.PUBLIC_URL + "/img/musk-logo.svg"} alt="spcx" />
-            <div className="main-title">SPACEX FUTURE, ...</div>
+            <div className="main-title"> {t("spaceX")}</div>
             <div className="desc">
-                <div >Trade SPACEX futures before anyone else.</div>
+                <div >{t("spaceX2")}</div>
             </div>
         </div>}
 

@@ -60,28 +60,29 @@ const SyncBscTest = () => {
     const { account, chainId } = useWeb3React()
     const [web3Class, setWeb3Class] = useState(new StockService(account, 97))
     const apis = [
-        "https://oracle1.deus.finance/BSC/signatures.json",
-        "https://oracle3.deus.finance/BSC/signatures.json",
+        "https://oracle1.deus.finance/bsc/signatures.json",
     ]
+
     let transactionType = {}
     useEffect(() => {
         if (account && chainId) {
             setWeb3Class(new StockService(account, 97))
         }
-        initialCap()
+        // initialCap()
     }, [account, chainId])
 
-    const getConducted = useCallback(() => fetcher("https://oracle1.deus.finance/test/BSC/conducted.json", { cache: "no-cache" }), [])
-    const getPrices = useCallback(() => fetcher("https://oracle1.deus.finance/test/BSC/price.json", { cache: "no-cache" }), [])
+    const getConducted = useCallback(() => fetcher("https://oracle1.deus.finance/bsc/conducted.json", { cache: "no-cache" }), [])
+    const getPrices = useCallback(() => fetcher("https://oracle1.deus.finance/bsc/price.json", { cache: "no-cache" }), [])
 
-    let reportMessages = ""
-    const getBuySell = useCallback(() =>
-        Promise.allSettled(
+    const getBuySell = useCallback(() => {
+        let reportMessages = ""
+        return Promise.allSettled(
             apis.map(api => fetch(api, { cache: "no-cache" }))
         ).then(function (responses) {
+
             responses = responses.filter((result, i) => {
                 if (result?.value?.ok) return true
-                reportMessages = apis[i] + "\t is down" + "\n"
+                reportMessages = apis[i] + "\t is down\n"
                 return false
             })
             if (reportMessages !== "") {
@@ -93,9 +94,10 @@ const SyncBscTest = () => {
             }));
         }).catch(function (error) {
             console.log(error);
-        }), [])
+        })
+    }, [apis])
 
-    const getStocks = useCallback(() => fetcher("https://oracle1.deus.finance/test/BSC/registrar.json", { cache: "no-cache" }), [])
+    const getStocks = useCallback(() => fetcher("https://oracle1.deus.finance/registrar-detail.json", { cache: "no-cache" }), [])
 
     useEffect(() => {
         handleInitToken("from", { ...busdToken })
@@ -105,7 +107,7 @@ const SyncBscTest = () => {
             })
         }, 15000))
         return clearInterval(subscrible)
-    }, [])
+    }, [])//eslint-disable-line
 
     useEffect(() => {
         document.body.style.backgroundColor = '#2c2f36'
@@ -114,7 +116,7 @@ const SyncBscTest = () => {
         const toToken = { ...emptyToken, balance: "0" }
         handleInitToken("from", { ...fromToken })
         handleInitToken("to", { ...toToken })
-    }, [web3Class])
+    }, [web3Class])//eslint-disable-line
 
     useEffect(() => { //adding chain and type wrap
         if (conducted && stocks) {
@@ -139,14 +141,15 @@ const SyncBscTest = () => {
             // handleInitTokenByName("to", "TSLA")
 
         }
-    }, [conducted, stocks, account])
+    }, [conducted, stocks, account])//eslint-disable-line
 
 
     useEffect(() => {
         const stype = lastInputFocus ? lastInputFocus : "from"
         handleTokenInputChange(stype, swap[stype].amount)
-    }, [isLong, prices])
+    }, [isLong, prices])//eslint-disable-line
 
+    //eslint-disable-next-line
     const initialCap = useCallback(async () => {
         if (account && chainId && chainId === 97) {
             setLoadingCAP(true)
@@ -158,7 +161,7 @@ const SyncBscTest = () => {
                 })
             })
         }
-    }, [account, chainId])
+    }, [account, chainId])//eslint-disable-line
 
 
     const getData = useCallback(() => {
@@ -217,11 +220,9 @@ const SyncBscTest = () => {
         if (token.type === TokenType.Main) {
             token.balance = await web3Class.getTokenBalance(token.address, account)
             console.log("token balance ", token.balance);
-            if (!token.allowances)
+            if (!token.allowances || !parseInt(token.allowances) > 0)
                 token.allowances = await web3Class.getAllowances(token.address, account)
         } else {
-            // console.log("from ", token);
-
             if (token.long) {
                 token.long.balance = await web3Class.getTokenBalance(token.long.address, account)
                 if (!parseInt(token.long.allowances) > 0) {
@@ -309,7 +310,7 @@ const SyncBscTest = () => {
             }
             if (transactionType.action !== "approve")
                 toast.info(<div>Transaction Pending <br />
-                    <a href={`https://blockscout.com/xdai/mainnet/tx/${hash}/internal-transactions`} target="_blank">{`Swap ${swap.from.amount} ${swap.from.symbol} for ~${swap.to.amount} ${swap.to.symbol} ↗ `}</a></div>, {
+                    <a href={`https://testnet.bscscan.com/tx//${hash}`} target="_blank" rel="noopener noreferrer">{`Swap ${swap.from.amount} ${swap.from.symbol} for ~${swap.to.amount} ${swap.to.symbol} ↗ `}</a></div>, {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: false,
                     closeOnClick: false,
@@ -317,7 +318,7 @@ const SyncBscTest = () => {
                 });
             else {
                 toast.info(<div>Transaction Pending <br />
-                    {`Approve d${swap.from.symbol}${!isLong ? '-s' : ''}`}</div>, {
+                    {`Approve ${swap.from.symbol}`}</div>, {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: false
 
@@ -330,7 +331,7 @@ const SyncBscTest = () => {
             if (transactionType.action === "approve") {
                 handleInitToken(transactionType.type, transactionType.token, transactionType.token.amount)
                 toast.success(<div>Transaction Successful <br />
-                    {`Approved d${swap.from.symbol}${!isLong ? '-s' : ''}`}</div>, {
+                    {`Approved ${swap.from.symbol}`}</div>, {
                     position: toast.POSITION.BOTTOM_RIGHT
                 });
             }
@@ -360,23 +361,11 @@ const SyncBscTest = () => {
     const handleSwap = async () => {
         const { from, to } = swap
         try {
-            if (from.type === TokenType.Wrapped) {
-                if (isLong && !parseInt(from.long.allowances) > 0) {
-                    const payload = { action: "approve", type: "from", token: from }
-                    transactionType = payload
-                    return await web3Class.approve(from.long.address, from.amount, notifSync(methods))
-                }
-                if (!isLong && !parseInt(from.short.allowances) > 0) {
-                    const payload = { action: "approve", type: "from", token: from }
-                    transactionType = payload
-                    return await web3Class.approve(from.short.address, from.amount, notifSync(methods))
-                }
-            } else {
-                if (!parseInt(from.allowances) > 0) {
-                    const payload = { action: "approve", type: "from", token: from }
-                    transactionType = payload
-                    return await web3Class.approve(from.address, from.amount, notifSync(methods))
-                }
+            if (from.type === TokenType.Main && !parseInt(from.allowances) > 0) {
+                console.log({ action: "approve", type: "from" });
+                const payload = { action: "approve", type: "from", token: from }
+                transactionType = payload
+                return await web3Class.approve(from.address, from.amount, notifSync(methods))
             }
 
             if (to.type === TokenType.Main) {
@@ -386,7 +375,7 @@ const SyncBscTest = () => {
             }
 
         } catch (error) {
-
+            console.log(error);
         }
     }
 
@@ -395,12 +384,13 @@ const SyncBscTest = () => {
         const tokenAddress = isLong ? token.long.address : token.short.address
         const makerBuySell = await getBuySell()
 
-        const oracles = xdaiMutileOracleHandler(type, tokenAddress, makerBuySell)
+        const oracles = xdaiMutileOracleHandler(type, tokenAddress, makerBuySell, 1)
 
         try {
             transactionType = { action: "buy", swap: swap, isLong: isLong }
-            const data = type === "buy" ?
-                await web3Class.buy(tokenAddress, amount, oracles.result, oracles.price, notifSync(methods)) :
+            if (type === "buy")
+                await web3Class.buy(tokenAddress, amount, oracles.result, notifSync(methods))
+            else
                 await web3Class.sell(tokenAddress, amount, oracles.result, notifSync(methods))
             // console.log(data);
         } catch (error) {
@@ -497,7 +487,7 @@ const SyncBscTest = () => {
                         <div style={{ margin: "16px 0" }}></div>
 
                         <SwapStockButton
-                            validChain={56}
+                            validChain={97}
                             loading={loadingAllowance}
                             handleSwap={handleSwap}
                             from_token={from_token}
@@ -509,7 +499,7 @@ const SyncBscTest = () => {
 
                         <div style={{ margin: "6px 0" }}></div>
                     </div>
-                    {chainId && chainId === 56 && <SyncCap remindedAmount={remindCap} totalAmount={totalCap} />}
+                    {chainId && chainId === 97 && <SyncCap remindedAmount={remindCap} totalAmount={totalCap} />}
                     {/* <TimerTrading /> */}
                 </div>
             </div>

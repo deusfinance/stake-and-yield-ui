@@ -33,13 +33,12 @@ const Deposit = (props) => {
   React.useEffect(() => {
     setSelectedStakeType(stakeType)
     setExitBtn(exit)
-  }, [owner, chainId])
-
+  }, [owner, chainId, exit, stakeType])
   React.useEffect(() => {
     return () => {
       setPreApprove(approve)
     }
-  }, [])
+  }, [approve])
 
   const chooseTypeStake = (e) => {
     setSelectedStakeType(e.target.value)
@@ -81,10 +80,10 @@ const Deposit = (props) => {
       if (!owner) {
         return
       }
-      if (stakeAmount == 0 || stakeAmount == '') return
+      if (stakeAmount === '0' || stakeAmount === '') return
       if (approve || approveClick) {
         let amount = web3.utils.toWei(stakeAmount)
-        let type = selectedStakeType == '0' ? '1' : selectedStakeType
+        let type = selectedStakeType === '0' ? '1' : selectedStakeType
         sendTransaction(
           StakeAndYieldContract,
           `deposit`,
@@ -131,7 +130,7 @@ const Deposit = (props) => {
           ]}
           handleSelectedButton={chooseTypeStake}
           name={`Stake-Yield-${title}`}
-          defaultChecked={selectedStakeType == '0' ? '1' : selectedStakeType}
+          defaultChecked={selectedStakeType === '0' ? '1' : selectedStakeType}
           lockStakeType={lockStakeType}
         />
         {exitable && (
@@ -182,10 +181,10 @@ const Deposit = (props) => {
         </div>
 
         {owner ? (
-          chainId == 1 || chainId == 4 ? (
+          chainId === 1 || chainId === 4 ? (
             <>
               <div className={!preApprove ? 'flex-between' : 'flex-center'}>
-                {preApprove == 0 && (
+                {preApprove === 0 && (
                   <div
                     className={`${
                       !approveClick
@@ -206,7 +205,7 @@ const Deposit = (props) => {
                   stake
                 </div>
               </div>
-              {preApprove == 0 && (
+              {preApprove === 0 && (
                 <div className="flex-center">
                   <div className="container-status-button">
                     <div className="active">1</div>
@@ -216,9 +215,9 @@ const Deposit = (props) => {
               )}
             </>
           ) : (
-            <a className="wrong-network">
+            <span className="wrong-network">
               <span>Wrong Network</span>
-            </a>
+            </span>
           )
         ) : (
           <div

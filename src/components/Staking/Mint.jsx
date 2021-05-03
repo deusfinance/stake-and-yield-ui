@@ -19,8 +19,7 @@ const Mint = (props) => {
     ContractToken,
     title,
     titleExit,
-    tokenName,
-    tokenAddress
+    tokenName
   } = props
 
   const web3React = useWeb3React()
@@ -86,7 +85,6 @@ const Mint = (props) => {
       if (allowance || approveClick) {
         return
       }
-      console.log({ ContractToken })
       let amount = web3.utils.toWei('1000000000000000000')
       sendTransaction(
         ContractToken,
@@ -184,10 +182,10 @@ const Mint = (props) => {
             </div>
 
             {owner ? (
-              chainId == 1 || chainId == 4 ? (
+              chainId === 1 || chainId === 4 ? (
                 <>
                   <div className={allowance ? 'flex-center' : 'flex-between'}>
-                    {allowance == 0 && (
+                    {allowance === 0 && (
                       <div
                         className={`${
                           !approveClick
@@ -211,7 +209,7 @@ const Mint = (props) => {
                       Mint
                     </div>
                   </div>
-                  {allowance == 0 && (
+                  {allowance === 0 && (
                     <div className="flex-center">
                       <div className="container-status-button">
                         <div className="active">1</div>
@@ -221,9 +219,9 @@ const Mint = (props) => {
                   )}
                 </>
               ) : (
-                <a className="wrong-network">
+                <span className="wrong-network">
                   <span>Wrong Network</span>
-                </a>
+                </span>
               )
             ) : (
               <div

@@ -3,7 +3,7 @@ import { getStayledNumber } from '../../utils/utils';
 import { TokenType } from '../../config';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { formatEtherscanLink, EtherscanType } from '../../sdk/constant';
-import { useWeb3React } from '@web3-react/core';
+import { useTranslation } from 'react-i18next'
 
 import './styles/search-assets.scss';
 
@@ -12,7 +12,8 @@ const SearchAssets = (props) => {
     const [currTokens, setCurrToken] = useState([])
     const [sortedList, setSortedList] = useState([])
     const { nAllStocks } = props
-    const { chainId } = useWeb3React()
+    const chainId = props.chainId
+    const { t } = useTranslation()
     const [query, setQuery] = useState("")
     const height = useState("500px")
 
@@ -30,15 +31,15 @@ const SearchAssets = (props) => {
 
     useEffect(() => {
         if (searchBoxType === "to") {
-            setSortedList(arrToken)
-            setCurrToken(arrToken)
+            setSortedList(arrToken && arrToken.filter(t => t.conducted))
+            setCurrToken(arrToken && arrToken.filter(t => t.conducted))
             setQuery("")
         } else {
             setSortedList(arrToken && arrToken.filter(t => t.conducted))
             setCurrToken(arrToken && arrToken.filter(t => t.conducted))
             setQuery("")
         }
-    }, [searchBoxType, showSearchBox, nAllStocks])
+    }, [searchBoxType, showSearchBox, nAllStocks, arrToken])
 
 
 
@@ -62,13 +63,13 @@ const SearchAssets = (props) => {
             <div className="search-box">
                 <div className="label">
                     <p> </p>
-                    <div onClick={() => handleSearchBox(false)}>close</div>
+                    <div onClick={() => handleSearchBox(false)}>{t("close")}</div>
                 </div>
-                <input type="text" placeholder="Search symbol and name" spellCheck="false" autoComplete="off" autoFocus={true} value={query} onChange={(e) => handleTyping(e.currentTarget.value)} />
+                <input type="text" placeholder={t("searchSymbol")} spellCheck="false" autoComplete="off" autoFocus={true} value={query} onChange={(e) => handleTyping(e.currentTarget.value)} />
                 <div className="token-items-wrap">
                     <div className="titles">
-                        <p>Asset Name</p>
-                        <p>Balance</p>
+                        <p>{t("assetName")}</p>
+                        <p>{t("balance")}</p>
                     </div>
                     <div className="token-items" style={{ height: height }}  >
                         {
@@ -76,8 +77,8 @@ const SearchAssets = (props) => {
                                 if (token.symbol === choosedToken) return <></>
                                 return <div key={i} className="token-item" onClick={() => handleChangeToken(token)}>
                                     <div style={{ display: "flex", justifyContent: "start" }}>
-                                        {token.type !== TokenType.Wrapped && <img src={process.env.PUBLIC_URL + `${token?.logo}`} alt={token?.name} />}
-                                        {token.type === TokenType.Wrapped && <div className={`wrap-stock-${token.conducted ? "" : "none-"}conduct`}><img src={process.env.PUBLIC_URL + `${token?.logo}`} style={{ marginLeft: "0px", marginRight: "0px" }} alt={token?.name} /></div>}
+                                        {token.type !== TokenType.Wrapped && <img src={process.env.PUBLIC_URL + `${token?.logo}`} alt={token?.name || "dAsset"} />}
+                                        {token.type === TokenType.Wrapped && <div className={`wrap-stock-${token.conducted ? "" : "none-"}conduct`}><img src={process.env.PUBLIC_URL + `${token?.logo}`} style={{ marginLeft: "0px", marginRight: "0px" }} alt={token?.name || "dAsset"} /></div>}
                                         <div style={{ display: "flex", flexDirection: "column", justifyContent: "start", alignItems: "start" }}>
                                             <p>{token?.symbol}</p>
                                             <p style={{ fontSize: "11px", opacity: "0.5" }}>{token.name}</p>
@@ -98,7 +99,7 @@ const SearchAssets = (props) => {
                                                 <img className="copy-icon" src={process.env.PUBLIC_URL + "/img/copy.svg"} alt="" />
                                             </CopyToClipboard>
                                         </div>
-                                    </div> : <p>not conducted</p> :
+                                    </div> : <p>{t("notConducted")}</p> :
                                         <p> {getStayledNumber(token?.balance)}</p>}
 
                                 </div>

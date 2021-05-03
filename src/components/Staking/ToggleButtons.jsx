@@ -18,7 +18,7 @@ const ToggleButtons = ({
             <input
               key={index}
               id={`${name}-${item.value}-${index}`}
-              checked={`${defaultChecked == item.value ? 'checked' : ''}`}
+              checked={`${defaultChecked === item.value ? 'checked' : ''}`}
               value={item.value}
               type="radio"
               name={name}
@@ -29,7 +29,7 @@ const ToggleButtons = ({
               htmlFor={`${name}-${item.value}-${index}`}
               className={`${
                 lockStakeType || item.disabled ? ' ' : ' pointer '
-              } ${defaultChecked == item.value ? 'checkedType' : ''}`}
+              } ${defaultChecked === item.value ? 'checkedType' : ''}`}
             >
               {item.title}
             </label>
@@ -37,7 +37,10 @@ const ToggleButtons = ({
               <span className="tooltip-text">
                 <div>
                   {item.tooltip}
-                  <img src="/img/staking/yearn-finance-logo.svg" />
+                  <img
+                    src="/img/staking/yearn-finance-logo.svg"
+                    alt="yearn-finance-logo"
+                  />
                 </div>
               </span>
             )}

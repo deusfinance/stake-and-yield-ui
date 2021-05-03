@@ -96,7 +96,7 @@ export function ToastTransaction(type, title, data = '') {
     case 'success':
       toast.success(
         <div>
-          <Type.LG style={{ marginBottom: '5px' }}> {title}</Type.LG>
+          <Type.MD style={{ marginBottom: '3px' }}> {title}</Type.MD>
           {data}
         </div>,
         {
@@ -109,12 +109,13 @@ export function ToastTransaction(type, title, data = '') {
     case 'warn':
       toast.warn(
         <div>
-          <Type.LG style={{ marginBottom: '5px' }}> {title}</Type.LG>
+          <Type.MD style={{ marginBottom: '3px' }}> {title}</Type.MD>
           {data}
         </div>,
         {
           position: toast.POSITION.BOTTOM_RIGHT,
           autoClose: false,
+          draggable: false,
           closeOnClick: false
         }
       )
@@ -124,7 +125,7 @@ export function ToastTransaction(type, title, data = '') {
     default:
       toast.info(
         <div>
-          <Type.LG style={{ marginBottom: '5px' }}> {title}</Type.LG>
+          <Type.MD style={{ marginBottom: '3px' }}> {title}</Type.MD>
           {data}
         </div>,
         {
@@ -172,6 +173,10 @@ export function SwapTranaction(type, payload) {
       break
 
     case TransactionState.FAILED:
+      if (!payload.hash) {
+        ToastTransaction('warn', 'Transaction Rejected')
+        return
+      }
       ToastTransaction(
         'warn',
         'Transaction Failed',
@@ -182,7 +187,7 @@ export function SwapTranaction(type, payload) {
             'transaction'
           )}
         >
-          {`View On Explorer ↗ `}
+          {`View On Explorer ↗`}
         </ExternalLink>
       )
       break
@@ -198,7 +203,7 @@ export function SwapTranaction(type, payload) {
             'transaction'
           )}
         >
-          {`View On Explorer ↗ `}
+          {`View On Explorer ↗`}
         </ExternalLink>
       )
   }
@@ -219,7 +224,7 @@ export function ApproveTranaction(type, payload) {
             'transaction'
           )}
         >
-          {`Approve  ${payload.from.symbol} ↗ `}
+          {`Approve  ${payload.from.symbol} ↗`}
         </ExternalLink>
       )
       break
@@ -235,12 +240,16 @@ export function ApproveTranaction(type, payload) {
             'transaction'
           )}
         >
-          {`Approved ${payload.from.symbol}`}
+          {`Approved ${payload.from.symbol} ↗`}
         </ExternalLink>
       )
       break
 
     case TransactionState.FAILED:
+      if (!payload.hash) {
+        ToastTransaction('warn', 'Transaction Rejected')
+        return
+      }
       ToastTransaction(
         'warn',
         'Transaction Failed',
@@ -251,7 +260,7 @@ export function ApproveTranaction(type, payload) {
             'transaction'
           )}
         >
-          {`View On Explorer`}
+          {`View On Explorer ↗`}
         </ExternalLink>
       )
       break
@@ -267,13 +276,14 @@ export function ApproveTranaction(type, payload) {
             'transaction'
           )}
         >
-          {`View On Explorer`}
+          {`View On Explorer ↗`}
         </ExternalLink>
       )
   }
   return
 }
 
+//to do
 export function CustomTranaction(type, payload) {
   toast.dismiss()
 
@@ -311,22 +321,18 @@ export function CustomTranaction(type, payload) {
       break
 
     case TransactionState.FAILED:
-      if (!payload.hash) {
-        ToastTransaction('warn', 'Transaction Rejected')
-        return
-      }
       ToastTransaction(
         'warn',
-        'Transaction Failed',
-        <ExternalLink
-          href={getTransactionLink(
-            payload.chainId,
-            payload.hash,
-            'transaction'
-          )}
-        >
-          {`View On Explorer`}
-        </ExternalLink>
+        'Transaction Failed'
+        // <ExternalLink
+        //   href={getTransactionLink(
+        //     payload.chainId,
+        //     payload.hash,
+        //     'transaction'
+        //   )}
+        // >
+        //   {`View On Explorer`}
+        // </ExternalLink>
       )
       break
 
@@ -341,7 +347,7 @@ export function CustomTranaction(type, payload) {
             'transaction'
           )}
         >
-          {`View On Explorer ↗ `}
+          {`View On Explorer`}
         </ExternalLink>
       )
   }

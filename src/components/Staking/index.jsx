@@ -28,8 +28,7 @@ const Staking = () => {
       setType('all')
       setOpen(false)
 
-      let selectedChainId = chainId == 4 ? chainId : 1
-      console.log({ selectedChainId, tokens: tokens[selectedChainId] })
+      let selectedChainId = chainId === 4 ? chainId : 1
       setShowTokens(tokens[selectedChainId])
       setSelesctedChainId(selectedChainId)
     }
@@ -42,7 +41,9 @@ const Staking = () => {
     let result =
       category === 'all'
         ? tokens[selesctedChainId]
-        : tokens[selesctedChainId].filter((token) => token.category == category)
+        : tokens[selesctedChainId].filter(
+            (token) => token.category === category
+          )
     setShowTokens(result)
   }
 
@@ -51,7 +52,10 @@ const Staking = () => {
       <div className="staking-desc">
         <div className="title-container">
           <span className="title">STAKE AND YIELD WITH YEARN FINANCE</span>
-          <img src="/img/staking/yearn-finance-logo.svg" />
+          <img
+            src="/img/staking/yearn-finance-logo.svg"
+            alt="yearn-finance-logo"
+          />
         </div>
 
         <p>
@@ -62,7 +66,11 @@ const Staking = () => {
           You can also opt for Stake+Yield where the underlying ETH value of
           your stake will be used to earn yield on{' '}
           <span className="yearn-finance">
-            YEARN FINANCE <img src="/img/staking/yearn-finance-logo.svg" />{' '}
+            YEARN FINANCE{' '}
+            <img
+              src="/img/staking/yearn-finance-logo.svg"
+              alt="yearn-finance-logo"
+            />{' '}
           </span>
           – <span className="blue-color">basically double rewards!</span>
         </p>

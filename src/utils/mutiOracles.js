@@ -2,14 +2,14 @@ import React from 'react';
 import { sendMessage } from "./telegramLogger"
 import { toast } from 'react-toastify';
 
-const expectedNumberOracles = 2
+let expectedNumberOracles = 2
 
-export const xdaiMutileOracleHandler = (type, address, prices) => {
+export const xdaiMutileOracleHandler = (type, address, prices, expected = 2) => {
+    expectedNumberOracles = expected
     // console.log(prices);
     let liveCounts = 0
     console.log(prices);
-    // console.log(prices.length);
-
+    //eslint-disable-next-line
     prices.map((price, index) => {
         if (price && price[address]) {
             liveCounts++

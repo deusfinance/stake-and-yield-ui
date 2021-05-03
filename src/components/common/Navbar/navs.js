@@ -20,12 +20,11 @@ export default [
         exact: false
       },
       {
-        id: 'stakeandyield',
-        text: 'Stake & Yield',
+        id: 'STAKE & YIELD',
+        text: 'STAKE & YIELD',
         path: '/stakeandyield',
         exact: true
       },
-
       {
         id: 'vaults',
         text: 'VAULTS',
@@ -35,21 +34,27 @@ export default [
     ]
   },
   {
-    id: 'sync',
+    id: 'buyStocks',
     text: <span>BUY&thinsp;Stocks</span>,
     path: '/',
     exact: true,
     children: [
       {
-        id: 'mainsync',
+        id: 'mainnet',
         text: 'MAINNET',
         path: '/synchronizer',
         exact: true
       },
       {
-        id: 'xdai-sync',
+        id: 'xDai',
         text: 'xDAI',
         path: '/crosschain/xdai/synchronizer',
+        exact: true
+      },
+      {
+        id: 'bsc',
+        text: 'BSC',
+        path: '/crosschain/bsc/synchronizer',
         exact: true
       }
     ]
@@ -61,9 +66,9 @@ export default [
     exact: true,
     children: [
       {
-        id: 'coinbase',
-        text: 'COINBASE',
-        path: '/coinbase',
+        id: 'coinbaseMigrator',
+        text: <span>COINBASE MIGRATOR</span>,
+        path: '/migrator',
         exact: true
       },
       {
@@ -87,7 +92,7 @@ export default [
     exact: true,
     children: [
       {
-        id: 'wiki',
+        id: 'deusWiki',
         text: 'DEUS wiki',
         path: 'https://wiki.deus.finance/docs',
         out: true,
@@ -109,14 +114,14 @@ export default [
     exact: true,
     children: [
       {
-        id: 'simulate',
+        id: 'simulator',
         text: 'DEUS simulator',
         path: 'https://simulate.deus.finance',
         out: true,
         exact: true
       },
       {
-        id: 'chart',
+        id: 'tradingview',
         text: 'DEUS tradingview',
         path: 'https://chart.deus.finance',
         out: true,

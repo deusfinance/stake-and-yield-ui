@@ -1,5 +1,4 @@
 import React from 'react'
-import DrawableAmount from './DrawableAmount'
 import { sendTransaction } from '../../utils/Stakefun'
 
 const Fluid = (props) => {
@@ -10,7 +9,6 @@ const Fluid = (props) => {
     title,
     titleExit,
     StakeAndYieldContract,
-    exit,
     chainId,
     showFluid,
     earned

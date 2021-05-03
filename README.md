@@ -1,15 +1,11 @@
-# stakeAndYield-ui
-
-StakeAndYield front-end
+# app-ui
+DEUS app front-end
 
 ### Install packages
-
 `npm install`
 
 ### Run dev server
-
 `npm run start`
 
-### Build
-
+### Build 
 `npm run build`

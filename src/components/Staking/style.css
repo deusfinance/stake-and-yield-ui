@@ -934,6 +934,7 @@ input:focus {
   padding: 1px;
   text-decoration: none;
   margin: 0 3px 5px;
+  border: none;
 }
 .lock-btn {
   background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%);
@@ -959,9 +960,23 @@ input:focus {
   justify-content: center;
   align-items: center;
 }
-.action-btn:hover {
+.lock-btn span:hover {
   background: linear-gradient(90deg, #08a4f5 -0.01%, #2bede3 93.42%),
-    linear-gradient(247.41deg, #a2fbb0 16.32%, #5ec4d6 87.6%);
+    linear-gradient(247.41deg, #a2fbb0 16.32%, #5ec4d6 87.6%) !important;
+  border-radius: 6px;
+}
+
+.get-btn span:hover {
+  background: linear-gradient(
+    247.41deg,
+    #a2fbb0 16.32%,
+    #5ec4d6 87.6%
+  ) !important;
+  border-radius: 6px;
+}
+
+.uni-get-btn span:hover {
+  background: #ec357a !important;
   border-radius: 6px;
 }
 

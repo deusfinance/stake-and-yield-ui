@@ -139,6 +139,29 @@ ul.tab li input[type='radio']:checked ~ label {
     width: 100%;
   }
 }
+
+@media screen and (max-width: 670px) {
+  .title {
+    font-size: 14px;
+  }
+  .title-container img {
+    width: 15.8px;
+  }
+  .staking-desc p {
+    font-size: 11px;
+  }
+  .container-staking {
+    padding: 0px;
+    width: 85%;
+  }
+  .action-btn span {
+    font-size: 10px;
+    width: 100px;
+  }
+  .yearn-finance img {
+    width: 10px;
+  }
+}
 @media screen and (min-width: 445px) and (max-width: 570px) {
   ul.tab li label {
     width: 110px;
@@ -154,48 +177,8 @@ ul.tab li input[type='radio']:checked ~ label {
   ul.togglebuttontab li label {
     width: 100%;
   }
-}
-@media screen and (min-width: 465px) and (max-width: 570px) {
   .tooltip .tooltip-text {
     left: 40%;
-  }
-}
-@media screen and (max-width: 465px) {
-  .tooltip .tooltip-text {
-    left: 57%;
-    width: 200px;
-  }
-  .tooltip .tooltip-text div {
-    font-size: 8.5px;
-  }
-}
-
-@media screen and (min-width: 370px) and (max-width: 445px) {
-  .wrap-box-gray {
-    padding: 8px 5px;
-  }
-  .unfreez-text {
-    padding: 0 5px;
-  }
-  .wrap-box-gray-complete > div {
-    padding: 8px 5px;
-  }
-  ul.togglebuttontab {
-    /* display: flex;
-    flex-direction: column; */
-    border-radius: 10px;
-  }
-  ul.togglebuttontab li {
-    width: 100%;
-  }
-  ul.togglebuttontab li label {
-    width: 100%;
-  }
-  .hour {
-    font-size: 10px;
-  }
-  .fluid {
-    font-size: 7px;
   }
 }
 @media screen and (max-width: 500px) {
@@ -253,7 +236,52 @@ ul.tab li input[type='radio']:checked ~ label {
   .approve-btn {
     margin: 0 3px;
   }
+  .title {
+    font-size: 13px;
+  }
+  .title-container img {
+    width: 15px;
+  }
+  .staking-desc p {
+    font-size: 9px;
+  }
 }
+@media screen and (min-width: 370px) and (max-width: 445px) {
+  .wrap-box-gray {
+    padding: 8px 5px;
+  }
+  .unfreez-text {
+    padding: 0 5px;
+  }
+  .wrap-box-gray-complete > div {
+    padding: 8px 5px;
+  }
+  ul.togglebuttontab {
+    /* display: flex;
+    flex-direction: column; */
+    border-radius: 10px;
+  }
+  ul.togglebuttontab li {
+    width: 100%;
+  }
+  ul.togglebuttontab li label {
+    width: 100%;
+  }
+  .hour {
+    font-size: 10px;
+  }
+  .fluid {
+    font-size: 7px;
+  }
+  .tooltip .tooltip-text {
+    left: 57%;
+    width: 200px;
+  }
+  .tooltip .tooltip-text div {
+    font-size: 8.5px;
+  }
+}
+
 @media screen and (max-width: 370px) {
   /* .tvl-container {
     position: absolute;

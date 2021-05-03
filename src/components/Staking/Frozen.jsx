@@ -2,8 +2,6 @@ import React from 'react'
 import { web3, sendTransaction } from '../../utils/Stakefun'
 import DrawableAmount from './DrawableAmount'
 import WaitingTime from './WaitingTime'
-import { CustomTranaction } from '../../utils/explorers'
-import { TransactionState } from '../../utils/constant'
 
 const Frozen = (props) => {
   const {
@@ -16,16 +14,14 @@ const Frozen = (props) => {
     withDrawable,
     withDrawableExit,
     withDrawTime,
-    showFluid,
-    stakeType,
-    exit
+    showFluid
   } = props
 
   const [unfreez, setUnfreez] = React.useState('0')
 
   const handleUnfreeze = () => {
     try {
-      if (unfreez == 0 || unfreez == '') return
+      if (unfreez === '0' || unfreez === '') return
 
       let amount = web3.utils.toWei(String(unfreez))
 

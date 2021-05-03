@@ -35,7 +35,7 @@ const WaitingTime = ({ withDrawTime, showFluid }) => {
     } else {
       showFluid()
     }
-  }, [timer])
+  }, [timer, showFluid])
 
   return <span>{waiting}</span>
 }

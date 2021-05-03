@@ -1,9 +1,3 @@
-*/node_modules
-*/package-lock.json
-package-lock.json
-/.vscode
-.vscode/
-
 # Logs
 logs
 *.log
@@ -94,6 +88,7 @@ dist
 # Comment in the public line in if your project uses Gatsby and *not* Next.js
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
+
 # vuepress build output
 .vuepress/dist
 
@@ -111,6 +106,4 @@ dist
 
 # Source and Build zip files
 build*.zip
-src*.zipvs
-
-
+src*.zip
