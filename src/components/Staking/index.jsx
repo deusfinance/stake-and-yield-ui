@@ -27,8 +27,9 @@ const Staking = () => {
     if (account) {
       setType('all')
       setOpen(false)
-
-      let selectedChainId = chainId === 4 ? chainId : 1
+      let selectedChainId = 1
+      // TODO add rinkeby when contarct deploy
+      // let selectedChainId = chainId === 4 ? chainId : 1
       setShowTokens(tokens[selectedChainId])
       setSelesctedChainId(selectedChainId)
     }

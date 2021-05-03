@@ -182,7 +182,7 @@ const Mint = (props) => {
             </div>
 
             {owner ? (
-              chainId === 1 || chainId === 4 ? (
+              chainId === 1 ? (
                 <>
                   <div className={allowance ? 'flex-center' : 'flex-between'}>
                     {allowance === 0 && (

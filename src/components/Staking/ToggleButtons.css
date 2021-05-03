@@ -106,9 +106,9 @@ ul.tab li input[type='radio']:checked ~ label {
   visibility: visible;
 }
 @media screen and (max-width: 995px) {
-  .flex-column {
+  /* .flex-column {
     flex-direction: column;
-  }
+  } */
   .wrap-box-gradient {
     width: 371px;
   }
@@ -138,9 +138,6 @@ ul.tab li input[type='radio']:checked ~ label {
   .container-staking {
     width: 100%;
   }
-}
-
-@media screen and (max-width: 670px) {
   .title {
     font-size: 14px;
   }
@@ -154,12 +151,48 @@ ul.tab li input[type='radio']:checked ~ label {
     padding: 0px;
     width: 85%;
   }
+  .swap-BPT {
+    font-size: 9px;
+  }
+  .action-btn {
+    margin: 0 1px 3px;
+  }
   .action-btn span {
-    font-size: 10px;
-    width: 100px;
+    font-size: 9px;
+    width: 70px;
+    height: 28px;
   }
   .yearn-finance img {
     width: 10px;
+  }
+  .staking-content {
+    padding: 0px;
+  }
+  .token-container {
+    padding: 15px;
+  }
+  .token-title {
+    font-size: 18px;
+  }
+  .expand-btn {
+    min-width: 58px;
+  }
+}
+@media screen and (max-width: 550px) {
+  .expand-container {
+    flex-direction: column;
+    margin: 0 auto;
+  }
+  .action-btn span {
+    font-size: 10px;
+    width: 85px;
+    height: 28px;
+  }
+  .token-title {
+    font-size: 20px;
+  }
+  .swap-BPT {
+    font-size: 10px;
   }
 }
 @media screen and (min-width: 445px) and (max-width: 570px) {
@@ -223,10 +256,10 @@ ul.tab li input[type='radio']:checked ~ label {
     justify-content: space-between;
     flex-wrap: wrap;
   }
-  .expand-container {
+  /* .expand-container {
     flex-direction: column;
     margin: 0 auto;
-  }
+  } */
   .deposit-container {
     width: 100%;
     display: flex;

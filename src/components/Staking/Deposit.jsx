@@ -181,7 +181,7 @@ const Deposit = (props) => {
         </div>
 
         {owner ? (
-          chainId === 1 || chainId === 4 ? (
+          chainId === 1 ? (
             <>
               <div className={!preApprove ? 'flex-between' : 'flex-center'}>
                 {preApprove === 0 && (
