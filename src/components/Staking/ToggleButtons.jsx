@@ -1,5 +1,5 @@
 import React from 'react'
-import './ToggleButtons.css'
+// import './ToggleButtons.css'
 const ToggleButtons = ({
   data,
   handleSelectedButton,
