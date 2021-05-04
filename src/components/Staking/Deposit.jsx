@@ -29,16 +29,10 @@ const Deposit = (props) => {
   const [stakeAmount, setStakeAmount] = React.useState('')
   const [exitBtn, setExitBtn] = React.useState(exit)
   const [approveClick, setApproveClick] = React.useState(false)
-  const [preApprove, setPreApprove] = React.useState(approve)
   React.useEffect(() => {
     setSelectedStakeType(stakeType)
     setExitBtn(exit)
   }, [owner, chainId, exit, stakeType])
-  React.useEffect(() => {
-    return () => {
-      setPreApprove(approve)
-    }
-  }, [approve])
 
   const chooseTypeStake = (e) => {
     setSelectedStakeType(e.target.value)
@@ -183,8 +177,16 @@ const Deposit = (props) => {
         {owner ? (
           chainId === 1 ? (
             <>
-              <div className={!preApprove ? 'flex-between' : 'flex-center'}>
-                {preApprove === 0 && (
+              <div
+                className={
+                  approve === 0
+                    ? 'flex-between'
+                    : approveClick
+                    ? 'flex-between'
+                    : 'flex-center'
+                }
+              >
+                {approve === 0 ? (
                   <div
                     className={`${
                       !approveClick
@@ -195,6 +197,19 @@ const Deposit = (props) => {
                   >
                     Approve
                   </div>
+                ) : (
+                  approveClick && (
+                    <div
+                      className={`${
+                        !approveClick
+                          ? 'approve-btn pointer'
+                          : 'stake-deposit-btn'
+                      } `}
+                      onClick={handleApprove}
+                    >
+                      Approve
+                    </div>
+                  )
                 )}
                 <div
                   className={`${
@@ -205,13 +220,22 @@ const Deposit = (props) => {
                   stake
                 </div>
               </div>
-              {preApprove === 0 && (
+              {approve === 0 ? (
                 <div className="flex-center">
                   <div className="container-status-button">
                     <div className="active">1</div>
                     <div className={approveClick ? 'active' : ''}>2</div>
                   </div>
                 </div>
+              ) : (
+                approveClick && (
+                  <div className="flex-center">
+                    <div className="container-status-button">
+                      <div className="active">1</div>
+                      <div className={approveClick ? 'active' : ''}>2</div>
+                    </div>
+                  </div>
+                )
               )}
             </>
           ) : (
