@@ -26,7 +26,6 @@ const Staking = () => {
   React.useEffect(() => {
     if (account) {
       setType('all')
-      setOpen(false)
       let selectedChainId = 1
       // TODO add rinkeby when contarct deploy
       // let selectedChainId = chainId === 4 ? chainId : 1

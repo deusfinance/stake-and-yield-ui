@@ -188,8 +188,6 @@ const TokenContainer = (props) => {
         }
         if (balance === '0') {
           setCollapseContent('stake')
-        } else {
-          setCollapseContent('default')
         }
 
         setUserInfo((prev) => {
