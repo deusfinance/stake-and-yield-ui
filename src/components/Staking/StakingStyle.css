@@ -289,52 +289,6 @@
   mask-composite: exclude;
 } */
 
-@media screen and (min-width: 563px) and (max-width: 970px) {
-  .stake-btn {
-    width: 117px;
-  }
-  .expand-btn {
-    font-size: 9px;
-    min-width: 70px;
-    margin-left: 0;
-  }
-  .apy {
-    font-size: 17px;
-  }
-  .wallet-amount {
-    font-size: 9.5px;
-  }
-  .token-title {
-    font-size: 22px;
-  }
-}
-@media screen and (max-width: 1200px) {
-  /* .expand-container {
-    flex-direction: column;
-  } */
-  .container-staking {
-    font-family: 'Monument Grotesk Semi';
-    padding: 5px;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-}
-
-@media screen and (max-width: 799px) {
-  /* .expand-container {
-    flex-direction: column;
-  } */
-  .stake-btn {
-    margin-bottom: 3px;
-  }
-  .stake-btn span {
-    width: 100%;
-  }
-  .container-staking {
-    width: 100%;
-  }
-}
-
 /* end Content */
 
 /* collapse content */
@@ -1135,10 +1089,21 @@ ul.tab li input[type='radio']:checked ~ label {
 .tooltip:hover .tooltip-text {
   visibility: visible;
 }
-@media screen and (max-width: 995px) {
-  /* .flex-column {
+@media screen and (max-width: 1200px) {
+  /* .expand-container {
     flex-direction: column;
   } */
+  .container-staking {
+    font-family: 'Monument Grotesk Semi';
+    padding: 5px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 992px) {
+  .flex-column {
+    flex-direction: column;
+  }
   .wrap-box-gradient {
     width: 371px;
   }
@@ -1155,10 +1120,13 @@ ul.tab li input[type='radio']:checked ~ label {
     max-width: 100% !important;
   }
 }
-@media screen and (max-width: 799px) {
+@media screen and (max-width: 768px) {
   /* .expand-container {
     flex-direction: column;
   } */
+  .flex-column {
+    flex-direction: column;
+  }
   .stake-btn {
     margin-bottom: 3px;
   }
@@ -1208,7 +1176,28 @@ ul.tab li input[type='radio']:checked ~ label {
     min-width: 58px;
   }
 }
-@media screen and (max-width: 550px) {
+
+/* @media screen and (min-width: 563px) and (max-width: 970px) {
+  .stake-btn {
+    width: 117px;
+  }
+  .expand-btn {
+    font-size: 9px;
+    min-width: 70px;
+    margin-left: 0;
+  }
+  .apy {
+    font-size: 17px;
+  }
+  .wallet-amount {
+    font-size: 9.5px;
+  }
+  .token-title {
+    font-size: 22px;
+  }
+} */
+
+@media screen and (max-width: 576px) {
   .expand-container {
     flex-direction: column;
     margin: 0 auto;
@@ -1224,27 +1213,6 @@ ul.tab li input[type='radio']:checked ~ label {
   .swap-BPT {
     font-size: 10px;
   }
-}
-@media screen and (min-width: 445px) and (max-width: 570px) {
-  ul.tab li label {
-    width: 110px;
-  }
-  ul.togglebuttontab {
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-  }
-  ul.togglebuttontab li {
-    width: 100%;
-  }
-  ul.togglebuttontab li label {
-    width: 100%;
-  }
-  .tooltip .tooltip-text {
-    left: 40%;
-  }
-}
-@media screen and (max-width: 500px) {
   .token-title {
     font-size: 19px;
     white-space: nowrap;
@@ -1309,6 +1277,26 @@ ul.tab li input[type='radio']:checked ~ label {
     font-size: 9px;
   }
 }
+@media screen and (min-width: 445px) and (max-width: 576px) {
+  ul.tab li label {
+    width: 110px;
+  }
+  ul.togglebuttontab {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+  }
+  ul.togglebuttontab li {
+    width: 100%;
+  }
+  ul.togglebuttontab li label {
+    width: 100%;
+  }
+  .tooltip .tooltip-text {
+    left: 40%;
+  }
+}
+
 @media screen and (min-width: 370px) and (max-width: 445px) {
   .wrap-box-gray {
     padding: 8px 5px;
