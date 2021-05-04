@@ -220,10 +220,10 @@ const Mint = (props) => {
                     )}
                     <div
                       className={`${
-                        approveClick
+                        allowance !== 0
                           ? 'approve-btn pointer'
                           : 'stake-deposit-btn'
-                      } ${allowance ? 'pointer approve-btn' : ''}`}
+                      } `}
                       onClick={handleMint}
                     >
                       Mint
