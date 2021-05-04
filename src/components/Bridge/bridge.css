@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'Monument Grotesk Semi';
+  src: url('../../assets/fonts/EduMonumentGroteskSemi-Mono/EduMonumentGroteskSemi-Mono-Regular.woff2')
+      format('woff2'),
+    url('../../assets/fonts/EduMonumentGroteskSemi-Mono/EduMonumentGroteskSemi-Mono-Regular.woff')
+      format('woff')
+      url('../../assets/fonts/EduMonumentGroteskSemi-Mono/EduMonumentGroteskSemi-Mono-Regular.otf')
+      format('otf');
+}
+
 .flex-between {
   display: flex;
   justify-content: space-between;
@@ -72,6 +82,8 @@ input:focus {
   text-transform: uppercase;
   font-size: 25px;
   line-height: 35px;
+  font-style: normal;
+  font-weight: 400;
   padding: 8px;
   background: linear-gradient(90deg, #b35480 0%, #d99d94 100%),
     linear-gradient(224.74deg, #c4eb89 0.19%, #5ec4d6 100.22%), #111111;
@@ -383,4 +395,9 @@ input:focus {
   line-height: 35px;
   color: rgba(255, 255, 255, 0.75);
   margin-left: 5px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
 }

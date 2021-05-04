@@ -54,6 +54,12 @@ const Bridge = () => {
           Warp
         </div>
       </div>
+      <div className="flex-center">
+        <div className="container-status-button">
+          <div className="active">1</div>
+          <div>2</div>
+        </div>
+      </div>
       <TokenModal
         open={open}
         hide={() => setOpen(!open)}
