@@ -1101,6 +1101,9 @@ ul.tab li input[type='radio']:checked ~ label {
   }
 }
 @media screen and (min-width: 992px) and (max-width: 1200px) {
+  .flex-column {
+    flex-direction: column;
+  }
   .swap-BPT {
     font-size: 10.5px;
   }
