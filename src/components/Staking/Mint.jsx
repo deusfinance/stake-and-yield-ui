@@ -229,7 +229,7 @@ const Mint = (props) => {
                       Mint
                     </div>
                   </div>
-                  {approve === 0 ? (
+                  {allowance === 0 ? (
                     <div className="flex-center">
                       <div className="container-status-button">
                         <div className="active">1</div>
