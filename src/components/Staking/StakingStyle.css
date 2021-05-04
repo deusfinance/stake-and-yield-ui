@@ -1119,6 +1119,24 @@ ul.tab li input[type='radio']:checked ~ label {
   .wrap-box-gradient-complete {
     max-width: 100% !important;
   }
+  .swap-BPT {
+    font-size: 9px;
+  }
+  .action-btn {
+    margin: 0 1px 3px;
+  }
+  .action-btn span {
+    font-size: 9px;
+    width: 70px;
+    height: 28px;
+  }
+  .token-title {
+    font-size: 18px;
+  }
+  .expand-btn {
+    min-width: 58px;
+    font-size: 9px;
+  }
 }
 @media screen and (max-width: 768px) {
   /* .expand-container {
@@ -1174,6 +1192,7 @@ ul.tab li input[type='radio']:checked ~ label {
   }
   .expand-btn {
     min-width: 58px;
+    font-size: 9px;
   }
 }
 
