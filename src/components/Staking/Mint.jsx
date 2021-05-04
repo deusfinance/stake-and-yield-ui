@@ -2,9 +2,9 @@ import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { injected } from '../../connectors'
 import { getEtherscanLink } from '../../utils/explorers'
-import abis from '../../services/abis.json'
-import { web3, makeContract, sendTransaction } from '../../utils/Stakefun'
+import { sendTransaction } from '../../utils/Stakefun'
 import addresses from '../../services/addresses.json'
+import useWeb3 from '../../helper/useWeb3'
 
 const Mint = (props) => {
   const {
@@ -15,13 +15,14 @@ const Mint = (props) => {
     chainId,
     handleBack,
     balanceToken,
-    // vaultContract,
+    VaultContract,
     ContractToken,
     title,
     titleExit,
     tokenName
   } = props
 
+  const web3 = useWeb3()
   const web3React = useWeb3React()
   const { activate } = web3React
   const [amount, setAmount] = React.useState('')
@@ -46,10 +47,11 @@ const Mint = (props) => {
     try {
       setAmount(amount)
       if (amount && owner) {
-        const VaultContract = makeContract(
-          abis['vaults'],
-          addresses['vaults'][tokenName][chainId]
-        )
+        // const VaultContract = makeContract(
+        //   web3,
+        //   abis['vaults'],
+        //   addresses['vaults'][tokenName][chainId]
+        // )
         amount = web3.utils.toWei(amount)
         const result = await VaultContract.methods
           .sealedAndTimeAmount(owner, amount)
@@ -108,10 +110,11 @@ const Mint = (props) => {
       if (amount === '' || amount === '0') return
       if (allowance || approveClick) {
         let amountVault = web3.utils.toWei(amount)
-        const VaultContract = makeContract(
-          abis['vaults'],
-          addresses['vaults'][tokenName][chainId]
-        )
+        // const VaultContract = makeContract(
+        //   web3,
+        //   abis['vaults'],
+        //   addresses['vaults'][tokenName][chainId]
+        // )
         sendTransaction(
           VaultContract,
           `lock`,

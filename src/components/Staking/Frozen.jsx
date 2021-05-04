@@ -1,7 +1,8 @@
 import React from 'react'
-import { web3, sendTransaction } from '../../utils/Stakefun'
+import { sendTransaction } from '../../utils/Stakefun'
 import DrawableAmount from './DrawableAmount'
 import WaitingTime from './WaitingTime'
+import useWeb3 from '../../helper/useWeb3'
 
 const Frozen = (props) => {
   const {
@@ -18,6 +19,7 @@ const Frozen = (props) => {
   } = props
 
   const [unfreez, setUnfreez] = React.useState('0')
+  const web3 = useWeb3()
 
   const handleUnfreeze = () => {
     try {

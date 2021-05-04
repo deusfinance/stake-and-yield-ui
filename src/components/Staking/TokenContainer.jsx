@@ -3,7 +3,7 @@ import Collapsible from 'react-collapsible'
 import moment from 'moment'
 import CollapseTrigger from './CollapseTrigger'
 import CollapseTriggerOpen from './CollapseTriggerOpen'
-import { web3, makeContract, sendTransaction } from '../../utils/Stakefun'
+import { makeContract, sendTransaction } from '../../utils/Stakefun'
 import { abi, StakeAndYieldABI, ControllerABI } from '../../utils/StakingABI'
 import UserInfo from './UserInfo'
 import Frozen from './Frozen'
@@ -12,6 +12,8 @@ import Deposit from './Deposit'
 import Mint from './Mint'
 import { getEtherscanLink } from '../../utils/explorers'
 import addresses from '../../services/addresses.json'
+import useWeb3 from '../../helper/useWeb3'
+import abis from '../../services/abis.json'
 
 const TokenContainer = (props) => {
   const {
@@ -32,7 +34,8 @@ const TokenContainer = (props) => {
     balancer,
     handleTriggerClick
   } = props
-  const [collapseContent, setCollapseContent] = React.useState('lock')
+  const web3 = useWeb3()
+  const [collapseContent, setCollapseContent] = React.useState('default')
   const [unfreezStake, setUnfreezStake] = React.useState('0')
   const [showFluid, setShowFluid] = React.useState(false)
   const [userInfo, setUserInfo] = React.useState({
@@ -40,6 +43,7 @@ const TokenContainer = (props) => {
     StakedTokenContract: '',
     StakeAndYieldContract: '',
     ContractToken: '',
+    VaultContract: '',
     balanceToken: 0,
     allowance: '',
     balanceWallet: 0,
@@ -65,6 +69,7 @@ const TokenContainer = (props) => {
       StakedTokenContract: '',
       StakeAndYieldContract: '',
       ContractToken: '',
+      VaultContract: '',
       balanceToken: 0,
       allowance: '',
       balanceWallet: 0,
@@ -89,6 +94,7 @@ const TokenContainer = (props) => {
     const fetchDataUser = async () => {
       try {
         const ContractToken = makeContract(
+          web3,
           abi,
           addresses['token'][tokenName][chainId]
         )
@@ -98,7 +104,13 @@ const TokenContainer = (props) => {
           .allowance(owner, addresses['vaults'][tokenName][chainId])
           .call()
         allowance = Number(web3.utils.fromWei(allowance, 'ether'))
+        const VaultContract = makeContract(
+          web3,
+          abis['vaults'],
+          addresses['vaults'][tokenName][chainId]
+        )
         const StakeAndYieldContract = makeContract(
+          web3,
           StakeAndYieldABI,
           stakingContract
         )
@@ -108,7 +120,7 @@ const TokenContainer = (props) => {
         let fullyUnlock = Number(exitStartTime) + 90 * 24 * 3600
         fullyUnlock = moment(new Date(fullyUnlock * 1000)).format('DD.MM.YYYY')
         let { numbers, exit, stakedTokenAddress } = result
-        const StakedTokenContract = makeContract(abi, stakedTokenAddress)
+        const StakedTokenContract = makeContract(web3, abi, stakedTokenAddress)
         let balanceWallet = await StakedTokenContract.methods
           .balanceOf(owner)
           .call()
@@ -148,7 +160,11 @@ const TokenContainer = (props) => {
           let controller = await StakeAndYieldContract.methods
             .controller()
             .call()
-          const ControllerContract = makeContract(ControllerABI, controller)
+          const ControllerContract = makeContract(
+            web3,
+            ControllerABI,
+            controller
+          )
           let strategy = await ControllerContract.methods
             .getStrategy(stakingContract)
             .call()
@@ -194,6 +210,7 @@ const TokenContainer = (props) => {
           return {
             ...prev,
             ContractToken,
+            VaultContract,
             stakedTokenAddress,
             StakedTokenContract,
             StakeAndYieldContract,
@@ -228,14 +245,21 @@ const TokenContainer = (props) => {
     }
 
     const fetchUNIToken = async () => {
+      setCollapseContent('lock')
       if (tokenAddress && tokenName) {
         const ContractToken = makeContract(
+          web3,
           abi,
           addresses['token'][tokenName][chainId]
         )
         let balanceToken = await ContractToken.methods.balanceOf(owner).call()
         balanceToken = web3.utils.fromWei(balanceToken, 'ether')
-        const Contract = makeContract(abi, tokenAddress)
+        const VaultContract = makeContract(
+          web3,
+          abis['vaults'],
+          addresses['vaults'][tokenName][chainId]
+        )
+        const Contract = makeContract(web3, abi, tokenAddress)
         let balanceWallet = await Contract.methods.balanceOf(owner).call()
         balanceWallet = web3.utils.fromWei(balanceWallet, 'ether')
         let allowance = await ContractToken.methods
@@ -248,6 +272,7 @@ const TokenContainer = (props) => {
             balanceWallet,
             balanceToken,
             ContractToken,
+            VaultContract,
             allowance
           }
         })
@@ -277,7 +302,15 @@ const TokenContainer = (props) => {
         })
       }
     }
-  }, [owner, chainId, tokenName, onlyLocking, stakingContract, tokenAddress])
+  }, [
+    web3,
+    owner,
+    chainId,
+    tokenName,
+    onlyLocking,
+    stakingContract,
+    tokenAddress
+  ])
 
   // React.useEffect(() => {
   //   if (!onlyLocking && owner) {
