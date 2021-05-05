@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactModal from 'react-modal'
 import TokenBadge from './TokenBadge'
-import { tokens, chains } from './tokens'
+import { tokens, chains } from './data'
 if (typeof window !== 'undefined') {
   ReactModal.setAppElement('body')
 }

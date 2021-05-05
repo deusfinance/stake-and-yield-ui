@@ -18,6 +18,9 @@
 .mt-20 {
   margin-top: 20px;
 }
+.mb-20 {
+  margin-bottom: 20px;
+}
 .mt-100 {
   margin-top: 100px;
 }
@@ -32,9 +35,10 @@ input:focus {
   background: transparent;
   border: transparent;
 }
+
 .container-bridge {
-  font-family: 'Monument Grotesk';
-  width: 830px;
+  font-family: 'Monument Grotesk Semi';
+  max-width: 830px;
   display: flex;
   flex-direction: column;
   margin: 60px auto;
@@ -53,6 +57,7 @@ input:focus {
   background: linear-gradient(90deg, #dff4fe 0%, #8eb5ff 100%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 32px;
 }
 
 .bridge {
@@ -66,7 +71,6 @@ input:focus {
 }
 
 .bridge-box {
-  width: 530px;
   height: 90px;
   padding: 15px;
   background: linear-gradient(90deg, #dff4fe 0%, #8eb5ff 100%);
@@ -74,35 +78,42 @@ input:focus {
   box-sizing: border-box;
   border-radius: 10px;
 }
+.container-btn {
+  display: flex;
+  justify-content: space-between;
+  max-width: 530px;
+  width: 100%;
+  margin-top: 100px;
+}
 .bridge-approve {
-  margin-right: 17px;
-  width: 255px;
+  max-width: 255px;
+  width: 100%;
   height: 55px;
-  text-align: center;
   text-transform: uppercase;
   font-size: 25px;
-  line-height: 35px;
   font-style: normal;
-  font-weight: 400;
-  padding: 8px;
+  font-weight: normal;
   background: linear-gradient(90deg, #b35480 0%, #d99d94 100%),
     linear-gradient(224.74deg, #c4eb89 0.19%, #5ec4d6 100.22%), #111111;
   box-shadow: 0px 2px 4px rgba(100, 100, 100, 0.498039);
   border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.bridge-warp {
-  width: 255px;
+.bridge-deposit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 255px;
+  width: 100%;
   height: 55px;
-
   background: #1c1c1c;
   border: 1px solid #000000;
   border-radius: 10px;
   font-style: normal;
   font-weight: normal;
   font-size: 25px;
-  line-height: 35px;
-  text-align: center;
-  padding: 8px;
   color: rgba(255, 255, 255, 0.5);
 }
 .bridge-from {
@@ -218,10 +229,14 @@ input:focus {
 .bridge-box-1 {
   position: absolute;
   bottom: 118px;
+  max-width: 530px;
+  width: 100%;
 }
 .bridge-box-2 {
   position: absolute;
   bottom: -78px;
+  max-width: 530px;
+  width: 100%;
 }
 
 /* The Modal (background) */
@@ -359,7 +374,7 @@ input:focus {
 }
 
 .border-bottom {
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .token-name {
@@ -400,4 +415,210 @@ input:focus {
 .flex-center {
   display: flex;
   justify-content: center;
+}
+.opacity-5 {
+  opacity: 0.5;
+}
+
+.instruction {
+  font-family: 'Monument Grotesk Semi';
+
+  position: absolute;
+  max-width: 340px;
+  width: 100%;
+  left: 21px;
+  top: 75px;
+  padding: 20px 25px;
+  background: #0d0d0d;
+  border: 1px solid #1c1c1c;
+  border-radius: 10px;
+}
+.instruction-title {
+  padding-bottom: 14px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11.5px;
+  line-height: 16px;
+  /* identical to box height */
+
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.border-bottom-instruction {
+  border-bottom: 1px solid #1c1c1c;
+}
+
+.ptb-6 {
+  padding: 6px 0;
+}
+.content-collapse {
+  padding: 10px 2px;
+}
+
+.container-status-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 530px;
+  width: 100%;
+}
+.status-button {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  border-top: 2px solid;
+
+  border-image-source: linear-gradient(247.41deg, #a2fbb0 16.32%, #5ec4d6 87.6%),
+    linear-gradient(90deg, #fdcad5 0%, #d99d94 100%);
+
+  border-image-slice: 5;
+  padding-top: 24px;
+  margin-top: 22px;
+}
+
+.status-button div {
+  background-color: #1c1c1c;
+  font-weight: normal;
+  margin-top: -35px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.status-button .active {
+  background: linear-gradient(90deg, #e26ba2 0%, #fdb9af 100%);
+  color: #000000;
+}
+.green-color {
+  color: #00d16c;
+}
+.arrow {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  bottom: 50px;
+
+  background: #b5d4ff;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.arrow img {
+  width: 20px;
+}
+
+.pink-btn {
+  width: 100%;
+  height: 55px;
+  background: linear-gradient(90deg, #e26ba2 0%, #fdb9af 100%);
+  border-radius: 10px;
+  max-width: 530px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 25px;
+  margin-bottom: 5px;
+  margin-top: 100px;
+}
+.wrong-network {
+  max-width: 530px;
+  width: 100%;
+  height: 55px;
+  background: #1c1c1c;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 25px;
+  margin-top: 100px;
+}
+
+.claim-token {
+  position: absolute;
+  max-width: 478px;
+  width: 100%;
+  right: 21px;
+  top: 75px;
+
+  background: #242424;
+  border: 1px solid #1c1c1c;
+  border-radius: 10px;
+  padding: 20px;
+}
+.claim-token-title {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11.5px;
+  line-height: 16px;
+
+  color: #ffffff;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1c1c1c;
+  margin-bottom: 15px;
+}
+
+.token-item {
+  display: flex;
+  align-items: center;
+}
+
+.token-item img {
+  width: 25px;
+}
+.token-item span {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+
+  color: rgba(255, 255, 255, 0.75);
+}
+.claim-amount {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+
+  color: rgba(255, 255, 255, 0.75);
+}
+.container-claim-btn {
+  display: flex;
+  align-items: center;
+  flex-basis: 35%;
+  justify-content: space-between;
+}
+.claim-btn {
+  max-width: 80px;
+  width: 100%;
+  height: 24px;
+  background: linear-gradient(90deg, #e26ba2 0%, #fdb9af 100%);
+  border-radius: 10px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 6px;
+  line-height: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px;
+  color: #000000;
 }

@@ -71,4 +71,34 @@ const tokens = [
   }
 ]
 const chains = ['ETH', 'BSC']
-export { tokens, chains }
+
+const instructions = [
+  {
+    name: 'approve',
+    title: '1 – Approve Spend',
+    desc: 'Approve the spend of the asset that you intend to bridge.'
+  },
+  {
+    name: 'deposit',
+    title: '2 – Deposit',
+    desc: 'Your asset will be deposited to the bridge before you can withdraw '
+  },
+  {
+    name: 'network',
+    title: '3 – Change Network',
+    desc:
+      'Either press the button in the bridge interface or click: Change Network'
+  },
+  {
+    name: 'bridge',
+    title: '4 – Initiate Bridging',
+    desc:
+      'Initiate bridging to the new network by pressing the button in the interface.'
+  },
+  {
+    name: 'claim',
+    title: '5 – Claim on destination Network',
+    desc: 'Claim your bridged token.'
+  }
+]
+export { tokens, chains, instructions }
