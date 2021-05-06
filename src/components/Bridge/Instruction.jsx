@@ -12,7 +12,6 @@ const Instruction = (props) => {
       <div className="instruction-title">STEP BY STEP INSTRUCTIONS</div>
       <div className="border-bottom mb-20" />
       {instructions.map((instruction, index) => {
-        console.log(collapse[instruction.name])
         return (
           <div key={index}>
             <Collapsible

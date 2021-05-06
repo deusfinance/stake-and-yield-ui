@@ -622,3 +622,19 @@ input:focus {
   margin: 0 5px;
   color: #000000;
 }
+.logo {
+  width: 32px !important;
+  position: absolute;
+}
+.bsc-logo {
+  width: 25px !important;
+  position: absolute;
+  top: 50px;
+  left: 73px;
+}
+.eth-logo {
+  width: 32px !important;
+  position: absolute;
+  right: 10px;
+  top: 155px;
+}
