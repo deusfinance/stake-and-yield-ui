@@ -1,6 +1,6 @@
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
-
+import { injected } from '../../connectors'
 import './bridge.css'
 import BridgeBox from './BridgeBox'
 import ClaimToken from './ClaimToken'
@@ -9,7 +9,9 @@ import Instruction from './Instruction'
 import TokenModal from './TokenModal'
 
 const Bridge = () => {
-  const { chainId } = useWeb3React()
+  const { account, chainId } = useWeb3React()
+  const web3React = useWeb3React()
+  const { activate } = web3React
   const [open, setOpen] = React.useState(false)
   const [wrongNetwork, setWrongNetwork] = React.useState(false)
   const [collapse, setCollapse] = React.useState({
@@ -27,9 +29,13 @@ const Bridge = () => {
     to: { chain: 'BSC', icon: 'DEUS.svg', name: 'DEUS', chainId: 97 }
   })
 
-  React.useEffect(() => {
-    setWrongNetwork(false)
-  }, [chainId, bridge])
+  React.useEffect(
+    () => {
+      setWrongNetwork(false)
+    },
+    [chainId, bridge],
+    account
+  )
 
   const handleOpenModal = (data) => {
     setTarget(data)
@@ -119,6 +125,9 @@ const Bridge = () => {
       }
     })
   }
+  const handleConnectWallet = async () => {
+    await activate(injected)
+  }
   return (
     <>
       <Instruction collapse={collapse} />
@@ -161,59 +170,67 @@ const Bridge = () => {
             />
           </div>
         </div>
-        {(collapse.approve.pending || collapse.deposit.pending) &&
-          !wrongNetwork && (
-            <>
-              <div className="container-btn">
-                <div
-                  className={
-                    collapse.approve.success
-                      ? 'bridge-deposit'
-                      : 'bridge-approve pointer'
-                  }
-                  onClick={handleApprove}
-                >
-                  Approve
-                </div>
+        {account ? (
+          <>
+            {(collapse.approve.pending || collapse.deposit.pending) &&
+              !wrongNetwork && (
+                <>
+                  <div className="container-btn">
+                    <div
+                      className={
+                        collapse.approve.success
+                          ? 'bridge-deposit'
+                          : 'bridge-approve pointer'
+                      }
+                      onClick={handleApprove}
+                    >
+                      Approve
+                    </div>
 
-                <div
-                  className={
-                    collapse.approve.success
-                      ? 'bridge-approve pointer'
-                      : 'bridge-deposit'
-                  }
-                  onClick={handleDeposit}
-                >
-                  Deposit
-                </div>
-              </div>
-              <div className="container-status-button">
-                <div className="status-button">
-                  <div className="active">1</div>
-                  <div className={collapse.approve.success ? 'active' : ''}>
-                    2
+                    <div
+                      className={
+                        collapse.approve.success
+                          ? 'bridge-approve pointer'
+                          : 'bridge-deposit'
+                      }
+                      onClick={handleDeposit}
+                    >
+                      Deposit
+                    </div>
                   </div>
-                </div>
+                  <div className="container-status-button">
+                    <div className="status-button">
+                      <div className="active">1</div>
+                      <div className={collapse.approve.success ? 'active' : ''}>
+                        2
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            {collapse.network.pending && !wrongNetwork && (
+              <div className="pink-btn" onClick={handleChangeNetwork}>
+                CHANGE NETWORK
               </div>
-            </>
-          )}
+            )}
+            {collapse.bridge.pending && !wrongNetwork && (
+              <div className="pink-btn" onClick={handleBridge}>
+                INITIATE BRIDGING
+              </div>
+            )}
+            {collapse.claim.pending && !wrongNetwork && (
+              <div className="pink-btn" onClick={handleClaim}>
+                CLAIM TOKEN
+              </div>
+            )}
+            {wrongNetwork && <div className="wrong-network">Wrong Network</div>}
+          </>
+        ) : (
+          <div className="pink-btn" onClick={handleConnectWallet}>
+            Connect Wallet
+          </div>
+        )}
 
-        {collapse.network.pending && !wrongNetwork && (
-          <div className="pink-btn" onClick={handleChangeNetwork}>
-            CHANGE NETWORK
-          </div>
-        )}
-        {collapse.bridge.pending && !wrongNetwork && (
-          <div className="pink-btn" onClick={handleBridge}>
-            INITIATE BRIDGING
-          </div>
-        )}
-        {collapse.claim.pending && !wrongNetwork && (
-          <div className="pink-btn" onClick={handleClaim}>
-            CLAIM TOKEN
-          </div>
-        )}
-        {wrongNetwork && <div className="wrong-network">Wrong Network</div>}
         <TokenModal
           open={open}
           hide={() => setOpen(!open)}
