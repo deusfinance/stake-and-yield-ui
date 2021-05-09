@@ -4,7 +4,6 @@ import ActionButton from './ActionButton'
 const CollapseTrigger = ({
   title,
   titleExit,
-  category,
   balancer,
   link,
   onlyLocking,
