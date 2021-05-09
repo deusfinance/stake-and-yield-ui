@@ -10,7 +10,7 @@ const ActionButton = (props) => {
       onClick={(e) => onClick(e)}
     >
       <span className={`${onlyLocking ? 'uni-background' : ''}`}>
-        {`${type} ${title}`}
+        {type === 'STAKE' && onlyLocking ? 'GET BPT' : `${type} ${title}`}
       </span>
     </span>
   )

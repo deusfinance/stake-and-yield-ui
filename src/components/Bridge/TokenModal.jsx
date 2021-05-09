@@ -77,7 +77,6 @@ const TokenModal = (props) => {
           </span>
         </div>
         <div className="modal-body">
-          {' '}
           <div className="content-modal-bridge">
             <input
               className="input-search"

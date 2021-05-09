@@ -366,6 +366,7 @@ const TokenContainer = (props) => {
             apy={userInfo.apy}
             category={category}
             balancer={balancer}
+            balance={userInfo.balance}
             balanceWallet={userInfo.balanceWallet}
             handleCollapseContent={(data) => handleCollapseContent(data)}
           />
@@ -379,6 +380,7 @@ const TokenContainer = (props) => {
             apy={userInfo.apy}
             category={category}
             balancer={balancer}
+            balance={userInfo.balance}
             balanceWallet={userInfo.balanceWallet}
             handleCollapseContent={(data) => handleCollapseContent(data)}
           />

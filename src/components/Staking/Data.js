@@ -5,7 +5,7 @@ const tokens = {
 
       title: 'sDEA',
       titleExit: 'DEA',
-      stakingContract: '0xC2306fB9b3102D82810Fbef8A419020573Bc1D44',
+      stakingContract: '0x4244abF6151153b8d3eEfbBfDBAB91CD85a8b222',
       vaultContract: '0x1591Da306e9726CF8a60BfF1CE96d7714D7b24cd',
       exitable: true,
       category: 'single',

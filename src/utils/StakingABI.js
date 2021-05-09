@@ -457,7 +457,10 @@ export const StakeAndYieldABI = [
       { internalType: 'uint256', name: 'stakeType', type: 'uint256' }
     ],
     name: 'earned',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    outputs: [
+      { internalType: 'uint256', name: '', type: 'uint256' },
+      { internalType: 'uint256', name: '', type: 'uint256' }
+    ],
     stateMutability: 'view',
     type: 'function'
   },
@@ -492,6 +495,13 @@ export const StakeAndYieldABI = [
   {
     inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
     name: 'exitBalance',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'exitRewardDenominator',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function'
@@ -656,6 +666,13 @@ export const StakeAndYieldABI = [
     type: 'function'
   },
   {
+    inputs: [{ internalType: 'uint256', name: '_val', type: 'uint256' }],
+    name: 'setExitRewardDenominator',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
     inputs: [{ internalType: 'bool', name: '_val', type: 'bool' }],
     name: 'setExitable',
     outputs: [],
@@ -731,7 +748,7 @@ export const StakeAndYieldABI = [
     inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
     name: 'userInfo',
     outputs: [
-      { internalType: 'uint256[14]', name: 'numbers', type: 'uint256[14]' },
+      { internalType: 'uint256[15]', name: 'numbers', type: 'uint256[15]' },
       { internalType: 'address', name: 'rewardTokenAddress', type: 'address' },
       { internalType: 'address', name: 'stakedTokenAddress', type: 'address' },
       { internalType: 'address', name: 'controllerAddress', type: 'address' },
@@ -760,7 +777,8 @@ export const StakeAndYieldABI = [
       { internalType: 'uint256', name: 'withdrawTime', type: 'uint256' },
       { internalType: 'bool', name: 'exit', type: 'bool' },
       { internalType: 'uint256', name: 'exitStartTime', type: 'uint256' },
-      { internalType: 'uint256', name: 'exitAmountTillNow', type: 'uint256' }
+      { internalType: 'uint256', name: 'exitAmountTillNow', type: 'uint256' },
+      { internalType: 'uint256', name: 'lastCliamTime', type: 'uint256' }
     ],
     stateMutability: 'view',
     type: 'function'

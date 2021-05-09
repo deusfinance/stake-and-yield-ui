@@ -10,6 +10,7 @@ const CollapseTriggerOpen = ({
   onlyLocking,
   apy,
   balanceWallet,
+  balance,
   handleCollapseContent
 }) => {
   const handleGet = (e) => {
@@ -54,10 +55,11 @@ const CollapseTriggerOpen = ({
         <p className="token-title">{title}</p>
         <p className="wallet-amount">
           <span className="blue-color">{balanceWallet}</span> in your wallet
+          <span className="blue-color">{`  ${balance}`}</span> Staked
         </p>
       </div>
       {onlyLocking ? (
-        <div className="swap-BPT">swap to BPT and stake for APY</div>
+        <div className="swap-BPT">get BPT and stake for APY</div>
       ) : (
         <div className="apy">{`${apy}% apy`}</div>
       )}
