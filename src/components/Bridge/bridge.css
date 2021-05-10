@@ -335,6 +335,7 @@ input:focus {
   background: #111111;
   border: 1px solid #010101;
   border-radius: 10px;
+  color: #ffffff;
 }
 .content-modal-bridge {
   display: flex;

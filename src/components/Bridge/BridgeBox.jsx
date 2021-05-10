@@ -2,15 +2,14 @@ import React from 'react'
 import TokenBadge from './TokenBadge'
 
 const BridgeBox = (props) => {
-  const { title, chain, max, handleOpenModal, icon, name } = props
+  const { title, chain, max, handleOpenModal, icon, name, balance } = props
   const [amount, setAmount] = React.useState(0)
-  // TODO change to dynamic data
-  const balance = 23.33
+
   return (
     <div className="bridge-box">
       <div className="flex-between">
         <div className="bridge-from">{title}</div>
-        <div className="bridge-from font-weight-600">Balance: 34</div>
+        <div className="bridge-from font-weight-600">{`Balance: ${balance}`}</div>
       </div>
       <div className="flex-between pt-13">
         <div>

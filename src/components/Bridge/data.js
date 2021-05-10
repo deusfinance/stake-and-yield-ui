@@ -1,7 +1,15 @@
 const tokens = [
   {
+    name: 'ERT',
+    address: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6',
+    chain: 'BSC',
+    icon: 'DEUS.svg',
+    balance: 0,
+    chainId: 97
+  },
+  {
     name: 'DEUS',
-    contarct: '',
+    address: '',
     chain: 'BSC',
     icon: 'DEUS.svg',
     balance: 0,
@@ -9,14 +17,14 @@ const tokens = [
   },
   {
     name: 'DEA',
-    contarct: '',
+    address: '',
     chain: 'BSC',
     icon: 'DEA.svg',
     balance: 0
   },
   {
     name: 'BPT',
-    contarct: '',
+    address: '',
     chain: 'BSC',
     icon: 'BPT.svg',
     balance: 0,
@@ -24,7 +32,7 @@ const tokens = [
   },
   {
     name: 'sDEA',
-    contarct: '',
+    address: '',
     chain: 'BSC',
     icon: 'sDEA.svg',
     balance: 0,
@@ -32,15 +40,23 @@ const tokens = [
   },
   {
     name: 'sDEUS',
-    contarct: '',
+    address: '',
     chain: 'BSC',
     icon: 'sDEUS.svg',
     balance: 0,
     chainId: 97
   },
   {
+    name: 'ERT',
+    address: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
+    chain: 'ETH',
+    icon: 'DEUS.svg',
+    balance: 0,
+    chainId: 4
+  },
+  {
     name: 'DEUS',
-    contarct: '',
+    address: '',
     chain: 'ETH',
     icon: 'DEUS.svg',
     balance: 0,
@@ -48,7 +64,7 @@ const tokens = [
   },
   {
     name: 'DEA',
-    contarct: '',
+    address: '0x02b7a1AF1e9c7364Dd92CdC3b09340Aea6403934',
     chain: 'ETH',
     icon: 'DEA.svg',
     balance: 0,
@@ -56,7 +72,7 @@ const tokens = [
   },
   {
     name: 'BPT',
-    contarct: '',
+    address: '',
     chain: 'ETH',
     icon: 'BPT.svg',
     balance: 0,
@@ -64,7 +80,7 @@ const tokens = [
   },
   {
     name: 'sDEA',
-    contarct: '',
+    address: '',
     chain: 'ETH',
     icon: 'sDEA.svg',
     balance: 0,
@@ -72,7 +88,7 @@ const tokens = [
   },
   {
     name: 'sDEUS',
-    contarct: '',
+    address: '',
     chain: 'ETH',
     icon: 'sDEUS.svg',
     balance: 0,
@@ -110,4 +126,154 @@ const instructions = [
     desc: 'Claim your bridged token.'
   }
 ]
-export { tokens, chains, instructions }
+
+const ABI = [
+  { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address'
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'spender',
+        type: 'address'
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256'
+      }
+    ],
+    name: 'Approval',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256'
+      }
+    ],
+    name: 'Transfer',
+    type: 'event'
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'owner', type: 'address' },
+      { internalType: 'address', name: 'spender', type: 'address' }
+    ],
+    name: 'allowance',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'spender', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' }
+    ],
+    name: 'approve',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'decimals',
+    outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'spender', type: 'address' },
+      { internalType: 'uint256', name: 'subtractedValue', type: 'uint256' }
+    ],
+    name: 'decreaseAllowance',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'spender', type: 'address' },
+      { internalType: 'uint256', name: 'addedValue', type: 'uint256' }
+    ],
+    name: 'increaseAllowance',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'account', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' }
+    ],
+    name: 'mint',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'name',
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'symbol',
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'recipient', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' }
+    ],
+    name: 'transfer',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'sender', type: 'address' },
+      { internalType: 'address', name: 'recipient', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' }
+    ],
+    name: 'transferFrom',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
+]
+export { tokens, chains, instructions, ABI }

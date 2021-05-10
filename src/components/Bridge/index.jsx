@@ -5,8 +5,13 @@ import './bridge.css'
 import BridgeBox from './BridgeBox'
 import ClaimToken from './ClaimToken'
 import Instruction from './Instruction'
+import Web3 from 'web3'
+import useWeb3 from '../../helper/useWeb3'
 
 import TokenModal from './TokenModal'
+import { makeContract } from '../../utils/Stakefun'
+import { ABI } from './data'
+import { abi } from '../../utils/StakingABI'
 
 const Bridge = () => {
   const { account, chainId } = useWeb3React()
@@ -25,9 +30,24 @@ const Bridge = () => {
   const [target, setTarget] = React.useState()
   // TODO change chainId
   const [bridge, setBridge] = React.useState({
-    from: { chain: 'ETH', icon: 'DEUS.svg', name: 'DEUS', chainId: 4 },
-    to: { chain: 'BSC', icon: 'DEUS.svg', name: 'DEUS', chainId: 97 }
+    from: {
+      chain: 'ETH',
+      icon: 'DEUS.svg',
+      name: 'ERT',
+      chainId: 4,
+      address: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1'
+    },
+    to: {
+      chain: 'BSC',
+      icon: 'DEUS.svg',
+      name: 'ERT',
+      chainId: 97,
+      address: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'
+    }
   })
+  const [fromBalance, setFromBalance] = React.useState(0)
+  const [toBalance, setToBalance] = React.useState(0)
+  let web3 = useWeb3()
 
   React.useEffect(
     () => {
@@ -36,7 +56,57 @@ const Bridge = () => {
     [chainId, bridge],
     account
   )
+  React.useEffect(() => {
+    const fetchData = async () => {
+      if (bridge.from.chainId === 4) {
+        const fromContract = makeContract(web3, abi, bridge.from.address)
+        let fromBalance = await fromContract.methods.balanceOf(account).call()
+        fromBalance = web3.utils.fromWei(fromBalance, 'ether')
+        // console.log({ fromBalance, chain: 'chain rinkeby' })
+        setFromBalance(fromBalance)
+      }
+      if (bridge.to.chainId === 4) {
+        const toContract = makeContract(web3, abi, bridge.to.address)
+        let toBalance = await toContract.methods.balanceOf(account).call()
+        toBalance = web3.utils.fromWei(toBalance, 'ether')
+        // console.log({ toBalance, chain: 'chain rinkeby' })
 
+        setToBalance(toBalance)
+      }
+      if (bridge.from.chainId === 97) {
+        const BSCWeb3 = new Web3(
+          new Web3.providers.HttpProvider(
+            'https://data-seed-prebsc-1-s1.binance.org:8545/'
+          )
+        )
+        const fromContract = makeContract(BSCWeb3, ABI, bridge.from.address)
+        let fromBalance = await fromContract.methods.balanceOf(account).call()
+        fromBalance = web3.utils.fromWei(fromBalance, 'ether')
+        // console.log({ fromBalance, chain: 'chain BSC' })
+
+        setFromBalance(fromBalance)
+
+        // let balance = await BSCWeb3.eth.getBalance(account)
+        // balance = BSCWeb3.utils.fromWei(balance, 'ether')
+
+        // console.log({ balance })
+      }
+      if (bridge.to.chainId === 97) {
+        const BSCWeb3 = new Web3(
+          new Web3.providers.HttpProvider(
+            'https://data-seed-prebsc-1-s1.binance.org:8545/'
+          )
+        )
+        const toContract = makeContract(BSCWeb3, ABI, bridge.to.address)
+        let toBalance = await toContract.methods.balanceOf(account).call()
+        toBalance = web3.utils.fromWei(toBalance, 'ether')
+        // console.log({ toBalance, chain: 'chain BSC' })
+
+        setToBalance(toBalance)
+      }
+    }
+    fetchData()
+  }, [bridge, account, web3])
   const handleOpenModal = (data) => {
     setTarget(data)
     setOpen(true)
@@ -154,6 +224,7 @@ const Bridge = () => {
             <BridgeBox
               title="from"
               {...bridge.from}
+              balance={fromBalance}
               max={true}
               handleOpenModal={() => handleOpenModal('from')}
             />
@@ -166,6 +237,7 @@ const Bridge = () => {
             <BridgeBox
               title="to"
               {...bridge.to}
+              balance={toBalance}
               handleOpenModal={() => handleOpenModal('to')}
             />
           </div>
