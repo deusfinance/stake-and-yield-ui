@@ -1,101 +1,153 @@
+// const tokens = [
+//   {
+//     name: 'ERT',
+//     address: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6',
+//     chain: 'BSC',
+//     icon: 'DEUS.svg',
+//     balance: 0,
+//     chainId: 97
+//   },
+//   {
+//     name: 'DEUS',
+//     address: '',
+//     chain: 'BSC',
+//     icon: 'DEUS.svg',
+//     balance: 0,
+//     chainId: 97
+//   },
+//   {
+//     name: 'DEA',
+//     address: '',
+//     chain: 'BSC',
+//     icon: 'DEA.svg',
+//     balance: 0
+//   },
+//   {
+//     name: 'BPT',
+//     address: '',
+//     chain: 'BSC',
+//     icon: 'BPT.svg',
+//     balance: 0,
+//     chainId: 97
+//   },
+//   {
+//     name: 'sDEA',
+//     address: '',
+//     chain: 'BSC',
+//     icon: 'sDEA.svg',
+//     balance: 0,
+//     chainId: 97
+//   },
+//   {
+//     name: 'sDEUS',
+//     address: '',
+//     chain: 'BSC',
+//     icon: 'sDEUS.svg',
+//     balance: 0,
+//     chainId: 97
+//   },
+//   {
+//     name: 'ERT',
+//     address: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
+//     chain: 'ETH',
+//     icon: 'DEUS.svg',
+//     balance: 0,
+//     chainId: 4
+//   },
+//   {
+//     name: '',
+//     address: '',
+//     chain: 'ETH',
+//     icon: 'DEUS.svg',
+//     balance: 0,
+//     chainId: 4
+//   },
+//   {
+//     name: 'DEA',
+//     address: '0x02b7a1AF1e9c7364Dd92CdC3b09340Aea6403934',
+//     chain: 'ETH',
+//     icon: 'DEA.svg',
+//     balance: 0,
+//     chainId: 4
+//   },
+//   {
+//     name: 'BPT',
+//     address: '',
+//     chain: 'ETH',
+//     icon: 'BPT.svg',
+//     balance: 0,
+//     chainId: 4
+//   },
+//   {
+//     name: 'sDEA',
+//     address: '',
+//     chain: 'ETH',
+//     icon: 'sDEA.svg',
+//     balance: 0,
+//     chainId: 4
+//   },
+//   {
+//     name: 'sDEUS',
+//     address: '',
+//     chain: 'ETH',
+//     icon: 'sDEUS.svg',
+//     balance: 0,
+//     chainId: 4
+//   }
+// ]
+
 const tokens = [
   {
-    name: 'ERT',
-    address: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6',
-    chain: 'BSC',
-    icon: 'DEUS.svg',
-    balance: 0,
-    chainId: 97
-  },
-  {
     name: 'DEUS',
-    address: '',
-    chain: 'BSC',
-    icon: 'DEUS.svg',
-    balance: 0,
-    chainId: 97
+    tokenId: 1,
+    address: {
+      4: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
+      97: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'
+    },
+    icon: 'DEUS.svg'
   },
   {
     name: 'DEA',
-    address: '',
-    chain: 'BSC',
-    icon: 'DEA.svg',
-    balance: 0
+    tokenId: 2,
+    address: {
+      4: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
+      97: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'
+    },
+    icon: 'DEA.svg'
   },
   {
     name: 'BPT',
-    address: '',
-    chain: 'BSC',
-    icon: 'BPT.svg',
-    balance: 0,
-    chainId: 97
+    tokenId: 3,
+    address: {
+      4: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
+      97: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'
+    },
+    icon: 'BPT.svg'
   },
   {
     name: 'sDEA',
-    address: '',
-    chain: 'BSC',
-    icon: 'sDEA.svg',
-    balance: 0,
-    chainId: 97
+    tokenId: 4,
+    address: {
+      4: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
+      97: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'
+    },
+    icon: 'sDEA.svg'
   },
   {
     name: 'sDEUS',
-    address: '',
-    chain: 'BSC',
-    icon: 'sDEUS.svg',
-    balance: 0,
-    chainId: 97
-  },
-  {
-    name: 'ERT',
-    address: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
-    chain: 'ETH',
-    icon: 'DEUS.svg',
-    balance: 0,
-    chainId: 4
-  },
-  {
-    name: 'DEUS',
-    address: '',
-    chain: 'ETH',
-    icon: 'DEUS.svg',
-    balance: 0,
-    chainId: 4
-  },
-  {
-    name: 'DEA',
-    address: '0x02b7a1AF1e9c7364Dd92CdC3b09340Aea6403934',
-    chain: 'ETH',
-    icon: 'DEA.svg',
-    balance: 0,
-    chainId: 4
-  },
-  {
-    name: 'BPT',
-    address: '',
-    chain: 'ETH',
-    icon: 'BPT.svg',
-    balance: 0,
-    chainId: 4
-  },
-  {
-    name: 'sDEA',
-    address: '',
-    chain: 'ETH',
-    icon: 'sDEA.svg',
-    balance: 0,
-    chainId: 4
-  },
-  {
-    name: 'sDEUS',
-    address: '',
-    chain: 'ETH',
-    icon: 'sDEUS.svg',
-    balance: 0,
-    chainId: 4
+    tokenId: 5,
+    address: {
+      4: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
+      97: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'
+    },
+    icon: 'sDEUS.svg'
   }
 ]
-const chains = ['ETH', 'BSC']
+
+const chains = [
+  { id: 97, name: 'BSC' },
+  { id: 4, name: 'ETH' }
+]
 
 const instructions = [
   {
@@ -111,14 +163,12 @@ const instructions = [
   {
     name: 'network',
     title: '3 – Change Network',
-    desc:
-      'Either press the button in the bridge interface or click: Change Network'
+    desc: 'Either press the button in the bridge interface or click: Change Network'
   },
   {
     name: 'bridge',
     title: '4 – Initiate Bridging',
-    desc:
-      'Initiate bridging to the new network by pressing the button in the interface.'
+    desc: 'Initiate bridging to the new network by pressing the button in the interface.'
   },
   {
     name: 'claim',

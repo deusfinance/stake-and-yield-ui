@@ -6,11 +6,9 @@ import BridgeBox from './BridgeBox'
 import ClaimToken from './ClaimToken'
 import Instruction from './Instruction'
 import Web3 from 'web3'
-import useWeb3 from '../../helper/useWeb3'
-
 import TokenModal from './TokenModal'
 import { makeContract } from '../../utils/Stakefun'
-import { ABI } from './data'
+import { ABI, chains } from './data'
 import { abi } from '../../utils/StakingABI'
 
 const Bridge = () => {
@@ -33,21 +31,30 @@ const Bridge = () => {
     from: {
       chain: 'ETH',
       icon: 'DEUS.svg',
-      name: 'ERT',
+      name: 'DEUS',
       chainId: 4,
       address: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1'
     },
     to: {
       chain: 'BSC',
       icon: 'DEUS.svg',
-      name: 'ERT',
+      name: 'DEUS',
       chainId: 97,
       address: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'
     }
   })
   const [fromBalance, setFromBalance] = React.useState(0)
   const [toBalance, setToBalance] = React.useState(0)
-  let web3 = useWeb3()
+  const BSCWeb3 = new Web3(
+    new Web3.providers.HttpProvider(
+      'https://data-seed-prebsc-1-s1.binance.org:8545/'
+    )
+  )
+  const web3 = new Web3(
+    new Web3.providers.HttpProvider(
+      'https://rinkeby.infura.io/v3/4e955a81217a477e88e3793856deb18b'
+    )
+  )
 
   React.useEffect(
     () => {
@@ -62,57 +69,47 @@ const Bridge = () => {
         const fromContract = makeContract(web3, abi, bridge.from.address)
         let fromBalance = await fromContract.methods.balanceOf(account).call()
         fromBalance = web3.utils.fromWei(fromBalance, 'ether')
-        // console.log({ fromBalance, chain: 'chain rinkeby' })
         setFromBalance(fromBalance)
       }
       if (bridge.to.chainId === 4) {
         const toContract = makeContract(web3, abi, bridge.to.address)
         let toBalance = await toContract.methods.balanceOf(account).call()
         toBalance = web3.utils.fromWei(toBalance, 'ether')
-        // console.log({ toBalance, chain: 'chain rinkeby' })
-
         setToBalance(toBalance)
       }
       if (bridge.from.chainId === 97) {
-        const BSCWeb3 = new Web3(
-          new Web3.providers.HttpProvider(
-            'https://data-seed-prebsc-1-s1.binance.org:8545/'
-          )
-        )
         const fromContract = makeContract(BSCWeb3, ABI, bridge.from.address)
         let fromBalance = await fromContract.methods.balanceOf(account).call()
-        fromBalance = web3.utils.fromWei(fromBalance, 'ether')
-        // console.log({ fromBalance, chain: 'chain BSC' })
-
+        fromBalance = BSCWeb3.utils.fromWei(fromBalance, 'ether')
         setFromBalance(fromBalance)
 
         // let balance = await BSCWeb3.eth.getBalance(account)
         // balance = BSCWeb3.utils.fromWei(balance, 'ether')
-
-        // console.log({ balance })
       }
       if (bridge.to.chainId === 97) {
-        const BSCWeb3 = new Web3(
-          new Web3.providers.HttpProvider(
-            'https://data-seed-prebsc-1-s1.binance.org:8545/'
-          )
-        )
         const toContract = makeContract(BSCWeb3, ABI, bridge.to.address)
         let toBalance = await toContract.methods.balanceOf(account).call()
-        toBalance = web3.utils.fromWei(toBalance, 'ether')
-        // console.log({ toBalance, chain: 'chain BSC' })
-
+        toBalance = BSCWeb3.utils.fromWei(toBalance, 'ether')
         setToBalance(toBalance)
       }
     }
-    fetchData()
-  }, [bridge, account, web3])
+    if (account) fetchData()
+  }, [bridge, account])
   const handleOpenModal = (data) => {
     setTarget(data)
     setOpen(true)
   }
-  const changeToken = (token) => {
-    setBridge((prev) => ({ ...prev, [target]: { ...token } }))
+  const changeToken = (token, chainId) => {
+    let chain = chains.find((item) => item.id === chainId).name
+    setBridge((prev) => ({
+      ...prev,
+      [target]: {
+        ...token,
+        address: token.address[chainId],
+        chainId: chainId,
+        chain
+      }
+    }))
   }
 
   const handleApprove = () => {
@@ -306,7 +303,7 @@ const Bridge = () => {
         <TokenModal
           open={open}
           hide={() => setOpen(!open)}
-          changeToken={(token) => changeToken(token)}
+          changeToken={(token, chainId) => changeToken(token, chainId)}
         />
       </div>
     </>

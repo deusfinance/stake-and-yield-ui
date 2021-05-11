@@ -28,7 +28,7 @@ const customStyles = {
 
 const TokenModal = (props) => {
   const { open, hide, changeToken } = props
-  const [chainToken, setChainToken] = React.useState([])
+  const [chainToken, setChainToken] = React.useState(chains)
   const [searchQuery, setSearchQuery] = React.useState('')
   const [showTokens, setShowTokens] = React.useState(tokens)
 
@@ -38,9 +38,19 @@ const TokenModal = (props) => {
   }
   const handleFilter = (e) => {
     if (e.target.checked) {
-      setChainToken([...chainToken, e.target.value])
+      let result = chainToken.filter((item) => item.name === e.target.value)
+      if (result.length === 0) {
+        setChainToken(chains)
+      } else {
+        setChainToken(result)
+      }
     } else {
-      setChainToken(chainToken.filter((id) => id !== e.target.value))
+      let result = chainToken.filter((item) => item.name !== e.target.value)
+      if (result.length === 0) {
+        setChainToken(chains)
+      } else {
+        setChainToken(result)
+      }
     }
   }
   React.useEffect(() => {
@@ -48,15 +58,7 @@ const TokenModal = (props) => {
     const resultFilter = tokens.filter(
       (item) => search.test(item.name) || search.test(item.chain)
     )
-    if (chainToken.length === 0) {
-      setShowTokens(resultFilter)
-    } else {
-      setShowTokens(
-        resultFilter.filter((token) =>
-          chainToken.some((chain) => [token.chain].flat().includes(chain))
-        )
-      )
-    }
+    setShowTokens(resultFilter)
   }, [chainToken, searchQuery])
   return (
     <ReactModal
@@ -89,12 +91,12 @@ const TokenModal = (props) => {
                 <span key={index}>
                   <input
                     type="checkbox"
-                    id={chain}
-                    name={chain}
-                    defaultValue={chain}
+                    id={chain.name}
+                    name={chain.name}
+                    defaultValue={chain.name}
                     onChange={handleFilter}
                   />
-                  <label htmlFor={chain}>{chain}</label>
+                  <label htmlFor={chain.name}>{chain.name}</label>
                 </span>
               ))}
             </div>
@@ -105,22 +107,26 @@ const TokenModal = (props) => {
             </div>
             <div className="border-bottom mb-5"></div>
             <div className="pt-20">
-              {showTokens.map((token, index) => (
-                <div
-                  className="token-list"
-                  key={index}
-                  onClick={() => {
-                    changeToken(token)
-                    hide()
-                  }}
-                >
-                  <div className="token-list-item">
-                    <TokenBadge chain={token.chain} icon={token.icon} />
-                    <span>{`${token.name} (${token.chain})`}</span>
-                  </div>
-                  <div>{token.balance}</div>
-                </div>
-              ))}
+              {chainToken.map((chain) =>
+                showTokens.map((token, index) => {
+                  return (
+                    <div
+                      className="token-list"
+                      key={index}
+                      onClick={() => {
+                        changeToken(token, chain.id)
+                        hide()
+                      }}
+                    >
+                      <div className="token-list-item">
+                        <TokenBadge chain={chain.name} icon={token.icon} />
+                        <span>{`${token.name} (${chain.name})`}</span>
+                      </div>
+                      <div>{token.balance}</div>
+                    </div>
+                  )
+                })
+              )}
             </div>
           </div>
         </div>
