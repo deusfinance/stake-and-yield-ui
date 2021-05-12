@@ -2,8 +2,17 @@ import React from 'react'
 import TokenBadge from './TokenBadge'
 
 const BridgeBox = (props) => {
-  const { title, chain, max, handleOpenModal, icon, name, balance } = props
-  const [amount, setAmount] = React.useState(0)
+  const {
+    title,
+    chain,
+    max,
+    handleOpenModal,
+    icon,
+    name,
+    balance,
+    amount,
+    setAmount
+  } = props
 
   return (
     <div className="bridge-box">

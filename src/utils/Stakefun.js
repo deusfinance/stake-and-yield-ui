@@ -22,7 +22,6 @@ const sendTransaction = (
   return new Promise((resolve, reject) => {
     try {
       let hash = null
-
       contract.methods[methodName](...params)
         .send({ from: owner })
         .once('transactionHash', (tx) => {
@@ -43,7 +42,8 @@ const sendTransaction = (
           })
           resolve()
         })
-        .once('error', () => {
+        .once('error', (error) => {
+          console.log('error happend', error)
           CustomTranaction(TransactionState.FAILED, {
             hash,
             chainId

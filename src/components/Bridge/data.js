@@ -96,6 +96,9 @@
 //   }
 // ]
 
+const BSCContract = '0x70EF3ae9Db80462caFd048748d5Fc905fc471Ae4'
+const ETHContract = '0xFe9Cece1D202199Bf85427C7BEBE2Be8A870124F'
+
 const tokens = [
   {
     name: 'DEUS',
@@ -145,8 +148,8 @@ const tokens = [
 ]
 
 const chains = [
-  { id: 97, name: 'BSC' },
-  { id: 4, name: 'ETH' }
+  { id: 97, name: 'BSC', network: 2 },
+  { id: 4, name: 'ETH', network: 1 }
 ]
 
 const instructions = [
@@ -177,153 +180,4 @@ const instructions = [
   }
 ]
 
-const ABI = [
-  { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'owner',
-        type: 'address'
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'spender',
-        type: 'address'
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256'
-      }
-    ],
-    name: 'Approval',
-    type: 'event'
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
-      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256'
-      }
-    ],
-    name: 'Transfer',
-    type: 'event'
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'owner', type: 'address' },
-      { internalType: 'address', name: 'spender', type: 'address' }
-    ],
-    name: 'allowance',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'spender', type: 'address' },
-      { internalType: 'uint256', name: 'amount', type: 'uint256' }
-    ],
-    name: 'approve',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-    name: 'balanceOf',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'decimals',
-    outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'spender', type: 'address' },
-      { internalType: 'uint256', name: 'subtractedValue', type: 'uint256' }
-    ],
-    name: 'decreaseAllowance',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'spender', type: 'address' },
-      { internalType: 'uint256', name: 'addedValue', type: 'uint256' }
-    ],
-    name: 'increaseAllowance',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'account', type: 'address' },
-      { internalType: 'uint256', name: 'amount', type: 'uint256' }
-    ],
-    name: 'mint',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'name',
-    outputs: [{ internalType: 'string', name: '', type: 'string' }],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'symbol',
-    outputs: [{ internalType: 'string', name: '', type: 'string' }],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'totalSupply',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'recipient', type: 'address' },
-      { internalType: 'uint256', name: 'amount', type: 'uint256' }
-    ],
-    name: 'transfer',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'sender', type: 'address' },
-      { internalType: 'address', name: 'recipient', type: 'address' },
-      { internalType: 'uint256', name: 'amount', type: 'uint256' }
-    ],
-    name: 'transferFrom',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  }
-]
-export { tokens, chains, instructions, ABI }
+export { ETHContract, BSCContract, tokens, chains, instructions }
