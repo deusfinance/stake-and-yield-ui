@@ -11,12 +11,16 @@ import { makeContract } from '../../utils/Stakefun'
 import { BSCContract, chains, ETHContract } from './data'
 import { abi, BridgeABI } from '../../utils/StakingABI'
 import { sendTransaction } from '../../utils/Stakefun'
+import useWeb3 from '../../helper/useWeb3'
+import { set } from 'lodash'
 
 const Bridge = () => {
   const { account, chainId } = useWeb3React()
   const web3React = useWeb3React()
   const { activate } = web3React
   const [open, setOpen] = React.useState(false)
+  const [claims, setClaims] = React.useState([])
+  const [currentTx, setCurrentTx] = React.useState('')
   const [wrongNetwork, setWrongNetwork] = React.useState(false)
   const [collapse, setCollapse] = React.useState({
     approve: { pending: true, success: false },
@@ -34,7 +38,7 @@ const Bridge = () => {
       icon: 'DEUS.svg',
       name: 'DEUS',
       chainId: 4,
-      tokenId: 1,
+      tokenId: '1',
       address: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1'
     },
     to: {
@@ -42,22 +46,23 @@ const Bridge = () => {
       icon: 'DEUS.svg',
       name: 'DEUS',
       chainId: 97,
-      tokenId: 1,
+      tokenId: '1',
       address: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'
     }
   })
   const [fromBalance, setFromBalance] = React.useState(0)
   const [toBalance, setToBalance] = React.useState(0)
-  const [fromAmount, setFromAmount] = React.useState(0)
-  const [toAmount, setToAmount] = React.useState(0)
+  const [amount, setAmount] = React.useState(0)
+  const [fetch, setFetch] = React.useState('')
+  const web3 = useWeb3()
 
-  const BSCWeb3 = new Web3(
+  const bscWeb3 = new Web3(
     new Web3.providers.HttpProvider(
       'https://data-seed-prebsc-1-s1.binance.org:8545/'
     )
   )
 
-  const web3 = new Web3(
+  const ethWeb3 = new Web3(
     new Web3.providers.HttpProvider(
       'https://rinkeby.infura.io/v3/4e955a81217a477e88e3793856deb18b'
     )
@@ -72,40 +77,74 @@ const Bridge = () => {
   )
   React.useEffect(() => {
     const getBalance = async () => {
-      if (bridge.from.chainId === 4) {
-        const fromContract = makeContract(web3, abi, bridge.from.address)
-        let fromBalance = await fromContract.methods.balanceOf(account).call()
-        fromBalance = web3.utils.fromWei(fromBalance, 'ether')
-        setFromBalance(fromBalance)
-      }
-      if (bridge.to.chainId === 4) {
-        const toContract = makeContract(web3, abi, bridge.to.address)
-        let toBalance = await toContract.methods.balanceOf(account).call()
-        toBalance = web3.utils.fromWei(toBalance, 'ether')
-        setToBalance(toBalance)
-      }
-      if (bridge.from.chainId === 97) {
-        const fromContract = makeContract(BSCWeb3, abi, bridge.from.address)
-        let fromBalance = await fromContract.methods.balanceOf(account).call()
-        fromBalance = BSCWeb3.utils.fromWei(fromBalance, 'ether')
-        setFromBalance(fromBalance)
+      let bridgeWeb3 = ''
+      let bridgeToWeb3 = ''
+      let bridgeContract = ''
 
-        // let balance = await BSCWeb3.eth.getBalance(account)
-        // balance = BSCWeb3.utils.fromWei(balance, 'ether')
+      switch (chainId) {
+        case 4:
+          bridgeContract = ETHContract
+          break
+        case 97:
+          bridgeContract = BSCContract
+          break
+        default:
+          break
       }
-      if (bridge.to.chainId === 97) {
-        const toContract = makeContract(BSCWeb3, abi, bridge.to.address)
-        let toBalance = await toContract.methods.balanceOf(account).call()
-        toBalance = BSCWeb3.utils.fromWei(toBalance, 'ether')
-        setToBalance(toBalance)
+
+      switch (bridge.from.chainId) {
+        case 4:
+          bridgeWeb3 = ethWeb3
+          break
+        case 97:
+          bridgeWeb3 = bscWeb3
+          break
+        default:
+          break
       }
+      switch (bridge.to.chainId) {
+        case 4:
+          bridgeToWeb3 = ethWeb3
+          break
+        case 97:
+          bridgeToWeb3 = bscWeb3
+          break
+        default:
+          break
+      }
+
+      const fromContract = makeContract(bridgeWeb3, abi, bridge.from.address)
+      let fromBalance = await fromContract.methods.balanceOf(account).call()
+      fromBalance = web3.utils.fromWei(fromBalance, 'ether')
+      setFromBalance(fromBalance)
+      const toContract = makeContract(bridgeToWeb3, abi, bridge.to.address)
+      let toBalance = await toContract.methods.balanceOf(account).call()
+      toBalance = web3.utils.fromWei(toBalance, 'ether')
+      setToBalance(toBalance)
+
+      const Contract = makeContract(web3, BridgeABI, bridgeContract)
+      let userTxs = await Contract.methods.getUserTxs(account).call()
+      let pendingTxs = await Contract.methods.pendingTxs(userTxs).call()
+      const pendingIndex = pendingTxs.reduce(
+        (out, bool, index) => (bool ? out : out.concat(index)),
+        []
+      )
+      let claims = []
+      for (let index = 0; index < pendingIndex.length; index++) {
+        const element = userTxs[pendingIndex[index]]
+        let claim = await Contract.methods.txs(element).call()
+        claims.push(claim)
+      }
+      setClaims(claims)
+      console.log({ pendingTxs, pendingIndex, claims })
     }
     if (account) getBalance()
-  }, [bridge, account, chainId])
+  }, [bridge, account, chainId, fetch])
+
   React.useEffect(() => {
     const fetchData = async () => {
       if (bridge.from.chainId === 4) {
-        const fromContract = makeContract(web3, abi, bridge.from.address)
+        const fromContract = makeContract(ethWeb3, abi, bridge.from.address)
         let approve = await fromContract.methods
           .allowance(account, ETHContract)
           .call()
@@ -125,7 +164,7 @@ const Bridge = () => {
       if (bridge.to.chainId === 4) {
       }
       if (bridge.from.chainId === 97) {
-        const fromContract = makeContract(BSCWeb3, abi, bridge.from.address)
+        const fromContract = makeContract(bscWeb3, abi, bridge.from.address)
         let approve = await fromContract.methods
           .allowance(account, BSCContract)
           .call()
@@ -173,62 +212,40 @@ const Bridge = () => {
       }
       if (!account) return
       if (collapse.approve.success) return
-      let Contract = ''
-      if (bridge.from.chainId === 4) {
-        const INFURA_URL =
-          'wss://rinkeby.infura.io/ws/v3/4e955a81217a477e88e3793856deb18b'
+      let Contract = makeContract(web3, abi, bridge.from.address)
+      let amount = web3.utils.toWei('1000000000000000000')
+      let bridgeContract = ''
 
-        const web3 = new Web3(window.ethereum ? window.ethereum : INFURA_URL)
-        Contract = makeContract(web3, abi, bridge.from.address)
-        let amount = web3.utils.toWei('1000000000000000000')
-
-        sendTransaction(
-          Contract,
-          `approve`,
-          [ETHContract, amount],
-          account,
-          chainId,
-          `Approved ${bridge.from.name}`
-        ).then(() => {
-          setCollapse((prev) => {
-            return {
-              ...prev,
-              approve: {
-                pending: false,
-                success: true
-              },
-              deposit: { pending: true, success: false }
-            }
-          })
-        })
+      switch (bridge.from.chainId) {
+        case 4:
+          bridgeContract = ETHContract
+          break
+        case 97:
+          bridgeContract = BSCContract
+          break
+        default:
+          break
       }
-      if (bridge.from.chainId === 97) {
-        const URL = 'https://data-seed-prebsc-1-s1.binance.org:8545/'
 
-        const BSCWeb3 = new Web3(window.ethereum ? window.ethereum : URL)
-        Contract = makeContract(BSCWeb3, abi, bridge.from.address)
-        let amount = BSCWeb3.utils.toWei('1000000000000000000')
-
-        sendTransaction(
-          Contract,
-          `approve`,
-          [BSCContract, amount],
-          account,
-          chainId,
-          `Approved ${bridge.from.name}`
-        ).then(() => {
-          setCollapse((prev) => {
-            return {
-              ...prev,
-              approve: {
-                pending: false,
-                success: true
-              },
-              deposit: { pending: true, success: false }
-            }
-          })
+      sendTransaction(
+        Contract,
+        `approve`,
+        [bridgeContract, amount],
+        account,
+        chainId,
+        `Approved ${bridge.from.name}`
+      ).then(() => {
+        setCollapse((prev) => {
+          return {
+            ...prev,
+            approve: {
+              pending: false,
+              success: true
+            },
+            deposit: { pending: true, success: false }
+          }
         })
-      }
+      })
     } catch (error) {
       console.log('error happend in Approve', error)
     }
@@ -239,68 +256,47 @@ const Bridge = () => {
         setWrongNetwork(true)
         return
       }
-      // if (!collapse.approve.success) return
+      if (!collapse.approve.success) return
       if (!account) {
         return
       }
-      if (fromAmount === '0' || fromAmount === '') return
-      let network = chains.find(
-        (item) => item.id === bridge.from.chainId
-      ).network
-      if (bridge.from.chainId === 4) {
-        const INFURA_URL =
-          'wss://rinkeby.infura.io/ws/v3/4e955a81217a477e88e3793856deb18b'
+      if (amount === '0' || amount === '') return
+      let network = chains.find((item) => item.id === bridge.to.chainId).network
 
-        const web3 = new Web3(window.ethereum ? window.ethereum : INFURA_URL)
-        const Contract = makeContract(web3, BridgeABI, ETHContract)
-        let amountWie = web3.utils.toWei(fromAmount)
+      let bridgeContract = ''
 
-        sendTransaction(
-          Contract,
-          `deposit`,
-          [amountWie, network, bridge.from.tokenId],
-          account,
-          chainId,
-          `Deposite ${fromAmount} ${bridge.from.name}`
-        ).then(() => {
-          setCollapse((prev) => {
-            return {
-              ...prev,
-              deposit: {
-                pending: false,
-                success: true
-              },
-              network: { pending: true, success: false }
-            }
-          })
-        })
+      switch (bridge.from.chainId) {
+        case 4:
+          bridgeContract = ETHContract
+          break
+        case 97:
+          bridgeContract = BSCContract
+          break
+        default:
+          break
       }
-      if (bridge.from.chainId === 97) {
-        const URL = 'https://data-seed-prebsc-1-s1.binance.org:8545/'
+      const Contract = makeContract(web3, BridgeABI, bridgeContract)
+      let amountWie = web3.utils.toWei(amount)
 
-        const BSCWeb3 = new Web3(window.ethereum ? window.ethereum : URL)
-        const Contract = makeContract(BSCWeb3, BridgeABI, BSCContract)
-        let amountWie = BSCWeb3.utils.toWei(fromAmount)
-        sendTransaction(
-          Contract,
-          `deposit`,
-          [amountWie, network, bridge.from.tokenId],
-          account,
-          chainId,
-          `Deposite ${fromAmount} ${bridge.from.name}`
-        ).then(() => {
-          setCollapse((prev) => {
-            return {
-              ...prev,
-              deposit: {
-                pending: false,
-                success: true
-              },
-              network: { pending: true, success: false }
-            }
-          })
+      sendTransaction(
+        Contract,
+        `deposit`,
+        [amountWie, network, bridge.from.tokenId],
+        account,
+        chainId,
+        `Deposite ${amount} ${bridge.from.name}`
+      ).then(() => {
+        setCollapse((prev) => {
+          return {
+            ...prev,
+            deposit: {
+              pending: false,
+              success: true
+            },
+            network: { pending: true, success: false }
+          }
         })
-      }
+      })
     } catch (error) {
       console.log('error happend in Deposit', error)
     }
@@ -327,20 +323,29 @@ const Bridge = () => {
       return
     }
 
-    if (bridge.from.chainId === 4) {
-      const INFURA_URL =
-        'https://rinkeby.infura.io/v3/4e955a81217a477e88e3793856deb18b'
-      const web3 = new Web3(window.ethereum ? window.ethereum : INFURA_URL)
-      const Contract = makeContract(web3, BridgeABI, ETHContract)
-      let userTxs = await Contract.methods.getUserTxs(account).call()
-      console.log({ userTxs })
+    let bridgeContract = ''
+    let bridgeWeb3 = ''
+
+    switch (bridge.from.chainId) {
+      case 4:
+        bridgeContract = ETHContract
+        bridgeWeb3 = ethWeb3
+        break
+      case 97:
+        bridgeContract = BSCContract
+        bridgeWeb3 = bscWeb3
+        break
+      default:
+        break
     }
-    if (bridge.from.chainId === 97) {
-      const URL = 'https://data-seed-prebsc-1-s1.binance.org:8545/'
-      const BSCWeb3 = new Web3(window.ethereum ? window.ethereum : URL)
-      const Contract = makeContract(BSCWeb3, BridgeABI, BSCContract)
-      let userTxs = await Contract.methods.getUserTxs(account).call()
-      console.log({ userTxs })
+
+    const Contract = makeContract(bridgeWeb3, BridgeABI, bridgeContract)
+    let userTxs = await Contract.methods.getUserTxs(account).call()
+    let pendingTxs = await Contract.methods.pendingTxs(userTxs).call()
+    let currentPending = pendingTxs[pendingTxs.length - 1]
+    console.log('**************', currentPending, userTxs[currentPending])
+    if (!currentPending) {
+      setCurrentTx(userTxs[userTxs.length - 1])
     }
 
     setCollapse((prev) => {
@@ -354,17 +359,50 @@ const Bridge = () => {
       }
     })
   }
-  const handleClaim = () => {
+  const handleClaim = async () => {
     if (chainId !== bridge.to.chainId) {
       setWrongNetwork(true)
       return
     }
-    setCollapse((prev) => {
-      return {
-        ...prev,
-        claim: { pending: false, success: true },
-        approve: { pending: true, success: false }
-      }
+    let bridgeContract = ''
+
+    switch (chainId) {
+      case 4:
+        bridgeContract = ETHContract
+        break
+      case 97:
+        bridgeContract = BSCContract
+        break
+      default:
+        break
+    }
+    let amountWie = web3.utils.toWei(amount)
+    let network = chains.find((item) => item.id === bridge.to.chainId).network
+
+    const Contract = makeContract(web3, BridgeABI, bridgeContract)
+    console.log({
+      account,
+      amountWie,
+      network,
+      tokenId: bridge.from.tokenId,
+      currentTx
+    })
+    sendTransaction(
+      Contract,
+      `claim`,
+      [account, amountWie, network, bridge.from.tokenId, currentTx],
+      account,
+      chainId,
+      `Claim ${amount} ${bridge.to.chain}`
+    ).then(() => {
+      set(`${currentTx}-claim`)
+      setCollapse({
+        approve: { pending: false, success: true },
+        deposit: { pending: true, success: false },
+        network: { pending: false, success: false },
+        bridge: { pending: false, success: false },
+        claim: { pending: false, success: false }
+      })
     })
   }
   const handleConnectWallet = async () => {
@@ -373,7 +411,12 @@ const Bridge = () => {
   return (
     <>
       <Instruction collapse={collapse} />
-      {collapse.claim.pending && <ClaimToken />}
+      <ClaimToken
+        claims={claims}
+        chainId={chainId}
+        account={account}
+        setFetch={(data) => setFetch(data)}
+      />
       <div className="container-bridge">
         <div className="bridge-title">
           <h1>DEUS Bridge</h1>
@@ -397,8 +440,8 @@ const Bridge = () => {
               title="from"
               {...bridge.from}
               balance={fromBalance}
-              amount={fromAmount}
-              setAmount={(data) => setFromAmount(data)}
+              amount={amount}
+              setAmount={(data) => setAmount(data)}
               max={true}
               handleOpenModal={() => handleOpenModal('from')}
             />
@@ -412,8 +455,8 @@ const Bridge = () => {
               title="to"
               {...bridge.to}
               balance={toBalance}
-              amount={toAmount}
-              setAmount={(data) => setToAmount(data)}
+              amount={amount}
+              readonly={true}
               handleOpenModal={() => handleOpenModal('to')}
             />
           </div>

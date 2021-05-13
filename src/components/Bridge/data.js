@@ -102,7 +102,7 @@ const ETHContract = '0xFe9Cece1D202199Bf85427C7BEBE2Be8A870124F'
 const tokens = [
   {
     name: 'DEUS',
-    tokenId: 1,
+    tokenId: '1',
     address: {
       4: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
       97: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'
@@ -111,7 +111,7 @@ const tokens = [
   },
   {
     name: 'DEA',
-    tokenId: 2,
+    tokenId: '2',
     address: {
       4: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
       97: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'
@@ -120,7 +120,7 @@ const tokens = [
   },
   {
     name: 'BPT',
-    tokenId: 3,
+    tokenId: '3',
     address: {
       4: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
       97: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'
@@ -129,7 +129,7 @@ const tokens = [
   },
   {
     name: 'sDEA',
-    tokenId: 4,
+    tokenId: '4',
     address: {
       4: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
       97: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'
@@ -138,7 +138,7 @@ const tokens = [
   },
   {
     name: 'sDEUS',
-    tokenId: 5,
+    tokenId: '5',
     address: {
       4: '0xb9B5FFC3e1404E3Bb7352e656316D6C5ce6940A1',
       97: '0x4Ef4E0b448AC75b7285c334e215d384E7227A2E6'

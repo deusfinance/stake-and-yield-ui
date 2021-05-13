@@ -15,6 +15,9 @@
 .pointer {
   cursor: pointer;
 }
+.mb-5 {
+  margin-bottom: 5px;
+}
 .mt-20 {
   margin-top: 20px;
 }
@@ -117,7 +120,6 @@ input:focus {
   color: rgba(255, 255, 255, 0.5);
 }
 .bridge-from {
-  width: 86.21px;
   height: 14.98px;
 
   font-style: normal;
@@ -559,6 +561,7 @@ input:focus {
   border: 1px solid #1c1c1c;
   border-radius: 10px;
   padding: 20px;
+  z-index: 999;
 }
 .claim-token-title {
   font-style: normal;

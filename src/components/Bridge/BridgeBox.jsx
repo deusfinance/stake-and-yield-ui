@@ -11,7 +11,8 @@ const BridgeBox = (props) => {
     name,
     balance,
     amount,
-    setAmount
+    setAmount,
+    readonly
   } = props
 
   return (
@@ -22,12 +23,16 @@ const BridgeBox = (props) => {
       </div>
       <div className="flex-between pt-13">
         <div>
-          <input
-            type="text"
-            className="input-transparent bridge-amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-          />
+          {readonly ? (
+            <div className="bridge-amount">{amount}</div>
+          ) : (
+            <input
+              type="text"
+              className="input-transparent bridge-amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            />
+          )}
         </div>
 
         <div className="bridge-token ">
