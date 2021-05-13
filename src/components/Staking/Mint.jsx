@@ -34,7 +34,7 @@ const Mint = (props) => {
   })
 
   React.useEffect(() => {
-    if (chainId && tokenName) {
+    if (chainId && tokenName && title !== 'TIME') {
       let link = getEtherscanLink(
         chainId,
         addresses['vaults'][tokenName][chainId]

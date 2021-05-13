@@ -561,7 +561,7 @@ input:focus {
   border: 1px solid #1c1c1c;
   border-radius: 10px;
   padding: 20px;
-  z-index: 999;
+  z-index: 2;
 }
 .claim-token-title {
   font-style: normal;

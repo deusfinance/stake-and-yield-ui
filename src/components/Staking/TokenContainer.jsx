@@ -281,6 +281,9 @@ const TokenContainer = (props) => {
     if (!owner) {
       setCollapseContent('stake')
     }
+    if (chainId !== 1) {
+      setCollapseContent('stake')
+    }
     // TODO condition chainID (error in fetchUni)
     if (owner && tokenName && chainId === 1) {
       onlyLocking ? fetchUNIToken() : fetchDataUser()
