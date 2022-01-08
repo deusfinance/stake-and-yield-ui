@@ -1,3 +1,4 @@
+# DEPRICATED
 # app-ui
 DEUS app front-end
 
