@@ -1,4 +1,5 @@
-# DEPRICATED
+# DEPRECATED
+
 # app-ui
 DEUS app front-end
 
